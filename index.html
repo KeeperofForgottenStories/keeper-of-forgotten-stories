@@ -3,1581 +3,2074 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#020611">
 
-<title>Keeper of Forgotten Stories // Star Stream</title>
+<title>Keeper of Forgotten Stories</title>
 
 <style>
 
 /* =========================================================
-   KEEPER OF FORGOTTEN STORIES
-   STAR STREAM INTERFACE ENGINE
-   VISUAL CORE
+   ORIGINAL BASE
 ========================================================= */
 
 *{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+box-sizing:border-box;
 }
 
 html{
-    scroll-behavior:smooth;
-    scrollbar-width:thin;
-    scrollbar-color:#0ea5e9 #020611;
+scroll-behavior:smooth;
 }
 
 body{
-    min-height:100vh;
-    background:
-        radial-gradient(circle at 50% -10%,#0c3154 0%,transparent 35%),
-        radial-gradient(circle at 10% 70%,#031b32 0%,transparent 30%),
-        radial-gradient(circle at 90% 30%,#061a30 0%,transparent 30%),
-        #020611;
-    color:#dbeafe;
-    font-family:Arial,Helvetica,sans-serif;
-    overflow-x:hidden;
-    position:relative;
+margin:0;
+background:#020611;
+color:#dbeafe;
+font-family:Arial,Helvetica,sans-serif;
+overflow-x:hidden;
 }
 
+
 /* =========================================================
-   CUSTOM SCROLLBAR
+   STARFIELD
 ========================================================= */
 
-::-webkit-scrollbar{
-    width:8px;
+body:before{
+content:"";
+position:fixed;
+inset:0;
+pointer-events:none;
+
+background-image:
+radial-gradient(circle,#fff 0 1px,transparent 1px),
+radial-gradient(circle,#7dd3fc 0 1px,transparent 1px),
+radial-gradient(circle,#fff 0 1px,transparent 1px),
+radial-gradient(circle,#38bdf8 0 1px,transparent 1px);
+
+background-size:
+180px 180px,
+270px 240px,
+340px 300px,
+420px 370px;
+
+opacity:.28;
+z-index:-3;
+
+animation:stars 35s linear infinite;
 }
 
-::-webkit-scrollbar-track{
-    background:#020611;
+body:after{
+content:"";
+position:fixed;
+inset:0;
+pointer-events:none;
+
+background:
+linear-gradient(
+180deg,
+#06152d55,
+#020611,
+#03152a
+);
+
+z-index:-2;
 }
 
-::-webkit-scrollbar-thumb{
-    background:linear-gradient(#075985,#0ea5e9,#075985);
-    border:1px solid #38bdf8;
+@keyframes stars{
+
+from{
+background-position:
+0 0,
+0 0,
+0 0,
+0 0;
 }
 
-::-webkit-scrollbar-thumb:hover{
-    background:#38bdf8;
+to{
+background-position:
+180px 180px,
+270px 240px,
+340px 300px,
+420px 370px;
 }
+
+}
+
 
 /* =========================================================
-   GLOBAL STAR STREAM LAYERS
-========================================================= */
-
-body::before{
-    content:"";
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    z-index:-10;
-
-    background-image:
-        radial-gradient(circle,#ffffff 0 1px,transparent 1.5px),
-        radial-gradient(circle,#7dd3fc 0 1px,transparent 1.5px),
-        radial-gradient(circle,#ffffff 0 1px,transparent 1px),
-        radial-gradient(circle,#38bdf8 0 1px,transparent 1.5px),
-        radial-gradient(circle,#bae6fd 0 1px,transparent 1px);
-
-    background-size:
-        170px 170px,
-        260px 230px,
-        390px 310px,
-        470px 410px,
-        620px 570px;
-
-    background-position:
-        0 0,
-        30px 70px,
-        100px 20px,
-        200px 100px,
-        40px 250px;
-
-    opacity:.32;
-    animation:starDrift 55s linear infinite;
-}
-
-body::after{
-    content:"";
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    z-index:9990;
-
-    background:
-        repeating-linear-gradient(
-            0deg,
-            rgba(255,255,255,.018) 0px,
-            rgba(255,255,255,.018) 1px,
-            transparent 1px,
-            transparent 4px
-        );
-
-    mix-blend-mode:screen;
-    opacity:.28;
-}
-
-@keyframes starDrift{
-    0%{
-        background-position:
-        0 0,
-        30px 70px,
-        100px 20px,
-        200px 100px,
-        40px 250px;
-    }
-
-    50%{
-        background-position:
-        85px 85px,
-        160px 185px,
-        295px 175px,
-        435px 305px,
-        350px 535px;
-    }
-
-    100%{
-        background-position:
-        170px 170px,
-        290px 300px,
-        490px 330px,
-        670px 510px,
-        660px 820px;
-    }
-}
-
-/* =========================================================
-   FLOATING STAR PARTICLES
-========================================================= */
-
-#starParticles{
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    z-index:-1;
-    overflow:hidden;
-}
-
-.starParticle{
-    position:absolute;
-    width:2px;
-    height:2px;
-    border-radius:50%;
-    background:#dff8ff;
-    box-shadow:0 0 7px #38bdf8;
-    animation:floatStar linear infinite;
-}
-
-@keyframes floatStar{
-    0%{
-        transform:translate3d(0,30px,0);
-        opacity:0;
-    }
-
-    15%{
-        opacity:.8;
-    }
-
-    70%{
-        opacity:.45;
-    }
-
-    100%{
-        transform:translate3d(var(--drift),-120px,0);
-        opacity:0;
-    }
-}
-
-/* =========================================================
-   SCREEN VIGNETTE
-========================================================= */
-
-#vignette{
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    z-index:9988;
-
-    box-shadow:
-        inset 0 0 180px rgba(0,0,0,.85),
-        inset 0 0 50px rgba(2,132,199,.08);
-}
-
-/* =========================================================
-   CURSOR GLOW
-========================================================= */
-
-#cursorGlow{
-    position:fixed;
-    width:220px;
-    height:220px;
-    border-radius:50%;
-    pointer-events:none;
-    z-index:9987;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(56,189,248,.10) 0%,
-            rgba(14,165,233,.045) 30%,
-            transparent 70%
-        );
-
-    transform:translate(-50%,-50%);
-    opacity:0;
-    transition:opacity:.4s;
-}
-
-body.cursor-active #cursorGlow{
-    opacity:1;
-}
-
-/* =========================================================
-   BOOT / CONNECTION SCREEN
+   BOOT SCREEN
 ========================================================= */
 
 #connect{
-    position:fixed;
-    inset:0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:
-        radial-gradient(circle at center,#062441 0%,#020611 55%,#00030a 100%);
-    z-index:10000;
-    overflow:hidden;
+position:fixed;
+inset:0;
 
-    transition:
-        opacity 1.2s ease,
-        visibility 1.2s ease,
-        filter 1.2s ease;
-}
+background:
+radial-gradient(
+circle at 50% 45%,
+rgba(14,165,233,.09),
+transparent 27%
+),
+radial-gradient(
+circle at 50% 50%,
+rgba(30,64,175,.04),
+transparent 55%
+),
+#020611;
 
-#connect::before{
-    content:"";
-    position:absolute;
-    inset:-20%;
+display:flex;
+align-items:center;
+justify-content:center;
 
-    background:
-        conic-gradient(
-            from 0deg,
-            transparent,
-            rgba(14,165,233,.04),
-            transparent 25%,
-            rgba(56,189,248,.03),
-            transparent 50%
-        );
+z-index:9999;
 
-    animation:bootRotate 20s linear infinite;
-}
+transition:
+opacity 1.2s,
+visibility 1.2s;
 
-@keyframes bootRotate{
-    to{
-        transform:rotate(360deg);
-    }
+overflow:hidden;
 }
 
 #connect.hide{
-    opacity:0;
-    visibility:hidden;
-    filter:blur(8px);
+opacity:0;
+visibility:hidden;
 }
 
 .boot{
-    width:min(850px,92%);
-    position:relative;
-    z-index:2;
-    font-family:"Courier New",monospace;
+width:min(760px,91%);
+font-family:monospace;
 }
 
 .bootbox{
-    position:relative;
-    padding:40px 34px;
+position:relative;
 
-    border:1px solid #0ea5e9;
+border:1px solid #38bdf8;
 
-    background:
-        linear-gradient(
-            180deg,
-            rgba(4,25,47,.96),
-            rgba(1,8,20,.98)
-        );
+padding:32px 28px;
 
-    box-shadow:
-        0 0 0 1px rgba(56,189,248,.05),
-        0 0 35px rgba(14,165,233,.20),
-        0 0 100px rgba(14,165,233,.07),
-        inset 0 0 50px rgba(14,165,233,.05);
+background:
+linear-gradient(
+180deg,
+#06152dee,
+#030914f5
+);
 
-    overflow:hidden;
+box-shadow:
+0 0 0 1px rgba(56,189,248,.025),
+0 0 45px rgba(14,165,233,.10),
+0 0 100px rgba(14,165,233,.04),
+inset 0 0 60px rgba(14,165,233,.035);
+
+overflow:hidden;
 }
 
-/* HUD CORNERS */
+.bootbox:before{
+content:"";
 
-.bootbox::before,
-.bootbox::after{
-    content:"";
-    position:absolute;
-    width:65px;
-    height:65px;
-    border-color:#38bdf8;
-    border-style:solid;
-    opacity:.65;
-}
+position:absolute;
+inset:0;
 
-.bootbox::before{
-    top:-1px;
-    left:-1px;
-    border-width:2px 0 0 2px;
-}
+background:
+repeating-linear-gradient(
+0deg,
+transparent 0px,
+transparent 3px,
+rgba(56,189,248,.025) 4px
+);
 
-.bootbox::after{
-    bottom:-1px;
-    right:-1px;
-    border-width:0 2px 2px 0;
+pointer-events:none;
 }
 
 .bootcorner{
-    position:absolute;
-    color:#38bdf8;
-    opacity:.4;
-    font-size:16px;
+position:absolute;
+
+color:#155e75;
+font-size:18px;
 }
 
-.c1{top:12px;left:14px}
-.c2{top:12px;right:14px}
-.c3{bottom:12px;left:14px}
-.c4{bottom:12px;right:14px}
-
-/* BOOT SCAN */
-
-.bootbox .scan{
-    position:absolute;
-    left:0;
-    right:0;
-    height:1px;
-
-    background:linear-gradient(
-        90deg,
-        transparent,
-        #38bdf8,
-        transparent
-    );
-
-    box-shadow:0 0 12px #38bdf8;
-    opacity:.55;
-    pointer-events:none;
-
-    animation:scanBoot 5s linear infinite;
+.c1{
+top:8px;
+left:10px;
 }
 
-@keyframes scanBoot{
-    0%{top:-2%}
-    100%{top:102%}
+.c2{
+top:8px;
+right:10px;
+}
+
+.c3{
+bottom:8px;
+left:10px;
+}
+
+.c4{
+bottom:8px;
+right:10px;
 }
 
 .boottitle{
-    text-align:center;
-    color:#67e8f9;
-    font-size:11px;
-    letter-spacing:5px;
-    text-shadow:0 0 12px rgba(56,189,248,.6);
+position:relative;
+
+display:inline-block;
+
+width:100%;
+
+padding:7px 0;
+
+border-top:1px solid rgba(56,189,248,.16);
+border-bottom:1px solid rgba(56,189,248,.16);
+
+font-size:12px;
+
+letter-spacing:5px;
+
+color:#67e8f9;
+
+text-align:center;
 }
 
 .bootmain{
-    margin:25px 0 10px;
-    text-align:center;
+font-family:
+Georgia,
+"Times New Roman",
+serif;
 
-    color:#e0f2fe;
-    font-size:clamp(25px,6vw,45px);
-    letter-spacing:4px;
-    line-height:1.15;
+font-size:clamp(22px,6vw,38px);
 
-    text-shadow:
-        0 0 10px #38bdf8,
-        0 0 30px rgba(14,165,233,.45);
+font-weight:normal;
+
+letter-spacing:6px;
+
+margin:24px 0 8px;
+
+text-align:center;
+
+color:#e0f2fe;
+
+text-shadow:
+0 0 12px rgba(56,189,248,.65),
+0 0 40px rgba(56,189,248,.18);
 }
 
 .bootsub{
-    text-align:center;
-    color:#64748b;
-    font-size:10px;
-    letter-spacing:2px;
+text-align:center;
+
+font-size:10px;
+
+letter-spacing:2px;
+
+color:#475569;
+
+margin-bottom:25px;
 }
 
-/* =========================================================
-   BOOT DATA GRID
-========================================================= */
-
 .bootgrid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:8px 30px;
+position:relative;
 
-    margin:30px 0 20px;
+display:grid;
 
-    color:#64748b;
-    font-size:10px;
-    line-height:1.8;
+grid-template-columns:1fr 1fr;
+
+gap:7px 25px;
+
+padding:13px;
+
+border:1px solid rgba(21,94,117,.3);
+
+background:
+linear-gradient(
+90deg,
+rgba(14,165,233,.018),
+transparent
+);
+
+font-size:10px;
+
+line-height:1.8;
+
+color:#64748b;
+
+margin-bottom:20px;
 }
 
 .bootgrid div{
-    padding:5px 8px;
-    border-left:1px solid #0c4a6e;
-    background:rgba(14,165,233,.025);
+position:relative;
+padding-left:12px;
+}
+
+.bootgrid div:before{
+content:"";
+
+position:absolute;
+
+left:0;
+top:50%;
+
+width:4px;
+height:4px;
+
+border:1px solid #164e63;
+
+transform:
+translateY(-50%)
+rotate(45deg);
 }
 
 .bootgrid span{
-    color:#38bdf8;
+color:#38bdf8;
 }
 
-/* =========================================================
-   LOADING BAR
-========================================================= */
-
 .loading{
-    height:7px;
-    background:#031525;
-    border:1px solid #075985;
-    overflow:hidden;
+height:6px;
+
+background:#082f49;
+
+border:1px solid #155e75;
+
+overflow:hidden;
 }
 
 .loading span{
-    display:block;
-    width:0;
-    height:100%;
+display:block;
 
-    background:
-        linear-gradient(
-            90deg,
-            #075985,
-            #38bdf8,
-            #e0f2fe
-        );
+height:100%;
 
-    box-shadow:
-        0 0 10px #38bdf8,
-        0 0 25px #0ea5e9;
+width:0;
 
-    animation:loadBar 6.2s cubic-bezier(.2,.7,.2,1) forwards;
+background:
+linear-gradient(
+90deg,
+#075985,
+#0ea5e9,
+#67e8f9
+);
+
+box-shadow:
+0 0 15px #38bdf8,
+0 0 25px rgba(56,189,248,.25);
+
+animation:
+load 6s cubic-bezier(.2,.7,.2,1) forwards;
 }
 
-@keyframes loadBar{
-    0%{width:0}
-    12%{width:6%}
-    27%{width:21%}
-    42%{width:39%}
-    58%{width:57%}
-    73%{width:73%}
-    86%{width:88%}
-    95%{width:96%}
-    100%{width:100%}
+@keyframes load{
+
+0%{width:0}
+15%{width:8%}
+30%{width:27%}
+48%{width:44%}
+62%{width:61%}
+78%{width:79%}
+91%{width:94%}
+100%{width:100%}
+
 }
 
 .progressline{
-    display:flex;
-    justify-content:space-between;
-    margin-top:7px;
+display:flex;
 
-    color:#475569;
-    font-size:9px;
-    letter-spacing:1px;
+justify-content:space-between;
+
+font-size:9px;
+
+color:#475569;
+
+margin-top:7px;
 }
 
 #percent{
-    color:#67e8f9;
+color:#67e8f9;
 }
 
-/* =========================================================
-   BOOT STATUS / LOG
-========================================================= */
-
 .bootstatus{
-    min-height:42px;
-    margin-top:22px;
+font-size:10px;
 
-    color:#7dd3fc;
-    font-size:10px;
-    letter-spacing:1.5px;
-    line-height:2;
+color:#7dd3fc;
+
+letter-spacing:1.5px;
+
+line-height:2;
+
+margin-top:22px;
+
+min-height:42px;
 }
 
 .bootlog{
-    height:105px;
-    margin-top:14px;
-    padding:11px;
+height:92px;
 
-    overflow:hidden;
+margin-top:15px;
 
-    border:1px solid #0c3349;
-    background:rgba(0,4,12,.7);
+padding:10px;
 
-    color:#475569;
-    font-size:9px;
-    line-height:1.9;
+border:1px solid #0c3349;
+
+background:
+linear-gradient(
+180deg,
+rgba(1,8,18,.9),
+rgba(1,6,13,.7)
+);
+
+overflow:hidden;
+
+font-size:9px;
+
+line-height:1.8;
+
+color:#475569;
+
+box-shadow:
+inset 0 0 25px rgba(0,0,0,.35);
 }
 
 .bootlog div{
-    animation:logAppear .3s ease;
+animation:login .3s ease;
 }
 
 .bootlog .ok{
-    color:#38bdf8;
+color:#38bdf8;
 }
 
 .bootlog .alert{
-    color:#f59e0b;
+color:#f59e0b;
 }
 
-@keyframes logAppear{
-    from{
-        opacity:0;
-        transform:translateX(-8px);
-    }
+@keyframes login{
 
-    to{
-        opacity:1;
-        transform:none;
-    }
+from{
+opacity:0;
+transform:translateX(-5px);
+}
+
+to{
+opacity:1;
+transform:none;
+}
+
 }
 
 .bootsignal{
-    margin-top:18px;
-    text-align:center;
+text-align:center;
 
-    color:#155e75;
-    font-size:9px;
-    letter-spacing:3px;
+font-size:10px;
+
+letter-spacing:3px;
+
+color:#155e75;
+
+margin-top:17px;
+
+padding-top:8px;
+
+border-top:1px solid rgba(21,94,117,.15);
 }
 
 .enter{
-    display:none;
+display:none;
 
-    margin:25px auto 0;
-    padding:13px 28px;
+position:relative;
 
-    border:1px solid #38bdf8;
-    background:rgba(14,165,233,.06);
+margin:24px auto 0;
 
-    color:#bae6fd;
-    font-family:"Courier New",monospace;
-    font-weight:bold;
-    letter-spacing:3px;
+padding:13px 30px;
 
-    cursor:pointer;
-    transition:.3s;
+min-width:245px;
+
+border:1px solid #38bdf8;
+
+background:
+linear-gradient(
+90deg,
+rgba(14,165,233,.025),
+rgba(14,165,233,.08),
+rgba(14,165,233,.025)
+);
+
+color:#bae6fd;
+
+cursor:pointer;
+
+letter-spacing:3px;
+
+font-weight:bold;
+
+font-family:monospace;
+
+transition:.3s;
+
+box-shadow:
+inset 0 0 15px rgba(14,165,233,.025);
+}
+
+.enter:before{
+content:"";
+
+position:absolute;
+
+top:-1px;
+left:15%;
+right:15%;
+
+height:1px;
+
+background:#38bdf8;
+
+box-shadow:
+0 0 8px #38bdf8;
 }
 
 .enter:hover{
-    color:white;
-    background:rgba(14,165,233,.14);
+background:#0ea5e922;
 
-    box-shadow:
-        0 0 15px rgba(56,189,248,.4),
-        inset 0 0 15px rgba(56,189,248,.08);
+box-shadow:
+0 0 25px #38bdf855;
 
-    transform:translateY(-2px);
+color:white;
+
+transform:translateY(-2px);
 }
+
 
 /* =========================================================
    MAIN
 ========================================================= */
 
 #main{
-    min-height:100vh;
-    opacity:0;
+opacity:0;
 
-    transition:
-        opacity 1.2s ease,
-        filter 1.2s ease;
-
-    filter:blur(5px);
+transition:opacity 1.2s;
 }
 
 #main.show{
-    opacity:1;
-    filter:none;
+opacity:1;
 }
 
 .container{
-    width:min(1080px,94%);
-    margin:35px auto 60px;
+width:min(950px,92%);
+
+margin:35px auto;
 }
 
-.system{
-    position:relative;
-
-    border:1px solid #075985;
-
-    background:
-        linear-gradient(
-            180deg,
-            rgba(2,13,29,.95),
-            rgba(1,8,18,.93)
-        );
-
-    box-shadow:
-        0 0 45px rgba(2,132,199,.12),
-        0 0 120px rgba(14,165,233,.04);
-
-    overflow:hidden;
-}
 
 /* =========================================================
-   SYSTEM HUD FRAME
+   STAR STREAM MAIN SYSTEM
 ========================================================= */
 
-.system::before{
-    content:"";
-    position:absolute;
-    inset:7px;
+.system{
+position:relative;
 
-    border:1px solid rgba(56,189,248,.06);
+border:1px solid rgba(56,189,248,.28);
 
-    pointer-events:none;
+background:
+linear-gradient(
+180deg,
+rgba(3,15,31,.94),
+rgba(1,8,18,.96)
+);
+
+box-shadow:
+0 0 0 1px rgba(56,189,248,.025),
+0 0 35px rgba(14,165,233,.08),
+0 0 100px rgba(14,165,233,.035),
+inset 0 0 80px rgba(14,165,233,.025);
+
+isolation:isolate;
 }
 
-.system::after{
-    content:"STAR STREAM // NARRATIVE OBSERVATION NETWORK";
-    position:absolute;
-    top:12px;
-    right:20px;
+.system:after{
+content:
+"KFS-∞ // NARRATIVE PRESERVATION SYSTEM // OBSERVER UNKNOWN";
 
-    color:#164e63;
-    font-family:"Courier New",monospace;
-    font-size:7px;
-    letter-spacing:2px;
+position:absolute;
 
-    pointer-events:none;
+left:50%;
+bottom:4px;
+
+transform:translateX(-50%);
+
+width:max-content;
+
+max-width:90%;
+
+padding:0 10px;
+
+background:#020b18;
+
+color:#0c3349;
+
+font-family:"Courier New",monospace;
+
+font-size:6px;
+
+letter-spacing:2px;
+
+z-index:5;
+
+pointer-events:none;
 }
+
 
 /* =========================================================
    HEADER
 ========================================================= */
 
 header{
-    position:relative;
-    padding:60px 25px 45px;
+position:relative;
 
-    text-align:center;
+min-height:285px;
 
-    border-bottom:1px solid #164e63;
+padding:35px 20px;
 
-    background:
-        radial-gradient(
-            ellipse at center,
-            rgba(14,165,233,.10),
-            transparent 60%
-        );
+text-align:center;
+
+border-bottom:1px solid #164e63;
+
+background:
+radial-gradient(
+circle at 50% 45%,
+rgba(14,165,233,.075),
+transparent 34%
+),
+linear-gradient(
+180deg,
+rgba(7,28,51,.32),
+transparent
+);
+
+box-shadow:
+inset 0 -25px 50px rgba(14,165,233,.018);
 }
 
-header::before{
-    content:"";
-    position:absolute;
-    left:10%;
-    right:10%;
-    bottom:0;
+header:before,
+header:after{
+content:"";
 
-    height:1px;
+position:absolute;
 
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            #38bdf8,
-            transparent
-        );
+width:45px;
+height:45px;
 
-    box-shadow:0 0 10px #38bdf8;
-    opacity:.45;
+pointer-events:none;
+}
+
+header:before{
+left:12px;
+top:12px;
+
+border-left:1px solid #155e75;
+border-top:1px solid #155e75;
+}
+
+header:after{
+right:12px;
+top:12px;
+
+border-right:1px solid #155e75;
+border-top:1px solid #155e75;
 }
 
 .signal{
-    color:#67e8f9;
-    font-family:"Courier New",monospace;
-    font-size:10px;
-    letter-spacing:3px;
+position:relative;
 
-    text-shadow:0 0 8px rgba(56,189,248,.5);
+display:inline-block;
+
+margin-top:12px;
+
+padding:6px 17px;
+
+border-top:1px solid rgba(56,189,248,.25);
+border-bottom:1px solid rgba(56,189,248,.25);
+
+background:
+linear-gradient(
+90deg,
+transparent,
+rgba(14,165,233,.045),
+transparent
+);
+
+font-size:11px;
+
+color:#67e8f9;
+
+letter-spacing:3px;
+
+text-shadow:
+0 0 8px rgba(56,189,248,.6);
+}
+
+.signal:before{
+content:"◀";
+
+margin-right:10px;
+
+color:#155e75;
+}
+
+.signal:after{
+content:"▶";
+
+margin-left:10px;
+
+color:#155e75;
 }
 
 .title{
-    margin:18px 0 12px;
+position:relative;
 
-    color:#e0f2fe;
-    font-size:clamp(30px,7vw,57px);
-    letter-spacing:6px;
-    line-height:1.05;
+font-family:
+"Times New Roman",
+Georgia,
+serif;
 
-    text-shadow:
-        0 0 10px #38bdf8,
-        0 0 35px rgba(14,165,233,.35);
+font-size:clamp(27px,7vw,48px);
+
+font-weight:500;
+
+letter-spacing:7px;
+
+margin:15px 0 8px;
+
+color:#e8f7ff;
+
+text-shadow:
+0 0 8px rgba(125,211,252,.75),
+0 0 22px rgba(56,189,248,.32),
+0 0 55px rgba(14,165,233,.12);
+}
+
+.title:after{
+content:"";
+
+display:block;
+
+width:140px;
+
+height:1px;
+
+margin:20px auto 0;
+
+background:
+linear-gradient(
+90deg,
+transparent,
+#38bdf8,
+transparent
+);
+
+box-shadow:
+0 0 8px rgba(56,189,248,.6);
 }
 
 .subtitle{
-    color:#7dd3fc;
-    font-family:"Courier New",monospace;
-    font-size:10px;
-    letter-spacing:2px;
+display:inline-block;
+
+margin-top:18px;
+
+padding:6px 15px;
+
+border:1px solid rgba(21,94,117,.35);
+
+background:rgba(2,11,24,.45);
+
+font-size:12px;
+
+color:#7dd3fc;
+
+letter-spacing:2px;
+
+box-shadow:
+inset 0 0 15px rgba(14,165,233,.025);
 }
+
 
 /* =========================================================
    NAVIGATION
 ========================================================= */
 
 nav{
-    position:sticky;
-    top:0;
-    z-index:100;
+position:sticky;
 
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:5px;
+top:0;
 
-    padding:10px;
+z-index:20;
 
-    border-bottom:1px solid #164e63;
+display:flex;
 
-    background:rgba(2,9,20,.86);
-    backdrop-filter:blur(14px);
+justify-content:center;
+
+flex-wrap:wrap;
+
+gap:8px;
+
+padding:15px;
+
+border-top:1px solid rgba(56,189,248,.08);
+
+border-bottom:1px solid rgba(56,189,248,.20);
+
+background:
+linear-gradient(
+180deg,
+rgba(4,22,43,.97),
+rgba(2,12,26,.97)
+);
+
+backdrop-filter:blur(8px);
+
+box-shadow:
+0 8px 30px rgba(0,0,0,.25),
+inset 0 1px rgba(56,189,248,.025);
+}
+
+nav:before{
+content:"STAR STREAM // NAVIGATION CHANNEL";
+
+position:absolute;
+
+left:14px;
+
+top:-7px;
+
+padding:0 7px;
+
+background:#020b18;
+
+color:#164e63;
+
+font-family:"Courier New",monospace;
+
+font-size:7px;
+
+letter-spacing:2px;
 }
 
 nav a{
-    position:relative;
+position:relative;
 
-    padding:10px 16px;
+overflow:hidden;
 
-    border:1px solid transparent;
+color:#7dd3fc;
 
-    color:#7dd3fc;
-    text-decoration:none;
+text-decoration:none;
 
-    font-family:"Courier New",monospace;
-    font-size:9px;
-    letter-spacing:2px;
+font-size:11px;
 
-    transition:.25s;
+letter-spacing:2px;
+
+padding:9px 15px;
+
+border:1px solid transparent;
+
+transition:
+color .25s,
+background .25s,
+border-color .25s,
+box-shadow .25s;
 }
 
-nav a::before{
-    content:"";
-    position:absolute;
-    left:0;
-    bottom:0;
+nav a:before{
+content:"";
 
-    width:0;
-    height:1px;
+position:absolute;
 
-    background:#38bdf8;
-    box-shadow:0 0 8px #38bdf8;
+left:-100%;
+top:0;
+bottom:0;
 
-    transition:.3s;
+width:100%;
+
+background:
+linear-gradient(
+90deg,
+transparent,
+rgba(56,189,248,.09),
+transparent
+);
+
+transition:left .45s;
 }
 
-nav a:hover,
-nav a.active{
-    color:white;
-    border-color:#075985;
-    background:rgba(14,165,233,.07);
-    text-shadow:0 0 8px #38bdf8;
+nav a:hover:before{
+left:100%;
 }
 
-nav a:hover::before,
-nav a.active::before{
-    width:100%;
+nav a:hover{
+border-color:#0ea5e9;
+
+background:#0ea5e912;
+
+color:white;
+
+text-shadow:
+0 0 8px #38bdf8;
 }
+
 
 /* =========================================================
    SECTIONS
 ========================================================= */
 
 section{
-    position:relative;
+position:relative;
 
-    margin:18px;
-    padding:27px;
+margin:18px;
 
-    border:1px solid #164e63;
+padding:23px;
 
-    background:
-        linear-gradient(
-            135deg,
-            rgba(7,23,43,.78),
-            rgba(2,12,26,.82)
-        );
+border:1px solid #164e63;
 
-    scroll-margin-top:75px;
+background:
+linear-gradient(
+135deg,
+rgba(7,23,43,.72),
+rgba(2,12,25,.62)
+);
 
-    box-shadow:
-        inset 0 0 30px rgba(14,165,233,.025);
+scroll-margin-top:70px;
 
-    transition:
-        border-color .3s,
-        box-shadow .3s,
-        transform .3s;
+box-shadow:
+inset 0 0 35px rgba(14,165,233,.015);
+
+animation:
+sectionAppear .7s ease both;
 }
 
-section:hover{
-    border-color:#1e5d78;
+section:before{
+content:"";
+
+position:absolute;
+
+left:-1px;
+top:-1px;
+
+width:28px;
+height:28px;
+
+border-left:1px solid rgba(56,189,248,.45);
+border-top:1px solid rgba(56,189,248,.45);
+
+pointer-events:none;
 }
 
-section::before{
-    content:"";
-    position:absolute;
-    top:0;
-    left:0;
+section:after{
+content:"";
 
-    width:25px;
-    height:1px;
+position:absolute;
 
-    background:#38bdf8;
-    box-shadow:0 0 8px #38bdf8;
+right:-1px;
+bottom:-1px;
+
+width:28px;
+height:28px;
+
+border-right:1px solid rgba(56,189,248,.22);
+border-bottom:1px solid rgba(56,189,248,.22);
+
+pointer-events:none;
 }
 
-section::after{
-    content:"";
-    position:absolute;
-    bottom:0;
-    right:0;
+section:nth-of-type(2){
+animation-delay:.05s;
+}
 
-    width:25px;
-    height:1px;
+section:nth-of-type(3){
+animation-delay:.1s;
+}
 
-    background:#38bdf8;
-    box-shadow:0 0 8px #38bdf8;
+section:nth-of-type(4){
+animation-delay:.15s;
+}
+
+section:nth-of-type(5){
+animation-delay:.2s;
+}
+
+section:nth-of-type(6){
+animation-delay:.25s;
+}
+
+@keyframes sectionAppear{
+
+from{
+opacity:0;
+transform:translateY(8px);
+}
+
+to{
+opacity:1;
+transform:none;
+}
+
 }
 
 .heading{
-    color:#67e8f9;
-    font-family:"Courier New",monospace;
-    font-size:12px;
-    font-weight:bold;
-    letter-spacing:3px;
+position:relative;
 
-    text-shadow:0 0 8px rgba(56,189,248,.4);
+display:flex;
+
+align-items:center;
+
+color:#67e8f9;
+
+font-weight:bold;
+
+letter-spacing:3px;
+
+font-size:13px;
+
+text-shadow:
+0 0 8px rgba(56,189,248,.3);
+}
+
+.heading:after{
+content:"";
+
+flex:1;
+
+height:1px;
+
+margin-left:15px;
+
+background:
+linear-gradient(
+90deg,
+rgba(22,78,99,.7),
+transparent
+);
 }
 
 .line{
-    height:1px;
-    margin:18px 0;
+position:relative;
 
-    background:
-        linear-gradient(
-            90deg,
-            #164e63,
-            rgba(56,189,248,.4),
-            transparent
-        );
+height:1px;
+
+background:
+linear-gradient(
+90deg,
+#155e75,
+rgba(21,94,117,.4),
+transparent
+);
+
+margin:18px 0;
 }
 
+.line:before{
+content:"";
+
+position:absolute;
+
+left:0;
+top:-2px;
+
+width:5px;
+height:5px;
+
+border:1px solid #38bdf8;
+
+transform:rotate(45deg);
+
+box-shadow:
+0 0 7px rgba(56,189,248,.45);
+}
+
+
+/* =========================================================
+   INFORMATION
+========================================================= */
+
 .info{
-    color:#cbd5e1;
-    font-size:13px;
-    line-height:2;
+position:relative;
+
+padding:5px 0;
+
+font-size:14px;
+
+line-height:1.9;
 }
 
 .label{
-    color:#38bdf8;
+font-family:"Courier New",monospace;
+
+color:#38bdf8;
+
+letter-spacing:1px;
+
+text-shadow:
+0 0 7px rgba(56,189,248,.25);
 }
 
 .value{
-    color:#e0f2fe;
+color:#e0f2fe;
 }
 
+
 /* =========================================================
-   SYSTEM MESSAGE
+   STAR STREAM MESSAGE
 ========================================================= */
 
 .message{
-    position:relative;
+position:relative;
 
-    padding:18px 20px;
+border-left:2px solid #38bdf8;
 
-    border-left:2px solid #38bdf8;
+padding:15px 17px;
 
-    background:
-        linear-gradient(
-            90deg,
-            rgba(14,165,233,.08),
-            transparent
-        );
+background:
+linear-gradient(
+90deg,
+rgba(14,165,233,.065),
+rgba(14,165,233,.018),
+transparent
+);
 
-    color:#bae6fd;
+color:#bae6fd;
 
-    font-family:Georgia,serif;
-    font-size:14px;
-    line-height:1.9;
+line-height:1.8;
 
-    box-shadow:inset 15px 0 25px rgba(14,165,233,.025);
+font-family:
+Georgia,
+"Times New Roman",
+serif;
+
+font-style:italic;
+
+box-shadow:
+inset 15px 0 30px rgba(14,165,233,.015);
 }
 
-.message::before{
-    content:"SYSTEM MESSAGE";
-    display:block;
+.message:before{
+content:"“";
 
-    margin-bottom:8px;
+position:absolute;
 
-    color:#155e75;
-    font-family:"Courier New",monospace;
-    font-size:8px;
-    letter-spacing:3px;
+left:8px;
+top:-17px;
+
+font-family:Georgia,serif;
+
+font-size:48px;
+
+color:rgba(56,189,248,.08);
 }
+
 
 /* =========================================================
-   FABLE CARDS
+   FABLES
 ========================================================= */
 
 .fable{
-    position:relative;
+position:relative;
 
-    margin:12px 0;
-    padding:20px;
+border:1px solid rgba(22,78,99,.72);
 
-    border:1px solid #164e63;
+padding:20px;
 
-    background:
-        linear-gradient(
-            120deg,
-            rgba(3,13,28,.9),
-            rgba(5,20,37,.55)
-        );
+background:
+linear-gradient(
+135deg,
+rgba(5,20,38,.86),
+rgba(2,10,21,.76)
+);
 
-    transition:
-        transform .35s,
-        border-color .35s,
-        box-shadow .35s;
+transition:
+transform .35s cubic-bezier(.2,.8,.2,1),
+border-color .35s,
+box-shadow .35s;
+
+box-shadow:
+inset 0 0 25px rgba(14,165,233,.012);
 }
 
-.fable::before{
-    content:"";
-    position:absolute;
-    top:0;
-    left:0;
+.fable:after{
+content:"ARCHIVE RECORD";
 
-    width:3px;
-    height:0;
+position:absolute;
 
-    background:#38bdf8;
-    box-shadow:0 0 12px #38bdf8;
+top:8px;
+right:10px;
 
-    transition:.35s;
+font-family:"Courier New",monospace;
+
+font-size:7px;
+
+letter-spacing:2px;
+
+color:#164e63;
+
+pointer-events:none;
 }
 
 .fable:hover{
-    transform:translateX(4px);
+border-color:#0e7490;
 
-    border-color:#0ea5e9;
+transform:
+translateY(-3px)
+perspective(500px)
+rotateX(.4deg);
 
-    box-shadow:
-        -5px 0 20px rgba(14,165,233,.08),
-        0 0 25px rgba(14,165,233,.06);
-}
-
-.fable:hover::before{
-    height:100%;
+box-shadow:
+0 8px 30px rgba(0,0,0,.25),
+0 0 25px rgba(14,165,233,.07),
+inset 0 0 30px rgba(14,165,233,.025);
 }
 
 .fableid{
-    color:#475569;
-    font-family:"Courier New",monospace;
-    font-size:9px;
-    letter-spacing:2px;
+display:inline-block;
+
+padding:3px 7px;
+
+border:1px solid rgba(21,94,117,.45);
+
+background:rgba(2,11,24,.5);
+
+color:#64748b;
+
+font-family:monospace;
+
+font-size:11px;
+
+letter-spacing:2px;
 }
 
 .fabletitle{
-    margin:8px 0;
+font-family:
+Georgia,
+"Times New Roman",
+serif;
 
-    color:#e0f2fe;
-    font-size:21px;
-    letter-spacing:2px;
+font-weight:normal;
 
-    text-shadow:0 0 10px rgba(56,189,248,.2);
+font-size:21px;
+
+color:#e0f2fe;
+
+letter-spacing:3px;
+
+margin:8px 0;
+
+text-shadow:
+0 0 12px rgba(56,189,248,.13);
 }
 
 .meta{
-    color:#7dd3fc;
-    font-family:"Courier New",monospace;
-    font-size:10px;
-    line-height:1.9;
+position:relative;
+
+padding:10px 12px;
+
+border-left:1px solid rgba(21,94,117,.4);
+
+background:
+linear-gradient(
+90deg,
+rgba(14,165,233,.025),
+transparent
+);
+
+font-size:12px;
+
+line-height:1.8;
+
+color:#7dd3fc;
 }
 
 .summary{
-    margin:18px 0;
-    padding-left:16px;
+position:relative;
 
-    border-left:1px solid #155e75;
+margin:18px 0;
 
-    color:#bae6fd;
-    font-size:13px;
-    line-height:1.9;
+padding-left:15px;
+
+border-left:1px solid #155e75;
+
+color:#bae6fd;
+
+font-family:
+Georgia,
+"Times New Roman",
+serif;
+
+font-size:13px;
+
+line-height:1.8;
 }
 
 .tags{
-    color:#64748b;
-    font-family:"Courier New",monospace;
-    font-size:9px;
-    line-height:1.8;
+padding:8px 10px;
+
+border:1px solid rgba(21,94,117,.18);
+
+background:rgba(2,11,24,.28);
+
+font-size:11px;
+
+color:#64748b;
+
+line-height:1.8;
+
+letter-spacing:1px;
 }
 
-/* =========================================================
-   ACCESS BUTTON
-========================================================= */
-
 .access{
-    display:inline-block;
+position:relative;
 
-    margin-top:17px;
-    padding:11px 18px;
+display:inline-block;
 
-    border:1px solid #0ea5e9;
+overflow:hidden;
 
-    color:#bae6fd;
-    text-decoration:none;
+margin-top:15px;
 
-    font-family:"Courier New",monospace;
-    font-size:9px;
-    letter-spacing:2px;
+padding:10px 17px;
 
-    background:rgba(14,165,233,.035);
+border:1px solid #0ea5e9;
 
-    transition:.3s;
+background:
+linear-gradient(
+90deg,
+rgba(14,165,233,.025),
+transparent
+);
+
+color:#bae6fd;
+
+text-decoration:none;
+
+font-size:11px;
+
+letter-spacing:2px;
+
+transition:.25s;
+
+text-shadow:
+0 0 8px rgba(56,189,248,.25);
+}
+
+.access:before{
+content:"";
+
+position:absolute;
+
+left:-120%;
+top:0;
+bottom:0;
+
+width:100%;
+
+background:
+linear-gradient(
+90deg,
+transparent,
+rgba(125,211,252,.16),
+transparent
+);
+
+transition:left .5s;
+}
+
+.access:hover:before{
+left:120%;
 }
 
 .access:hover{
-    color:white;
-    background:rgba(14,165,233,.12);
+background:#0ea5e922;
 
-    box-shadow:
-        0 0 15px rgba(56,189,248,.3),
-        inset 0 0 10px rgba(56,189,248,.05);
+box-shadow:
+0 0 15px #38bdf855;
 
-    transform:translateY(-2px);
+color:white;
 }
+
 
 /* =========================================================
    TRANSMISSIONS
 ========================================================= */
 
 .transmission{
-    position:relative;
+padding:16px;
 
-    margin:13px 0;
-    padding:18px;
+margin:12px 0;
 
-    border:1px dashed #155e75;
+border:1px dashed #155e75;
 
-    background:
-        repeating-linear-gradient(
-            0deg,
-            transparent 0,
-            transparent 4px,
-            rgba(56,189,248,.015) 5px
-        );
-}
+background:
+linear-gradient(
+90deg,
+rgba(3,20,38,.9),
+rgba(2,9,20,.7)
+);
 
-.transmission::before{
-    content:"◈";
-    position:absolute;
-    top:12px;
-    right:15px;
-
-    color:#155e75;
-    font-size:14px;
-
-    animation:pulseStar 2s infinite;
+box-shadow:
+inset 0 0 30px rgba(14,165,233,.018);
 }
 
 .transmission strong{
-    color:#67e8f9;
-    font-family:"Courier New",monospace;
-    font-size:11px;
-    letter-spacing:2px;
+display:inline-block;
+
+padding:4px 9px;
+
+border:1px solid rgba(21,94,117,.5);
+
+background:rgba(2,11,24,.55);
+
+color:#67e8f9;
+
+font-family:monospace;
+
+font-size:12px;
+
+letter-spacing:2px;
+
+text-shadow:
+0 0 8px rgba(56,189,248,.4);
 }
 
 .transmission p{
-    margin-top:12px;
+font-size:13px;
 
-    color:#bae6fd;
-    font-size:13px;
-    line-height:1.8;
+line-height:1.7;
+
+color:#bae6fd;
 }
 
-@keyframes pulseStar{
-    0%,100%{
-        opacity:.3;
-        text-shadow:none;
-    }
-
-    50%{
-        opacity:1;
-        text-shadow:0 0 10px #38bdf8;
-    }
-}
 
 /* =========================================================
    CHANNELS
 ========================================================= */
 
 .channels{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:10px;
+display:flex;
+
+justify-content:center;
+
+flex-wrap:wrap;
+
+gap:10px;
 }
 
 .channel{
-    position:relative;
+position:relative;
 
-    padding:12px 23px;
+min-width:130px;
 
-    border:1px solid #155e75;
+padding:11px 20px;
 
-    color:#bae6fd;
-    text-decoration:none;
+border:1px solid #155e75;
 
-    font-family:"Courier New",monospace;
-    font-size:9px;
-    letter-spacing:2px;
+background:
+linear-gradient(
+180deg,
+rgba(8,29,48,.65),
+rgba(2,11,23,.65)
+);
 
-    transition:.3s;
+text-align:center;
+
+text-decoration:none;
+
+color:#bae6fd;
+
+font-size:11px;
+
+letter-spacing:2px;
+
+transition:.25s;
+
+box-shadow:
+inset 0 0 20px rgba(14,165,233,.018);
+}
+
+.channel:before{
+content:"CHANNEL";
+
+display:block;
+
+margin-bottom:4px;
+
+font-size:6px;
+
+color:#164e63;
+
+letter-spacing:3px;
+}
+
+.channel:after{
+content:"";
+
+position:absolute;
+
+left:15%;
+right:15%;
+bottom:4px;
+
+height:1px;
+
+background:
+linear-gradient(
+90deg,
+transparent,
+rgba(56,189,248,.35),
+transparent
+);
 }
 
 .channel:hover{
-    border-color:#38bdf8;
-    color:white;
+border-color:#38bdf8;
 
-    box-shadow:
-        0 0 20px rgba(56,189,248,.18),
-        inset 0 0 15px rgba(56,189,248,.04);
+box-shadow:
+0 0 15px #38bdf844;
 
-    transform:translateY(-2px);
+color:white;
 }
+
 
 /* =========================================================
    DETAILS / SECRET RECORDS
 ========================================================= */
 
 details{
-    margin-top:15px;
+position:relative;
 
-    border:1px dashed #155e75;
+overflow:hidden;
 
-    background:rgba(2,10,22,.45);
+margin-top:15px;
 
-    transition:.3s;
+border:1px dashed #155e75;
+
+background:
+linear-gradient(
+90deg,
+rgba(3,18,34,.4),
+rgba(2,10,20,.2)
+);
+
+transition:.3s;
+}
+
+details:after{
+content:"";
+
+position:absolute;
+
+top:0;
+left:-100%;
+
+width:35%;
+height:1px;
+
+background:
+linear-gradient(
+90deg,
+transparent,
+#38bdf8,
+transparent
+);
+
+opacity:.25;
+
+animation:
+secretScan 6s linear infinite;
+
+pointer-events:none;
+}
+
+@keyframes secretScan{
+
+from{
+left:-35%;
+}
+
+to{
+left:135%;
+}
+
 }
 
 summary{
-    padding:13px;
+position:relative;
 
-    cursor:pointer;
+cursor:pointer;
 
-    color:#67e8f9;
+padding:12px;
 
-    font-family:"Courier New",monospace;
-    font-size:10px;
-    letter-spacing:1.5px;
+color:#67e8f9;
 
-    transition:.3s;
+font-size:12px;
+
+letter-spacing:1px;
+
+transition:.3s;
+
+background:
+linear-gradient(
+90deg,
+rgba(14,165,233,.025),
+transparent
+);
+
+text-shadow:
+0 0 7px rgba(56,189,248,.25);
 }
 
 summary:hover{
-    background:rgba(14,165,233,.06);
-    text-shadow:0 0 8px #38bdf8;
+background:#0ea5e90a;
 }
 
 .hidden{
-    padding:17px;
+padding:15px;
 
-    color:#64748b;
-    font-family:"Courier New",monospace;
-    font-size:10px;
-    line-height:1.9;
+color:#64748b;
 
-    border-top:1px solid rgba(21,94,117,.5);
+font-size:12px;
+
+line-height:1.8;
 }
 
+
 /* =========================================================
-   SECRET CORRUPTION
+   RED SECRET STATE
 ========================================================= */
 
+.secret{
+position:relative;
+
+overflow:hidden;
+}
+
 .secret.revealed{
-    border-color:#ef4444;
+border-color:#ef4444;
 
-    background:
-        linear-gradient(
-            90deg,
-            rgba(69,4,9,.8),
-            rgba(8,3,10,.95),
-            rgba(69,4,9,.8)
-        );
+background:
+linear-gradient(
+90deg,
+#220307dd,
+#08030aee,
+#220307dd
+);
 
-    box-shadow:
-        0 0 30px rgba(239,68,68,.15),
-        inset 0 0 35px rgba(239,68,68,.06);
+box-shadow:
+0 0 20px #ef444422,
+inset 0 0 25px #ef444411;
 
-    animation:secretGlitch .13s infinite alternate;
+animation:
+secretGlitch .12s infinite alternate,
+redPulse 1.2s ease-in-out infinite;
 }
 
 .secret.revealed summary{
-    color:#f87171;
+color:#f87171;
 
-    border-bottom:1px solid #7f1d1d;
+border-bottom:1px solid #7f1d1d;
 
-    text-shadow:
-        0 0 8px #ef4444,
-        2px 0 #7f1d1d;
+text-shadow:
+0 0 8px #ef4444;
 }
 
 .secret.revealed .hidden{
-    color:#fca5a5;
+color:#fca5a5;
+
+text-shadow:
+0 0 6px #ef444433;
 }
 
-.secret.revealed .hidden::before{
-    content:"[ SYSTEM BREACH DETECTED ]";
-    display:block;
+.secret.revealed .hidden:before{
+content:"[ SYSTEM BREACH DETECTED ]";
 
-    margin-bottom:10px;
+display:block;
 
-    color:#ef4444;
+color:#ef4444;
 
-    font-family:"Courier New",monospace;
-    letter-spacing:2px;
+font-family:monospace;
 
-    text-shadow:0 0 8px #ef4444;
+letter-spacing:2px;
+
+margin-bottom:10px;
 }
 
 @keyframes secretGlitch{
-    0%{transform:translate(0)}
-    25%{transform:translate(1px,0)}
-    50%{transform:translate(-1px,1px)}
-    75%{transform:translate(0,-1px)}
-    100%{transform:translate(1px,1px)}
+
+0%{
+transform:translate(0);
 }
 
-/* =========================================================
-   WARNING
-========================================================= */
-
-.warning{
-    position:relative;
-    overflow:hidden;
-
-    padding:22px;
-
-    border:1px solid #1d4ed8;
-
-    background:
-        radial-gradient(
-            circle at center,
-            rgba(30,64,175,.12),
-            transparent 70%
-        );
-
-    color:#bae6fd;
-
-    text-align:center;
-
-    font-family:"Courier New",monospace;
-    font-size:10px;
-    line-height:1.9;
-    letter-spacing:1px;
-
-    cursor:pointer;
-
-    transition:.4s;
+25%{
+transform:translate(1px,0);
 }
 
-.warning::after{
-    content:"";
-    position:absolute;
-    inset:0;
-
-    background:
-        repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 5px,
-            rgba(56,189,248,.025) 6px
-        );
-
-    pointer-events:none;
+50%{
+transform:translate(-1px,1px);
 }
 
-.warning:hover{
-    box-shadow:
-        0 0 25px rgba(29,78,216,.18),
-        inset 0 0 25px rgba(29,78,216,.04);
+75%{
+transform:translate(0,-1px);
 }
 
-.warning.triggered{
-    border-color:#ef4444;
-
-    background:
-        radial-gradient(
-            circle at center,
-            rgba(127,29,29,.25),
-            rgba(37,3,7,.7)
-        );
-
-    color:#fecaca;
-
-    box-shadow:
-        0 0 35px rgba(239,68,68,.2),
-        inset 0 0 30px rgba(239,68,68,.08);
-
-    animation:warningGlitch .12s infinite alternate;
+100%{
+transform:translate(1px,1px);
 }
 
-.warningTitle{
-    color:#67e8f9;
-    transition:.3s;
 }
 
-.warning.triggered .warningTitle{
-    color:#ef4444;
+@keyframes redPulse{
 
-    text-shadow:
-        0 0 8px #ef4444,
-        2px 0 #7f1d1d;
+0%,100%{
+box-shadow:
+0 0 20px rgba(239,68,68,.08),
+inset 0 0 20px rgba(239,68,68,.025);
 }
 
-@keyframes warningGlitch{
-    0%{transform:translateX(0)}
-    25%{transform:translateX(2px)}
-    50%{transform:translateX(-2px)}
-    75%{transform:translateX(1px)}
-    100%{transform:translateX(-1px)}
+50%{
+box-shadow:
+0 0 35px rgba(239,68,68,.18),
+inset 0 0 35px rgba(239,68,68,.07);
 }
+
+}
+
 
 /* =========================================================
    RED PARTICLES
 ========================================================= */
 
 .redParticle{
-    position:fixed;
+position:fixed;
 
-    width:3px;
-    height:3px;
+width:3px;
+height:3px;
 
-    background:#ef4444;
-    box-shadow:
-        0 0 5px #ef4444,
-        0 0 12px #ef4444;
+border-radius:50%;
 
-    pointer-events:none;
-    z-index:9998;
+background:#ef4444;
 
-    animation:redParticle 1.8s linear forwards;
+box-shadow:
+0 0 8px #ef4444;
+
+filter:
+drop-shadow(0 0 3px #ef4444)
+drop-shadow(0 0 8px #ef4444);
+
+pointer-events:none;
+
+z-index:9998;
+
+animation:
+redParticle 1.8s linear forwards;
 }
 
 @keyframes redParticle{
-    0%{
-        opacity:0;
-        transform:translate(0,0) scale(.5);
-    }
 
-    15%{
-        opacity:1;
-    }
+0%{
+opacity:0;
 
-    100%{
-        opacity:0;
-        transform:
-            translate(
-                calc(var(--x) * 1px),
-                calc(var(--y) * 1px)
-            )
-            scale(0);
-    }
+transform:
+translate(0,0)
+scale(.5);
 }
+
+15%{
+opacity:1;
+}
+
+100%{
+opacity:0;
+
+transform:
+translate(
+calc((var(--x)) * 1px),
+calc((var(--y)) * 1px)
+)
+scale(0);
+}
+
+}
+
 
 /* =========================================================
-   BLINK / GLITCH
+   WARNING
 ========================================================= */
 
-.blink{
-    animation:blink 1.5s infinite;
+.warning{
+position:relative;
+
+overflow:hidden;
+
+text-align:center;
+
+min-height:160px;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+padding:20px;
+
+border:1px solid #1d4ed8;
+
+background:
+radial-gradient(
+ellipse at center,
+rgba(30,64,175,.06),
+transparent 60%
+),
+rgba(23,37,84,.16);
+
+color:#bae6fd;
+
+font-size:11px;
+
+line-height:1.8;
+
+letter-spacing:1px;
+
+transition:.4s;
+
+cursor:pointer;
+
+box-shadow:
+inset 0 0 40px rgba(30,64,175,.035);
 }
 
-@keyframes blink{
-    0%,45%{opacity:1}
-    50%,100%{opacity:.3}
+.warning:after{
+content:"";
+
+position:absolute;
+
+inset:7px;
+
+border:1px solid rgba(29,78,216,.08);
+
+pointer-events:none;
 }
 
-.glitch{
-    animation:titleGlitch 5s infinite;
+.warning:hover{
+box-shadow:
+0 0 15px #1d4ed833;
 }
 
-@keyframes titleGlitch{
-    0%,91%,100%{
-        transform:none;
-        text-shadow:
-            0 0 10px #38bdf8,
-            0 0 30px rgba(14,165,233,.45);
-    }
+.warning.triggered{
+border-color:#ef4444;
 
-    92%{
-        transform:translateX(2px);
-        text-shadow:
-            -2px 0 #22d3ee,
-            2px 0 #3b82f6;
-    }
+background:#250307aa;
 
-    93%{
-        transform:translateX(-2px);
-    }
+color:#fecaca;
 
-    94%{
-        transform:none;
-    }
+box-shadow:
+0 0 30px #ef444433,
+inset 0 0 25px #ef444411;
+
+animation:
+warningGlitch .12s infinite alternate,
+warningPulse .7s infinite;
 }
+
+.warning.triggered .warningTitle{
+color:#ef4444;
+
+text-shadow:
+0 0 10px #ef4444;
+}
+
+.warningTitle{
+transition:.3s;
+
+font-weight:bold;
+
+letter-spacing:4px;
+
+text-shadow:
+0 0 10px rgba(56,189,248,.35);
+}
+
+@keyframes warningGlitch{
+
+0%{
+transform:translateX(0);
+}
+
+30%{
+transform:translateX(2px);
+}
+
+60%{
+transform:translateX(-2px);
+}
+
+100%{
+transform:translateX(1px);
+}
+
+}
+
+@keyframes warningPulse{
+
+0%,100%{
+filter:brightness(1);
+}
+
+50%{
+filter:brightness(1.35);
+}
+
+}
+
 
 /* =========================================================
    FOOTER
 ========================================================= */
 
 footer{
-    position:relative;
+position:relative;
 
-    padding:35px 20px;
+text-align:center;
 
-    color:#475569;
+padding:25px;
 
-    text-align:center;
+font-size:10px;
 
-    font-family:"Courier New",monospace;
-    font-size:8px;
-    letter-spacing:2px;
-    line-height:2;
+color:#475569;
+
+letter-spacing:2px;
+
+line-height:1.8;
+
+border-top:1px solid rgba(22,78,99,.35);
+
+background:
+linear-gradient(
+180deg,
+transparent,
+rgba(2,11,24,.35)
+);
 }
 
-footer::before{
-    content:"";
-    display:block;
+footer:before{
+content:
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━";
 
-    width:60%;
-    max-width:500px;
-    height:1px;
+display:block;
 
-    margin:0 auto 20px;
+color:#0c3349;
 
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            #164e63,
-            transparent
-        );
+margin-bottom:15px;
+
+overflow:hidden;
+
+white-space:nowrap;
 }
+
+footer:after{
+content:
+"NARRATIVE PRESERVATION SYSTEM // OBSERVER ACCESS LEVEL: UNKNOWN";
+
+display:block;
+
+margin-top:13px;
+
+font-size:7px;
+
+color:#164e63;
+
+letter-spacing:2px;
+}
+
 
 /* =========================================================
-   TOAST SYSTEM MESSAGES
+   GENERAL EFFECTS
 ========================================================= */
 
-#toastContainer{
-    position:fixed;
-    right:18px;
-    bottom:18px;
+.blink{
+animation:blink 1.4s infinite;
 
-    width:min(360px,calc(100% - 36px));
-
-    z-index:9997;
-
-    pointer-events:none;
+text-shadow:
+0 0 8px currentColor;
 }
 
-.toast{
-    margin-top:8px;
-    padding:12px 15px;
+@keyframes blink{
 
-    border:1px solid #155e75;
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(2,18,35,.96),
-            rgba(2,9,20,.96)
-        );
-
-    box-shadow:
-        0 0 20px rgba(14,165,233,.12);
-
-    color:#bae6fd;
-
-    font-family:"Courier New",monospace;
-    font-size:9px;
-    line-height:1.6;
-
-    animation:
-        toastIn .4s ease,
-        toastOut .5s ease 3.5s forwards;
+0%,45%{
+opacity:1;
 }
 
-.toast strong{
-    color:#67e8f9;
+50%,100%{
+opacity:.3;
 }
 
-.toast.danger{
-    border-color:#ef4444;
-    color:#fecaca;
-    box-shadow:0 0 25px rgba(239,68,68,.15);
 }
 
-.toast.danger strong{
-    color:#ef4444;
+.glitch{
+position:relative;
+
+animation:glitch 4s infinite;
 }
 
-@keyframes toastIn{
-    from{
-        opacity:0;
-        transform:translateX(30px);
-    }
+@keyframes glitch{
 
-    to{
-        opacity:1;
-        transform:none;
-    }
+0%,94%,100%{
+transform:none;
 }
 
-@keyframes toastOut{
-    to{
-        opacity:0;
-        transform:translateX(30px);
-    }
+95%{
+transform:translateX(2px);
 }
+
+96%{
+transform:translateX(-2px);
+}
+
+97%{
+transform:none;
+}
+
+}
+
+.scan{
+position:absolute;
+
+left:0;
+right:0;
+
+height:1px;
+
+background:#38bdf844;
+
+box-shadow:
+0 0 8px #38bdf8;
+
+animation:
+scan 4s linear infinite;
+
+pointer-events:none;
+}
+
+@keyframes scan{
+
+0%{
+top:0;
+}
+
+100%{
+top:100%;
+}
+
+}
+
 
 /* =========================================================
-   SCENARIO HUD
+   ACCESSIBILITY
 ========================================================= */
 
-#scenarioHud{
-    position:fixed;
-    left:16px;
-    bottom:16px;
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible{
+outline:1px solid #38bdf8;
 
-    z-index:9995;
+outline-offset:4px;
 
-    padding:9px 12px;
-
-    border-left:2px solid #38bdf8;
-
-    background:rgba(2,9,20,.78);
-    backdrop-filter:blur(8px);
-
-    color:#64748b;
-
-    font-family:"Courier New",monospace;
-    font-size:8px;
-    letter-spacing:1px;
-
-    pointer-events:none;
+box-shadow:
+0 0 15px rgba(56,189,248,.25);
 }
 
-#scenarioHud span{
-    color:#38bdf8;
-}
 
 /* =========================================================
    MOBILE
@@ -1585,233 +2078,202 @@ footer::before{
 
 @media(max-width:700px){
 
-    body::after{
-        opacity:.18;
-    }
-
-    .container{
-        width:97%;
-        margin:12px auto 40px;
-    }
-
-    .system::after{
-        display:none;
-    }
-
-    header{
-        padding:45px 15px 35px;
-    }
-
-    .title{
-        font-size:clamp(27px,9vw,43px);
-        letter-spacing:3px;
-    }
-
-    .signal{
-        font-size:8px;
-        letter-spacing:2px;
-    }
-
-    nav{
-        gap:3px;
-    }
-
-    nav a{
-        padding:8px 9px;
-        font-size:8px;
-        letter-spacing:1px;
-    }
-
-    section{
-        margin:9px;
-        padding:19px 16px;
-    }
-
-    .heading{
-        font-size:10px;
-        letter-spacing:2px;
-    }
-
-    .info{
-        font-size:12px;
-    }
-
-    .fable{
-        padding:16px;
-    }
-
-    .fabletitle{
-        font-size:17px;
-    }
-
-    .bootbox{
-        padding:30px 18px;
-    }
-
-    .bootgrid{
-        grid-template-columns:1fr;
-        gap:5px;
-    }
-
-    .bootmain{
-        font-size:25px;
-    }
-
-    #scenarioHud{
-        display:none;
-    }
-
-    #cursorGlow{
-        display:none;
-    }
+header{
+min-height:270px;
 }
 
-/* =========================================================
-   REDUCED MOTION
-========================================================= */
+nav:before{
+display:none;
+}
+
+section:before,
+section:after{
+width:18px;
+height:18px;
+}
+
+.title{
+letter-spacing:4px;
+}
+
+}
+
+@media(max-width:600px){
+
+.container{
+width:96%;
+
+margin:15px auto;
+}
+
+section{
+margin:10px;
+
+padding:17px;
+}
+
+.title{
+letter-spacing:3px;
+}
+
+nav a{
+padding:8px 10px;
+
+font-size:9px;
+}
+
+.bootgrid{
+grid-template-columns:1fr;
+
+gap:3px;
+}
+
+.bootbox{
+padding:25px 17px;
+}
+
+}
+
+@media(max-width:420px){
+
+.signal{
+font-size:8px;
+
+letter-spacing:1.5px;
+}
+
+.title{
+font-size:27px;
+
+letter-spacing:2px;
+}
+
+.subtitle{
+font-size:8px;
+}
+
+}
 
 @media(prefers-reduced-motion:reduce){
 
-    *,
-    *::before,
-    *::after{
-        animation-duration:.001ms !important;
-        animation-iteration-count:1 !important;
-        scroll-behavior:auto !important;
-        transition-duration:.001ms !important;
-    }
+section{
+animation:none;
+}
+
+.secret.revealed,
+.warning.triggered{
+animation:none;
+}
 
 }
 
+
+/* =========================================================
+   END OF AESTHETIC LAYER
+========================================================= */
+
 </style>
 </head>
+
+
 <body>
 
-<!-- =====================================================
-     GLOBAL EFFECT LAYERS
-===================================================== -->
-
-<div id="starParticles"></div>
-<div id="cursorGlow"></div>
-<div id="vignette"></div>
-
-<div id="toastContainer"></div>
-
-<div id="scenarioHud">
-    SCENARIO:
-    <span>FRESH START</span>
-    //
-    OBSERVER:
-    <span>DETECTED</span>
-</div>
-
 
 <!-- =====================================================
-     STAR STREAM CONNECTION SCREEN
+     STAR STREAM BOOT SCREEN
 ===================================================== -->
 
 <div id="connect">
 
-    <div class="bootbox boot">
+<div class="bootbox boot">
 
-        <div class="bootcorner c1">┌</div>
-        <div class="bootcorner c2">┐</div>
-        <div class="bootcorner c3">└</div>
-        <div class="bootcorner c4">┘</div>
+<div class="bootcorner c1">┌</div>
+<div class="bootcorner c2">┐</div>
+<div class="bootcorner c3">└</div>
+<div class="bootcorner c4">┘</div>
 
-        <div class="scan"></div>
+<div class="scan"></div>
 
-        <div class="boottitle">
-            【 STAR STREAM CONNECTION PROTOCOL 】
-        </div>
+<div class="boottitle">
+【 STAR STREAM CONNECTION PROTOCOL 】
+</div>
 
-        <div class="bootmain glitch">
-            CONNECTING TO<br>
-            STAR STREAM...
-        </div>
+<div class="bootmain glitch">
+CONNECTING TO<br>
+STAR STREAM...
+</div>
 
-        <div class="bootsub">
-            NARRATIVE OBSERVATION SYSTEM // BUILD KFS-001
-        </div>
+<div class="bootsub">
+NARRATIVE OBSERVATION SYSTEM // BUILD KFS-001
+</div>
 
-        <div class="bootgrid">
+<div class="bootgrid">
 
-            <div>
-                [01] STAR STREAM:
-                <span>SEARCHING</span>
-            </div>
+<div>
+[01] STAR STREAM:
+<span>SEARCHING</span>
+</div>
 
-            <div>
-                [02] CONSTELLATION:
-                <span>UNKNOWN</span>
-            </div>
+<div>
+[02] CONSTELLATION:
+<span>UNKNOWN</span>
+</div>
 
-            <div>
-                [03] NARRATIVE:
-                <span>SCANNING</span>
-            </div>
+<div>
+[03] NARRATIVE:
+<span>SCANNING</span>
+</div>
 
-            <div>
-                [04] FABLE ARCHIVE:
-                <span>LOCKED</span>
-            </div>
+<div>
+[04] FABLE ARCHIVE:
+<span>LOCKED</span>
+</div>
 
-            <div>
-                [05] OBSERVER:
-                <span>DETECTED</span>
-            </div>
+<div>
+[05] OBSERVER:
+<span>DETECTED</span>
+</div>
 
-            <div>
-                [06] SCENARIO:
-                <span>STANDBY</span>
-            </div>
+<div>
+[06] SCENARIO:
+<span>STANDBY</span>
+</div>
 
-            <div>
-                [07] SPONSOR:
-                <span>UNIDENTIFIED</span>
-            </div>
+</div>
 
-            <div>
-                [08] STORY VALUE:
-                <span>CALCULATING</span>
-            </div>
+<div class="loading">
+<span></span>
+</div>
 
-        </div>
+<div class="progressline">
+<span>SYNCHRONIZATION</span>
+<span id="percent">0%</span>
+</div>
 
-        <div class="loading">
-            <span></span>
-        </div>
+<div class="bootstatus">
+<span id="status">
+INITIALIZING NARRATIVE ENGINE...
+</span>
+</div>
 
-        <div class="progressline">
-            <span>SYNCHRONIZATION</span>
-            <span id="percent">0%</span>
-        </div>
+<div class="bootlog" id="bootlog">
 
-        <div class="bootstatus">
-            <span id="status">
-                INITIALIZING NARRATIVE ENGINE...
-            </span>
-        </div>
+<div>> Initializing Star Stream interface...</div>
+<div>> Establishing connection...</div>
 
-        <div class="bootlog" id="bootlog">
+</div>
 
-            <div>> Initializing Star Stream interface...</div>
-            <div>> Establishing connection...</div>
+<div class="bootsignal">
+<span class="blink">●</span>
+WAITING FOR CONSTELLATION RESPONSE
+<span class="blink">●</span>
+</div>
 
-        </div>
+<button class="enter" id="enter">
+[ ENTER THE SCENARIO ]
+</button>
 
-        <div class="bootsignal">
-            <span class="blink">●</span>
-            WAITING FOR CONSTELLATION RESPONSE
-            <span class="blink">●</span>
-        </div>
-
-        <button class="enter" id="enter">
-            [ ENTER THE SCENARIO ]
-        </button>
-
-    </div>
-
+</div>
 </div>
 
 
@@ -1821,683 +2283,956 @@ footer::before{
 
 <div id="main">
 
-    <div class="container">
+<div class="container">
 
-        <div class="system">
+<div class="system">
 
+<header>
 
-            <!-- =================================================
-                 HEADER
-            ================================================= -->
+<div class="signal">
+【 TRANSMISSION CONNECTION ESTABLISHED 】
+</div>
 
-            <header>
+<h1 class="title">
+KEEPER OF<br>
+FORGOTTEN STORIES
+</h1>
 
-                <div class="signal">
-                    【 TRANSMISSION CONNECTION ESTABLISHED 】
-                </div>
+<div class="subtitle">
+<span class="blink">●</span>
+CONSTELLATION RECORD // ACTIVE
+</div>
 
-                <h1 class="title glitch">
-                    KEEPER OF<br>
-                    FORGOTTEN STORIES
-                </h1>
+</header>
 
-                <div class="subtitle">
-                    <span class="blink">●</span>
-                    CONSTELLATION RECORD // ACTIVE
-                    <span class="blink">●</span>
-                </div>
 
-            </header>
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
 
+<nav>
 
-            <!-- =================================================
-                 NAVIGATION
-            ================================================= -->
+<a href="#home">HOME</a>
+<a href="#fables">FABLES</a>
+<a href="#transmissions">TRANSMISSIONS</a>
+<a href="#channels">CHANNELS</a>
 
-            <nav>
+</nav>
 
-                <a href="#home">HOME</a>
-                <a href="#fables">FABLES</a>
-                <a href="#transmissions">TRANSMISSIONS</a>
-                <a href="#channels">CHANNELS</a>
 
-            </nav>
+<!-- =====================================================
+     HOME
+===================================================== -->
 
+<section id="home">
 
-            <!-- =================================================
-                 HOME
-            ================================================= -->
+<div class="heading">
+【 CONSTELLATION STATUS SHEET 】
+</div>
 
-            <section id="home">
+<div class="line"></div>
 
-                <div class="heading">
-                    【 CONSTELLATION STATUS SHEET 】
-                </div>
+<div class="info">
 
-                <div class="line"></div>
+■ <span class="label">Modifier:</span>
+<span class="value">「Keeper of Forgotten Stories」</span><br>
 
-                <div class="info">
+■ <span class="label">Grade:</span>
+<span class="value">Unknown.</span><br>
 
-                    ■
-                    <span class="label">Modifier:</span>
-                    <span class="value">
-                        「Keeper of Forgotten Stories」
-                    </span>
-                    <br>
+■ <span class="label">Status:</span>
+<span class="value">Currently observing the Scenario.</span><br>
 
-                    ■
-                    <span class="label">Grade:</span>
-                    <span class="value">
-                        Unknown.
-                    </span>
-                    <br>
+■ <span class="label">Alignment:</span>
+<span class="value">Narrative Preservation.</span><br>
 
-                    ■
-                    <span class="label">Status:</span>
-                    <span class="value">
-                        Currently observing the Scenario.
-                    </span>
-                    <br>
-
-                    ■
-                    <span class="label">Alignment:</span>
-                    <span class="value">
-                        Narrative Preservation.
-                    </span>
-                    <br>
-
-                    ■
-                    <span class="label">Fables Registered:</span>
-                    <span class="value">
-                        1 and counting...
-                    </span>
-                    <br>
-
-                    ■
-                    <span class="label">Current Scenario:</span>
-                    <span class="value">
-                        「Fresh Start」
-                    </span>
-
-                </div>
-
-                <div class="line"></div>
-
-                <div class="heading">
-                    【 STAR STREAM EVALUATION 】
-                </div>
-
-                <br>
-
-                <div class="message">
-
-                    "The Star Stream has recognized this
-                    constellation's obsession with unfinished stories."
-
-                    <br><br>
-
-                    "Every forgotten tale entrusted to this
-                    constellation is preserved as another Fable."
-
-                </div>
-
-            </section>
-
-
-            <!-- =================================================
-                 ACQUIRED FABLES
-            ================================================= -->
-
-            <section>
-
-                <div class="heading">
-                    【 ACQUIRED FABLES 】
-                </div>
-
-                <div class="line"></div>
-
-                <div class="fable">
-                    <i>
-                        The One Who Stayed Until The End
-                    </i>
-                </div>
-
-                <div class="fable">
-                    <i>
-                        The Author Who Loved Her Characters Too Much
-                    </i>
-                </div>
-
-                <div class="fable">
-                    <i>
-                        The Witness Beyond The Ending
-                    </i>
-                </div>
-
-                <div class="fable">
-                    <i>
-                        The Keeper of Unfinished Stories
-                    </i>
-                </div>
-
-
-                <details class="secret">
-
-                    <summary>
-                        【 ▶ REVEAL REMAINING FABLES... 】
-                    </summary>
-
-                    <div class="hidden">
-
-                        [ ACCESSING SEALED RECORDS ]
-
-                        <br><br>
-
-                        The remaining records have been sealed.
-
-                        <br><br>
-
-                        Permission level insufficient.
-
-                        <br><br>
-
-                        The Star Stream does not believe
-                        you are ready to read them.
-
-                        <br><br>
-
-                        <span class="blink">
-                            [ ACCESS SHOULD NOT HAVE BEEN GRANTED ]
-                        </span>
-
-                    </div>
-
-                </details>
-
-            </section>
-
-
-            <!-- =================================================
-                 CONSTELLATION ATTRIBUTES
-            ================================================= -->
-
-            <section>
-
-                <div class="heading">
-                    【 CONSTELLATION ATTRIBUTES 】
-                </div>
-
-                <div class="line"></div>
-
-                <div class="fable">
-                    <i>
-                        「Witness to Unfinished Stories」
-                    </i>
-                </div>
-
-                <div class="fable">
-                    <i>
-                        「The Hand That Writes Their Second Chances」
-                    </i>
-                </div>
-
-                <div class="fable">
-                    <i>
-                        「The One Who Refuses To Forget」
-                    </i>
-                </div>
-
-                <details class="secret">
-
-                    <summary>
-                        【 ▶ REVEAL HIDDEN ATTRIBUTES... 】
-                    </summary>
-
-                    <div class="hidden">
-
-                        [ RESTRICTED ATTRIBUTE DATA ]
-
-                        <br><br>
-
-                        Some attributes are not meant
-                        to be observed by incarnations.
-
-                        <br><br>
-
-                        Yet you have opened this record.
-
-                        <br><br>
-
-                        [ OBSERVATION PROTOCOL COMPROMISED ]
-
-                    </div>
-
-                </details>
-
-            </section>
-
-
-            <!-- =================================================
-                 ORIGIN
-            ================================================= -->
-
-            <section>
-
-                <div class="heading">
-                    【 ORIGIN RECORD 】
-                </div>
-
-                <div class="line"></div>
-
-                <div class="message">
-
-                    "Born from countless unfinished stories
-                    and the readers who refused to let them disappear."
-
-                </div>
-
-                <div class="line"></div>
-
-                <div class="heading">
-                    【 CONSTELLATION REPUTATION 】
-                </div>
-
-                <br>
-
-                <div class="message">
-
-                    "A quiet presence known for preserving stories
-                    that should have been forgotten."
-
-                </div>
-
-            </section>
-
-
-            <!-- =================================================
-                 STAR STREAM WARNING
-            ================================================= -->
-
-            <section>
-
-                <div class="warning" id="warning">
-
-                    <div class="warningTitle">
-
-                        ━━━━━━━━━━━━━━━━━━━━
-                        <br>
-
-                        [ STAR STREAM WARNING ]
-
-                        <br>
-                        ━━━━━━━━━━━━━━━━━━━━
-
-                    </div>
-
-                    <br>
-
-                    Interaction with this constellation may
-                    alter your perception of the Scenario.
-
-                    <br><br>
-
-                    <span class="blink">
-                        The consequences cannot be reversed.
-                    </span>
-
-                    <br><br>
-
-                    ━━━━━━━━━━━━━━━━━━━━
-
-                </div>
-
-            </section>
-
-
-            <!-- =================================================
-                 FABLE ARCHIVE
-            ================================================= -->
-
-            <section id="fables">
-
-                <div class="heading">
-                    【 FABLE ARCHIVE 】
-                </div>
-
-                <div class="line"></div>
-
-
-                <div class="fable">
-
-                    <div class="fableid">
-                        FABLE RECORD // #001
-                    </div>
-
-                    <div class="fabletitle">
-                        FRESH START
-                    </div>
-
-                    <div class="meta">
-
-                        KakaObi · Naruto (Anime & Manga)
-
-                        <br>
-
-                        STATUS: ONGOING · CHAPTERS: 13/?
-
-                        <br>
-
-                        WORD COUNT: 56,950
-
-                        <br>
-
-                        RATING: TEEN AND UP AUDIENCES
-
-                    </div>
-
-                    <div class="line"></div>
-
-                    <div class="summary">
-
-                        "I knew that helping in the end would never
-                        be enough to make up for everything I had done."
-
-                        <br><br>
-
-                        If Obito could start over from the beginning,
-                        he would do everything in his power to prevent
-                        the tragedies that once consumed his life.
-
-                        Maybe only then could he finally be at peace.
-
-                        <br><br>
-
-                        A second chance.
-                        A different beginning.
-                        Perhaps a different ending.
-
-                    </div>
-
-                    <div class="tags">
-
-                        TIME TRAVEL · BOTTOM UCHIHA OBITO ·
-                        PROTECTIVE UCHIHA OBITO ·
-                        UCHIHA OBITO NEEDS A HUG
-
-                    </div>
-
-                    <a
-                        class="access"
-                        href="https://archiveofourown.org/works/84746576"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        [ ACCESS FABLE ]
-                    </a>
-
-                </div>
-
-
-                <details class="secret">
-
-                    <summary>
-                        【 ▶ SEARCH FOR ADDITIONAL FABLES... 】
-                    </summary>
-
-                    <div class="hidden">
-
-                        [ STAR STREAM NOTICE ]
-
-                        <br><br>
-
-                        Additional Fable records have not yet
-                        been registered in the archive.
-
-                        <br><br>
-
-                        The constellation appears to be writing
-                        another story.
-
-                        <br><br>
-
-                        <span class="blink">
-                            ■ NARRATIVE GENERATION IN PROGRESS
-                        </span>
-
-                    </div>
-
-                </details>
-
-            </section>
-
-
-            <!-- =================================================
-                 TRANSMISSIONS
-            ================================================= -->
-
-            <section id="transmissions">
-
-                <div class="heading">
-                    【 TRANSMISSION LOG 】
-                </div>
-
-                <div class="line"></div>
-
-
-                <div class="transmission">
-
-                    <strong>
-                        TRANSMISSION #001
-                    </strong>
-
-                    <p>
-
-                        A new Fable has been registered.
-
-                        <br><br>
-
-                        「Fresh Start」
-
-                        <br><br>
-
-                        Origin: Naruto Scenario
-                        <br>
-
-                        Classification: KakaObi
-                        <br>
-
-                        Status: Ongoing
-
-                    </p>
-
-                </div>
-
-
-                <details class="secret">
-
-                    <summary>
-                        【 ▶ RECEIVE UNKNOWN TRANSMISSION... 】
-                    </summary>
-
-                    <div class="hidden">
-
-                        [ UNKNOWN SIGNAL DETECTED ]
-
-                        <br><br>
-
-                        ...
-
-                        <br><br>
-
-                        You were not supposed to find this.
-
-                        <br><br>
-
-                        The Star Stream is watching.
-
-                        <br><br>
-
-                        Someone is watching from beyond
-                        the archive.
-
-                        <br><br>
-
-                        [ CONNECTION SHOULD BE TERMINATED ]
-
-                    </div>
-
-                </details>
-
-            </section>
-
-
-            <!-- =================================================
-                 CHANNELS
-            ================================================= -->
-
-            <section id="channels">
-
-                <div class="heading">
-                    【 EXTERNAL CHANNELS 】
-                </div>
-
-                <div class="line"></div>
-
-                <div class="channels">
-
-                    <a
-                        class="channel"
-                        href="https://archiveofourown.org/users/Keeper_of_Forgotten_Stories"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        AO3
-                    </a>
-
-                    <a
-                        class="channel"
-                        href="https://www.wattpad.com/user/Louca_por_yaoi011"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        WATTPAD
-                    </a>
-
-                </div>
-
-            </section>
-
-
-            <!-- =================================================
-                 FOOTER
-            ================================================= -->
-
-            <footer>
-
-                STAR STREAM DATABASE // RECORD #KFS-001
-
-                <br>
-
-                STATUS: OBSERVING THE SCENARIO
-
-                <br><br>
-
-                「Some stories survive because someone
-                refused to forget them.」
-
-            </footer>
-
-        </div>
-
-    </div>
+■ <span class="label">Fables Registered:</span>
+<span class="value">1 and counting...</span>
 
 </div>
+
+<div class="line"></div>
+
+<div class="heading">
+【 STAR STREAM EVALUATION 】
+</div>
+
+<br>
+
+<div class="message">
+
+"The Star Stream has recognized this constellation's
+obsession with unfinished stories."
+
+<br><br>
+
+"Every forgotten tale entrusted to this constellation
+is preserved as another Fable."
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     ACQUIRED FABLES
+===================================================== -->
+
+<section>
+
+<div class="heading">
+【 ACQUIRED FABLES 】
+</div>
+
+<div class="line"></div>
+
+<div class="fable">
+<i>The One Who Stayed Until The End</i>
+</div>
+
+<div class="fable">
+<i>The Author Who Loved Her Characters Too Much</i>
+</div>
+
+<div class="fable">
+<i>The Witness Beyond The Ending</i>
+</div>
+
+<div class="fable">
+<i>The Keeper of Unfinished Stories</i>
+</div>
+
+<details class="secret">
+
+<summary>
+【 ▶ REVEAL REMAINING FABLES... 】
+</summary>
+
+<div class="hidden">
+
+The remaining records have been sealed.
+
+<br><br>
+
+Permission level insufficient.
+
+<br><br>
+
+The Star Stream does not believe
+you are ready to read them.
+
+<br><br>
+
+<span class="blink">
+[ ACCESS SHOULD NOT HAVE BEEN GRANTED ]
+</span>
+
+</div>
+
+</details>
+
+</section>
+
+
+<!-- =====================================================
+     ATTRIBUTES
+===================================================== -->
+
+<section>
+
+<div class="heading">
+【 CONSTELLATION ATTRIBUTES 】
+</div>
+
+<div class="line"></div>
+
+<div class="fable">
+<i>「Witness to Unfinished Stories」</i>
+</div>
+
+<div class="fable">
+<i>「The Hand That Writes Their Second Chances」</i>
+</div>
+
+<details class="secret">
+
+<summary>
+【 ▶ REVEAL HIDDEN ATTRIBUTES... 】
+</summary>
+
+<div class="hidden">
+
+[RESTRICTED ATTRIBUTE DATA]
+
+<br><br>
+
+Some attributes are not meant
+to be observed by incarnations.
+
+<br><br>
+
+Yet you have opened this record.
+
+<br><br>
+
+[ OBSERVATION PROTOCOL COMPROMISED ]
+
+</div>
+
+</details>
+
+</section>
+
+
+<!-- =====================================================
+     ORIGIN
+===================================================== -->
+
+<section>
+
+<div class="heading">
+【 ORIGIN RECORD 】
+</div>
+
+<div class="line"></div>
+
+<div class="message">
+
+"Born from countless unfinished stories
+and the readers who refused to let them disappear."
+
+</div>
+
+<div class="line"></div>
+
+<div class="heading">
+【 CONSTELLATION REPUTATION 】
+</div>
+
+<br>
+
+<div class="message">
+
+"A quiet presence known for preserving stories
+that should have been forgotten."
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     WARNING
+===================================================== -->
+
+<section>
+
+<div class="warning" id="warning">
+
+<div class="warningTitle">
+
+━━━━━━━━━━━━━━━━━━━━
+<br>
+
+[ STAR STREAM WARNING ]
+
+<br>
+━━━━━━━━━━━━━━━━━━━━
+
+</div>
+
+<br>
+
+Interaction with this constellation may
+alter your perception of the Scenario.
+
+<br><br>
+
+<span class="blink">
+The consequences cannot be reversed.
+</span>
+
+<br><br>
+
+━━━━━━━━━━━━━━━━━━━━
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     FABLE ARCHIVE
+===================================================== -->
+
+<section id="fables">
+
+<div class="heading">
+【 FABLE ARCHIVE 】
+</div>
+
+<div class="line"></div>
+
+<div class="fable">
+
+<div class="fableid">
+FABLE RECORD // #001
+</div>
+
+<div class="fabletitle">
+FRESH START
+</div>
+
+<div class="meta">
+KakaObi · Naruto (Anime & Manga)
+<br>
+STATUS: ONGOING · CHAPTERS: 13/?
+<br>
+WORD COUNT: 56,950
+<br>
+RATING: TEEN AND UP AUDIENCES
+</div>
+
+<div class="line"></div>
+
+<div class="summary">
+
+"I knew that helping in the end would never be
+enough to make up for everything I had done."
+
+<br><br>
+
+If Obito could start over from the beginning,
+he would do everything in his power to prevent
+the tragedies that once consumed his life.
+
+Maybe only then could he finally be at peace.
+
+<br><br>
+
+A second chance.
+A different beginning.
+Perhaps a different ending.
+
+</div>
+
+<div class="tags">
+TIME TRAVEL · BOTTOM UCHIHA OBITO ·
+PROTECTIVE UCHIHA OBITO · UCHIHA OBITO NEEDS A HUG
+</div>
+
+<a
+class="access"
+href="https://archiveofourown.org/works/84746576"
+target="_blank"
+rel="noopener noreferrer">
+
+[ ACCESS FABLE ]
+
+</a>
+
+</div>
+
+<br>
+
+<details class="secret">
+
+<summary>
+【 ▶ SEARCH FOR ADDITIONAL FABLES... 】
+</summary>
+
+<div class="hidden">
+
+[ STAR STREAM NOTICE ]
+
+<br><br>
+
+Additional Fable records have not yet
+been registered in the archive.
+
+<br><br>
+
+The constellation appears to be writing
+another story.
+
+<br><br>
+
+<span class="blink">
+■ NARRATIVE GENERATION IN PROGRESS
+</span>
+
+</div>
+
+</details>
+
+</section>
+
+
+<!-- =====================================================
+     TRANSMISSIONS
+===================================================== -->
+
+<section id="transmissions">
+
+<div class="heading">
+【 TRANSMISSION LOG 】
+</div>
+
+<div class="line"></div>
+
+<div class="transmission">
+
+<strong>
+TRANSMISSION #001
+</strong>
+
+<p>
+
+A new Fable has been registered.
+
+<br><br>
+
+「Fresh Start」
+
+<br><br>
+
+Origin: Naruto Scenario
+<br>
+
+Classification: KakaObi
+<br>
+
+Status: Ongoing
+
+</p>
+
+</div>
+
+<details class="secret">
+
+<summary>
+【 ▶ RECEIVE UNKNOWN TRANSMISSION... 】
+</summary>
+
+<div class="hidden">
+
+[UNKNOWN SIGNAL DETECTED]
+
+<br><br>
+
+...
+
+<br><br>
+
+You were not supposed to find this.
+
+<br><br>
+
+The Star Stream is watching.
+
+<br><br>
+
+Someone is watching from beyond the archive.
+
+<br><br>
+
+[ CONNECTION SHOULD BE TERMINATED ]
+
+</div>
+
+</details>
+
+</section>
+
+
+<!-- =====================================================
+     CHANNELS
+===================================================== -->
+
+<section id="channels">
+
+<div class="heading">
+【 EXTERNAL CHANNELS 】
+</div>
+
+<div class="line"></div>
+
+<div class="channels">
+
+<a
+class="channel"
+href="https://archiveofourown.org/users/Keeper_of_Forgotten_Stories"
+target="_blank"
+rel="noopener noreferrer">
+
+AO3
+
+</a>
+
+<a
+class="channel"
+href="https://www.wattpad.com/user/Louca_por_yaoi011"
+target="_blank"
+rel="noopener noreferrer">
+
+WATTPAD
+
+</a>
+
+</div>
+
+</section>
+
+
+<footer>
+
+STAR STREAM DATABASE // RECORD #KFS-001
+
+<br>
+
+STATUS: OBSERVING THE SCENARIO
+
+<br><br>
+
+「Some stories survive because someone
+refused to forget them.」
+
+</footer>
+
+</div>
+</div>
+</div>
+
+
 <script>
 
-/* =========================================================
-   KEEPER OF FORGOTTEN STORIES
-   STAR STREAM INTERACTION ENGINE
-========================================================= */
+/* =====================================================
+   BOOT SEQUENCE
+===================================================== */
+
+const status=document.getElementById("status");
+const enter=document.getElementById("enter");
+const connect=document.getElementById("connect");
+const main=document.getElementById("main");
+const percent=document.getElementById("percent");
+const bootlog=document.getElementById("bootlog");
+
+const messages=[
+
+"INITIALIZING NARRATIVE ENGINE...",
+"SEARCHING FOR CONSTELLATION...",
+"LOCATING NARRATIVE SIGNATURE...",
+"SCANNING FABLE ARCHIVE...",
+"ANALYZING OBSERVER...",
+"IDENTITY CONFIRMED.",
+"「KEEPER OF FORGOTTEN STORIES」",
+"ESTABLISHING TRANSMISSION...",
+"TRANSMISSION READY."
+
+];
+
+const logs=[
+
+"Searching the Star Stream...",
+"Connection route established.",
+"Scanning narrative frequency...",
+"Fable archive detected.",
+"Checking constellation signature...",
+"Unknown grade detected.",
+"Observer presence confirmed.",
+"Loading preserved stories...",
+"Checking restricted records...",
+"Warning: restricted data detected.",
+"Constellation identification complete.",
+"Transmission channel stabilized."
+
+];
+
+let i=0;
+let logIndex=2;
+let progress=0;
 
 
-/* =========================================================
-   ELEMENT REFERENCES
-========================================================= */
+/* =====================================================
+   STATUS TEXT
+===================================================== */
 
-const connect = document.getElementById("connect");
-const main = document.getElementById("main");
-const enter = document.getElementById("enter");
+function updateStatus(){
 
-const status = document.getElementById("status");
-const percent = document.getElementById("percent");
-const bootlog = document.getElementById("bootlog");
+if(i<messages.length){
 
-const cursorGlow = document.getElementById("cursorGlow");
-const starParticles = document.getElementById("starParticles");
+status.textContent=messages[i];
 
-const warning = document.getElementById("warning");
-const toastContainer = document.getElementById("toastContainer");
+i++;
 
-
-/* =========================================================
-   STAR PARTICLE GENERATOR
-========================================================= */
-
-function createStars(){
-
-    const amount =
-        window.innerWidth < 700 ? 45 : 90;
-
-    for(let i = 0; i < amount; i++){
-
-        const star =
-            document.createElement("div");
-
-        star.className = "starParticle";
-
-        star.style.left =
-            Math.random() * 100 + "%";
-
-        star.style.top =
-            Math.random() * 110 + "%";
-
-        const size =
-            Math.random() > .92 ? 3 : 1 + Math.random();
-
-        star.style.width =
-            size + "px";
-
-        star.style.height =
-            size + "px";
-
-        star.style.opacity =
-            (.15 + Math.random() * .7).toFixed(2);
-
-        star.style.animationDuration =
-            (8 + Math.random() * 18).toFixed(2) + "s";
-
-        star.style.animationDelay =
-            (-Math.random() * 18).toFixed(2) + "s";
-
-        star.style.setProperty(
-            "--drift",
-            ((Math.random() * 100) - 50).toFixed(0) + "px"
-        );
-
-        starParticles.appendChild(star);
-
-    }
+setTimeout(updateStatus,650);
 
 }
 
-createStars();
+}
+
+updateStatus();
+
+
+/* =====================================================
+   PERCENTAGE
+===================================================== */
+
+const progressTimer=setInterval(()=>{
+
+if(progress<100){
+
+progress+=1;
+
+percent.textContent=progress+"%";
+
+}
+
+else{
+
+clearInterval(progressTimer);
+
+}
+
+},60);
+
+
+/* =====================================================
+   SYSTEM LOG
+===================================================== */
+
+const logTimer=setInterval(()=>{
+
+if(logIndex<logs.length){
+
+const line=document.createElement("div");
+
+line.className=
+logs[logIndex].includes("Warning")
+?"alert":"ok";
+
+line.textContent="> "+logs[logIndex];
+
+bootlog.appendChild(line);
+
+bootlog.scrollTop=bootlog.scrollHeight;
+
+logIndex++;
+
+}
+
+else{
+
+clearInterval(logTimer);
+
+}
+
+},500);
+
+
+/* =====================================================
+   FINISH
+===================================================== */
+
+setTimeout(()=>{
+
+status.innerHTML=
+"CONSTELLATION DETECTED // TRANSMISSION RECEIVED";
+
+enter.style.display="block";
+
+},6500);
+
+
+/* =====================================================
+   ENTER
+===================================================== */
+
+enter.addEventListener("click",()=>{
+
+connect.classList.add("hide");
+
+setTimeout(()=>{
+
+main.classList.add("show");
+
+document.body.style.overflowY="auto";
+
+},300);
+
+});
+
+
+/* =====================================================
+   SECRET RED EFFECT
+===================================================== */
+
+function createRedParticles(){
+
+for(let i=0;i<35;i++){
+
+const particle=document.createElement("div");
+
+particle.className="redParticle";
+
+particle.style.left=
+Math.random()*window.innerWidth+"px";
+
+particle.style.top=
+Math.random()*window.innerHeight+"px";
+
+particle.style.setProperty(
+"--x",
+(Math.random()*240-120).toFixed(0)
+);
+
+particle.style.setProperty(
+"--y",
+(Math.random()*240-120).toFixed(0)
+);
+
+particle.style.animationDelay=
+(Math.random()*.6).toFixed(2)+"s";
+
+document.body.appendChild(particle);
+
+setTimeout(()=>{
+particle.remove();
+},2500);
+
+}
+
+}
+
+
+/* =====================================================
+   SECRET DETAILS
+===================================================== */
+
+document.querySelectorAll("details.secret").forEach(detail=>{
+
+detail.addEventListener("toggle",()=>{
+
+if(detail.open){
+
+detail.classList.add("revealed");
+
+createRedParticles();
+
+setTimeout(()=>{
+
+detail.classList.remove("revealed");
+
+},1800);
+
+}
+
+});
+
+});
+
+
+/* =====================================================
+   WARNING RED EFFECT
+===================================================== */
+
+const warning=document.getElementById("warning");
+
+warning.addEventListener("click",()=>{
+
+warning.classList.add("triggered");
+
+createRedParticles();
+
+setTimeout(()=>{
+
+warning.classList.remove("triggered");
+
+},2200);
+
+});
+
+
+/* =====================================================
+   SMALL GLITCH ON SCROLL
+===================================================== */
+
+let scrollTimer;
+
+window.addEventListener("scroll",()=>{
+
+clearTimeout(scrollTimer);
+
+scrollTimer=setTimeout(()=>{
+
+document.querySelector(".system").style.transform=
+"translateX(0)";
+
+},80);
+
+});
+
+</script>
+
+</body>
+</html>
+```html
+<script>
+
+/* =========================================================
+   STAR STREAM // CORE SYSTEM
+========================================================= */
+
+"use strict";
+
+const $ = selector => document.querySelector(selector);
+const $$ = selector => document.querySelectorAll(selector);
+
+const connect = $("#connect");
+const main = $("#main");
+const enter = $("#enter");
+const status = $("#status");
+const percent = $("#percent");
+const loadingBar = $("#loadingBar");
+const bootlog = $("#bootlog");
+const notification = $("#notification");
+const notificationText = $("#notificationText");
+const topButton = $("#topButton");
+const cursorGlow = $("#cursorGlow");
+
+let scenarioSeconds = 0;
+let notificationTimer = null;
+let bootFinished = false;
+
+
+/* =========================================================
+   STAR STREAM // CANVAS STARFIELD
+========================================================= */
+
+const canvas = $("#starCanvas");
+const ctx = canvas.getContext("2d");
+
+let stars = [];
+let width = 0;
+let height = 0;
+let animationFrame = null;
+
+function resizeCanvas(){
+
+    width = canvas.width = window.innerWidth * devicePixelRatio;
+    height = canvas.height = window.innerHeight * devicePixelRatio;
+
+    canvas.style.width = window.innerWidth + "px";
+    canvas.style.height = window.innerHeight + "px";
+
+    ctx.setTransform(
+        devicePixelRatio,
+        0,
+        0,
+        devicePixelRatio,
+        0,
+        0
+    );
+
+    createStars();
+}
+
+
+function createStars(){
+
+    stars = [];
+
+    const amount = Math.min(
+        170,
+        Math.floor(window.innerWidth / 7)
+    );
+
+    for(let i = 0; i < amount; i++){
+
+        stars.push({
+            x:Math.random() * window.innerWidth,
+            y:Math.random() * window.innerHeight,
+            size:Math.random() * 1.5 + .2,
+            speed:Math.random() * .18 + .025,
+            alpha:Math.random() * .7 + .15,
+            pulse:Math.random() * Math.PI * 2,
+            depth:Math.random()
+        });
+
+    }
+}
+
+
+function drawStars(){
+
+    ctx.clearRect(
+        0,
+        0,
+        window.innerWidth,
+        window.innerHeight
+    );
+
+    for(const star of stars){
+
+        star.y += star.speed;
+
+        if(star.y > window.innerHeight + 5){
+            star.y = -5;
+            star.x = Math.random() * window.innerWidth;
+        }
+
+        star.pulse += .015;
+
+        const alpha =
+            star.alpha +
+            Math.sin(star.pulse) * .15;
+
+        ctx.beginPath();
+
+        ctx.fillStyle =
+            `rgba(125,211,252,${Math.max(.05,alpha)})`;
+
+        ctx.arc(
+            star.x,
+            star.y,
+            star.size,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fill();
+
+    }
+
+    animationFrame = requestAnimationFrame(drawStars);
+}
+
+
+resizeCanvas();
+drawStars();
+
+window.addEventListener("resize",resizeCanvas);
+
+
+/* =========================================================
+   CURSOR // NARRATIVE ENERGY
+========================================================= */
+
+window.addEventListener("pointermove",event=>{
+
+    if(!cursorGlow) return;
+
+    cursorGlow.style.left = event.clientX + "px";
+    cursorGlow.style.top = event.clientY + "px";
+
+});
 
 
 /* =========================================================
    BOOT SEQUENCE
 ========================================================= */
 
-const messages = [
+const bootMessages = [
 
     "INITIALIZING NARRATIVE ENGINE...",
 
@@ -2509,9 +3244,7 @@ const messages = [
 
     "ANALYZING OBSERVER...",
 
-    "CALCULATING STORY VALUE...",
-
-    "UNREGISTERED CONSTELLATION DETECTED.",
+    "CHECKING SCENARIO PERMISSIONS...",
 
     "IDENTITY CONFIRMED.",
 
@@ -2524,317 +3257,412 @@ const messages = [
 ];
 
 
-const logs = [
+const bootLogs = [
 
-    "Searching the Star Stream...",
+    {
+        text:"Searching the Star Stream...",
+        type:"ok"
+    },
 
-    "Connection route established.",
+    {
+        text:"Connection route established.",
+        type:"ok"
+    },
 
-    "Scanning narrative frequency...",
+    {
+        text:"Scanning narrative frequency...",
+        type:"ok"
+    },
 
-    "Fable archive detected.",
+    {
+        text:"Fable archive detected.",
+        type:"ok"
+    },
 
-    "Checking constellation signature...",
+    {
+        text:"Checking constellation signature...",
+        type:"ok"
+    },
 
-    "Unknown grade detected.",
+    {
+        text:"Unknown grade detected.",
+        type:"alert"
+    },
 
-    "Observer presence confirmed.",
+    {
+        text:"Observer presence confirmed.",
+        type:"ok"
+    },
 
-    "Loading preserved stories...",
+    {
+        text:"Loading preserved stories...",
+        type:"ok"
+    },
 
-    "Checking restricted records...",
+    {
+        text:"Checking restricted records...",
+        type:"alert"
+    },
 
-    "Warning: restricted data detected.",
+    {
+        text:"Warning: restricted data detected.",
+        type:"alert"
+    },
 
-    "Calculating constellation attributes...",
+    {
+        text:"Narrative integrity: stable.",
+        type:"ok"
+    },
 
-    "Narrative integrity: STABLE.",
+    {
+        text:"Constellation identification complete.",
+        type:"ok"
+    },
 
-    "Constellation identification complete.",
+    {
+        text:"Transmission channel stabilized.",
+        type:"ok"
+    },
 
-    "Transmission channel stabilized."
+    {
+        text:"Probability interference detected.",
+        type:"critical"
+    }
 
 ];
 
 
-let messageIndex = 0;
-let logIndex = 2;
-let progress = 0;
+function addBootLog(text,type="ok"){
 
+    const line = document.createElement("div");
 
-/* =========================================================
-   STATUS MESSAGES
-========================================================= */
+    line.className = type;
 
-function updateStatus(){
+    line.textContent = "> " + text;
 
-    if(messageIndex >= messages.length){
-        return;
+    bootlog.appendChild(line);
+
+    while(bootlog.children.length > 7){
+        bootlog.removeChild(
+            bootlog.firstElementChild
+        );
     }
 
-    status.textContent =
-        messages[messageIndex];
+    bootlog.scrollTop = bootlog.scrollHeight;
+}
 
-    messageIndex++;
 
-    setTimeout(
-        updateStatus,
-        560
-    );
+function updateBootStatus(index){
+
+    if(index >= bootMessages.length) return;
+
+    status.textContent = bootMessages[index];
 
 }
 
-updateStatus();
+
+function updateBootLabels(progress){
+
+    if(progress >= 10){
+        $("#bootStar").textContent = "CONNECTED";
+        $("#bootStar").classList.add("active");
+    }
+
+    if(progress >= 25){
+        $("#bootConstellation").textContent = "LOCATED";
+        $("#bootConstellation").classList.add("active");
+    }
+
+    if(progress >= 40){
+        $("#bootNarrative").textContent = "IDENTIFIED";
+        $("#bootNarrative").classList.add("active");
+    }
+
+    if(progress >= 55){
+        $("#bootFable").textContent = "4 RECORDS";
+        $("#bootFable").classList.add("active");
+    }
+
+    if(progress >= 70){
+        $("#bootObserver").textContent = "CONFIRMED";
+        $("#bootObserver").classList.add("active");
+    }
+
+    if(progress >= 88){
+        $("#bootScenario").textContent = "READY";
+        $("#bootScenario").classList.add("active");
+    }
+
+}
 
 
-/* =========================================================
-   BOOT PERCENTAGE
-========================================================= */
+function runBoot(){
 
-const progressTimer =
-    setInterval(() => {
+    let progress = 0;
+    let messageIndex = 0;
+    let logIndex = 0;
 
-        if(progress < 100){
+    const progressTimer = setInterval(()=>{
 
-            progress++;
+        progress += Math.random() * 2.2 + .35;
 
-            percent.textContent =
-                progress + "%";
+        if(progress > 100){
+            progress = 100;
+        }
 
-        }else{
+        const rounded = Math.floor(progress);
+
+        percent.textContent = rounded + "%";
+
+        loadingBar.style.width =
+            rounded + "%";
+
+        updateBootLabels(rounded);
+
+        if(
+            messageIndex < bootMessages.length &&
+            rounded >=
+            (messageIndex / bootMessages.length) * 100
+        ){
+
+            updateBootStatus(messageIndex);
+
+            messageIndex++;
+
+        }
+
+        if(
+            logIndex < bootLogs.length &&
+            rounded >=
+            (logIndex / bootLogs.length) * 100
+        ){
+
+            const log = bootLogs[logIndex];
+
+            addBootLog(
+                log.text,
+                log.type
+            );
+
+            logIndex++;
+
+        }
+
+        if(progress >= 100){
 
             clearInterval(progressTimer);
 
-        }
-
-    },60);
-
-
-/* =========================================================
-   SYSTEM LOG
-========================================================= */
-
-const logTimer =
-    setInterval(() => {
-
-        if(logIndex >= logs.length){
-
-            clearInterval(logTimer);
-            return;
+            finishBoot();
 
         }
 
-        const line =
-            document.createElement("div");
+    },90);
 
-        line.className =
-            logs[logIndex]
-            .toLowerCase()
-            .includes("warning")
-                ? "alert"
-                : "ok";
-
-        line.textContent =
-            "> " + logs[logIndex];
-
-        bootlog.appendChild(line);
-
-        bootlog.scrollTop =
-            bootlog.scrollHeight;
-
-        logIndex++;
-
-    },430);
+}
 
 
-/* =========================================================
-   FINISH CONNECTION
-========================================================= */
+function finishBoot(){
 
-setTimeout(() => {
+    if(bootFinished) return;
 
-    status.innerHTML =
+    bootFinished = true;
+
+    status.textContent =
         "CONSTELLATION DETECTED // TRANSMISSION RECEIVED";
 
-    enter.style.display =
-        "block";
+    addBootLog(
+        "「KEEPER OF FORGOTTEN STORIES」 has entered the Star Stream.",
+        "ok"
+    );
 
-},6500);
+    addBootLog(
+        "Observer permissions granted.",
+        "ok"
+    );
+
+    addBootLog(
+        "WARNING: narrative probability is unstable.",
+        "critical"
+    );
+
+    setTimeout(()=>{
+
+        enter.style.display = "block";
+
+    },700);
+
+}
+
+
+runBoot();
 
 
 /* =========================================================
    ENTER SCENARIO
 ========================================================= */
 
-enter.addEventListener(
-    "click",
-    () => {
+enter.addEventListener("click",()=>{
 
-        connect.classList.add("hide");
+    connect.classList.add("hide");
 
-        setTimeout(() => {
+    setTimeout(()=>{
 
-            main.classList.add("show");
+        main.classList.add("show");
 
-            document.body.style.overflowY =
-                "auto";
+        document.body.style.overflowY = "auto";
 
-            showToast(
-                "TRANSMISSION ESTABLISHED",
-                "The Scenario is now accessible."
-            );
+        startScenarioClock();
 
-        },350);
-
-    }
-);
-
-
-/* =========================================================
-   TOAST SYSTEM
-========================================================= */
-
-function showToast(title,text,danger=false){
-
-    const toast =
-        document.createElement("div");
-
-    toast.className =
-        danger
-            ? "toast danger"
-            : "toast";
-
-    toast.innerHTML =
-
-        "<strong>【 " +
-        title +
-        " 】</strong>" +
-
-        "<br>" +
-
-        text;
-
-    toastContainer.appendChild(toast);
-
-    setTimeout(() => {
-
-        toast.remove();
-
-    },4300);
-
-}
-
-
-/* =========================================================
-   CURSOR TRACKING
-========================================================= */
-
-let mouseX = 0;
-let mouseY = 0;
-
-document.addEventListener(
-    "mousemove",
-    event => {
-
-        mouseX = event.clientX;
-        mouseY = event.clientY;
-
-        cursorGlow.style.left =
-            mouseX + "px";
-
-        cursorGlow.style.top =
-            mouseY + "px";
-
-        document.body.classList.add(
-            "cursor-active"
+        showNotification(
+            "Transmission established. Welcome, Observer."
         );
 
-    }
-);
+        setTimeout(()=>{
+            showNotification(
+                "The Star Stream is currently observing you."
+            );
+        },4500);
 
-
-/* =========================================================
-   INTERACTIVE FABLE TILT
-========================================================= */
-
-const cards =
-    document.querySelectorAll(
-        ".fable"
-    );
-
-
-cards.forEach(card => {
-
-    card.addEventListener(
-        "mousemove",
-        event => {
-
-            if(window.innerWidth < 700){
-                return;
-            }
-
-            const rect =
-                card.getBoundingClientRect();
-
-            const x =
-                event.clientX -
-                rect.left;
-
-            const y =
-                event.clientY -
-                rect.top;
-
-            const rotateY =
-                ((x / rect.width) - .5) * 3;
-
-            const rotateX =
-                ((y / rect.height) - .5) * -3;
-
-            card.style.transform =
-                "perspective(700px) " +
-                "rotateX(" +
-                rotateX +
-                "deg) " +
-                "rotateY(" +
-                rotateY +
-                "deg) " +
-                "translateX(4px)";
-
-        }
-    );
-
-
-    card.addEventListener(
-        "mouseleave",
-        () => {
-
-            card.style.transform =
-                "";
-
-        }
-    );
+    },350);
 
 });
 
 
 /* =========================================================
-   RED PARTICLE SYSTEM
+   SCENARIO CLOCK
 ========================================================= */
 
-function createRedParticles(){
+function startScenarioClock(){
 
-    const amount =
-        window.innerWidth < 700
-            ? 18
-            : 38;
+    setInterval(()=>{
+
+        scenarioSeconds++;
+
+        const hours =
+            Math.floor(scenarioSeconds / 3600)
+            .toString()
+            .padStart(2,"0");
+
+        const minutes =
+            Math.floor(
+                (scenarioSeconds % 3600) / 60
+            )
+            .toString()
+            .padStart(2,"0");
+
+        const seconds =
+            (scenarioSeconds % 60)
+            .toString()
+            .padStart(2,"0");
+
+        $("#scenarioClock").textContent =
+            `${hours}:${minutes}:${seconds}`;
+
+    },1000);
+
+}
 
 
-    for(let i = 0; i < amount; i++){
+/* =========================================================
+   NOTIFICATION SYSTEM
+========================================================= */
+
+function showNotification(message,duration=4200){
+
+    if(!notification) return;
+
+    notificationText.textContent = message;
+
+    notification.classList.add("show");
+
+    clearTimeout(notificationTimer);
+
+    notificationTimer = setTimeout(()=>{
+
+        notification.classList.remove("show");
+
+    },duration);
+
+}
+
+
+/* =========================================================
+   RANDOM STAR STREAM MESSAGES
+========================================================= */
+
+const randomMessages = [
+
+    "A constellation somewhere has noticed your presence.",
+
+    "The Star Stream has recorded your observation.",
+
+    "A forgotten Fable has gained another reader.",
+
+    "Probability is behaving unusually quietly.",
+
+    "Someone has opened a restricted narrative channel.",
+
+    "The archive remembers what you attempted to forget.",
+
+    "A distant constellation is watching the archive.",
+
+    "The Scenario continues without waiting for you.",
+
+    "Narrative density has increased.",
+
+    "A Fable somewhere has reached its turning point."
+
+];
+
+
+let randomMessageIndex = 0;
+
+function cycleStarMessages(){
+
+    if(!main.classList.contains("show")) return;
+
+    const message =
+        randomMessages[randomMessageIndex];
+
+    randomMessageIndex++;
+
+    if(randomMessageIndex >= randomMessages.length){
+        randomMessageIndex = 0;
+    }
+
+    showNotification(message,3600);
+
+}
+
+
+/* =========================================================
+   PERIODIC STAR STREAM EVENTS
+========================================================= */
+
+setInterval(()=>{
+
+    if(
+        main.classList.contains("show") &&
+        Math.random() > .35
+    ){
+
+        cycleStarMessages();
+
+    }
+
+},22000);
+
+
+/* =========================================================
+   SECRET DETAILS
+========================================================= */
+
+function createRedParticles(amount=35){
+
+    for(let i=0;i<amount;i++){
 
         const particle =
-            document.createElement(
-                "div"
-            );
+            document.createElement("div");
 
         particle.className =
             "redParticle";
@@ -2851,411 +3679,462 @@ function createRedParticles(){
 
         particle.style.setProperty(
             "--x",
-            (
-                Math.random() * 300 -
-                150
-            ).toFixed(0)
+            (Math.random()*260-130).toFixed(0)
         );
 
         particle.style.setProperty(
             "--y",
-            (
-                Math.random() * 300 -
-                150
-            ).toFixed(0)
+            (Math.random()*260-130).toFixed(0)
         );
 
         particle.style.animationDelay =
-            (
-                Math.random() * .7
-            ).toFixed(2) +
+            (Math.random()*.6).toFixed(2) +
             "s";
 
-        document.body.appendChild(
-            particle
-        );
+        document.body.appendChild(particle);
 
-        setTimeout(
-            () => particle.remove(),
-            2600
-        );
+        setTimeout(()=>{
+            particle.remove();
+        },2600);
 
     }
 
 }
 
 
-/* =========================================================
-   SECRET RECORDS
-========================================================= */
+$$("details.secret").forEach(detail=>{
 
-document
-.querySelectorAll("details.secret")
-.forEach(detail => {
+    detail.addEventListener("toggle",()=>{
 
-    detail.addEventListener(
-        "toggle",
-        () => {
+        if(!detail.open) return;
 
-            if(!detail.open){
-                return;
-            }
+        detail.classList.add("revealed");
 
-            detail.classList.add(
-                "revealed"
-            );
+        createRedParticles(28);
 
-            createRedParticles();
+        showNotification(
+            "WARNING: Restricted narrative data accessed."
+        );
 
-            showToast(
-                "RESTRICTED RECORD ACCESSED",
-                "Your observation has been registered.",
-                true
-            );
+        setTimeout(()=>{
 
-            setTimeout(
-                () => {
+            detail.classList.remove("revealed");
 
-                    detail.classList.remove(
-                        "revealed"
-                    );
+        },1800);
 
-                },
-                1800
-            );
-
-        }
-    );
+    });
 
 });
 
 
 /* =========================================================
-   WARNING SYSTEM
+   UNKNOWN TRANSMISSION
 ========================================================= */
 
-warning.addEventListener(
-    "click",
-    () => {
+const unknownTransmission =
+    $("#unknownTransmission");
 
-        warning.classList.add(
-            "triggered"
-        );
+if(unknownTransmission){
 
-        createRedParticles();
+    unknownTransmission.addEventListener(
+        "toggle",
+        ()=>{
 
-        showToast(
-            "STAR STREAM WARNING",
-            "Interaction with this record has been logged.",
-            true
-        );
+            if(!unknownTransmission.open)
+                return;
 
-        setTimeout(
-            () => {
+            setTimeout(()=>{
 
-                warning.classList.remove(
-                    "triggered"
+                showNotification(
+                    "UNKNOWN TRANSMISSION: Someone is watching from beyond the archive."
                 );
 
-            },
-            2300
-        );
+            },500);
 
-    }
-);
+        }
+    );
+
+}
 
 
 /* =========================================================
-   NAVIGATION ACTIVE STATE
+   WARNING EVENT
 ========================================================= */
 
-const navLinks =
-    document.querySelectorAll(
-        "nav a"
-    );
+const warning = $("#warning");
 
-const sections =
-    document.querySelectorAll(
-        "section[id]"
-    );
+if(warning){
+
+    warning.addEventListener("click",()=>{
+
+        warning.classList.add("triggered");
+
+        $("#warningHint").textContent =
+            "[ ACKNOWLEDGEMENT REGISTERED ]";
+
+        createRedParticles(50);
+
+        showNotification(
+            "STAR STREAM WARNING ACKNOWLEDGED."
+        );
+
+        setTimeout(()=>{
+
+            warning.classList.remove("triggered");
+
+            $("#warningHint").textContent =
+                "[ CLICK TO ACKNOWLEDGE ]";
+
+        },3000);
+
+    });
+
+}
 
 
-const observer =
-    new IntersectionObserver(
-        entries => {
+/* =========================================================
+   NAVIGATION // ACTIVE SECTION
+========================================================= */
 
-            entries.forEach(entry => {
+const navLinks = [...$$("#mainNav a")];
 
-                if(entry.isIntersecting){
+const observedSections = navLinks
+    .map(link => $(link.getAttribute("href")))
+    .filter(Boolean);
 
-                    navLinks.forEach(
-                        link => {
 
-                            link.classList.remove(
-                                "active"
-                            );
+const observer = new IntersectionObserver(
 
-                        }
-                    );
+    entries=>{
 
-                    const active =
-                        document.querySelector(
-                            'nav a[href="#' +
-                            entry.target.id +
-                            '"]'
-                        );
+        entries.forEach(entry=>{
 
-                    if(active){
+            if(!entry.isIntersecting) return;
 
-                        active.classList.add(
-                            "active"
-                        );
-
-                    }
-
-                }
-
+            navLinks.forEach(link=>{
+                link.classList.remove("active");
             });
 
-        },
-        {
-            rootMargin:
-                "-30% 0px -60% 0px"
-        }
-    );
+            const active =
+                navLinks.find(
+                    link =>
+                    link.getAttribute("href") ===
+                    "#" + entry.target.id
+                );
 
+            if(active){
+                active.classList.add("active");
+            }
 
-sections.forEach(
-    section =>
-        observer.observe(section)
+        });
+
+    },
+
+    {
+        root:null,
+        rootMargin:"-25% 0px -60% 0px",
+        threshold:0
+    }
+
 );
 
 
+observedSections.forEach(section=>{
+    observer.observe(section);
+});
+
+
 /* =========================================================
-   NAVIGATION TRANSMISSION EFFECT
+   SMOOTH NAVIGATION FEEDBACK
 ========================================================= */
 
-navLinks.forEach(link => {
+navLinks.forEach(link=>{
 
-    link.addEventListener(
-        "click",
-        () => {
+    link.addEventListener("click",()=>{
 
-            showToast(
-                "SCENARIO NAVIGATION",
-                "Redirecting observation channel..."
-            );
+        const target =
+            $(link.getAttribute("href"));
 
-        }
+        if(!target) return;
+
+        showNotification(
+            "Navigating to " +
+            link.textContent.trim() +
+            " record..."
+        );
+
+    });
+
+});
+
+
+/* =========================================================
+   TOP BUTTON
+========================================================= */
+
+window.addEventListener("scroll",()=>{
+
+    if(window.scrollY > 500){
+
+        topButton.classList.add("visible");
+
+    }else{
+
+        topButton.classList.remove("visible");
+
+    }
+
+});
+
+
+topButton.addEventListener("click",()=>{
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+    showNotification(
+        "Returning to primary archive..."
     );
 
 });
 
 
 /* =========================================================
-   RANDOM STAR STREAM SIGNALS
+   SCROLL NARRATIVE GLITCH
 ========================================================= */
 
-const ambientSignals = [
+let lastScroll = 0;
+let scrollGlitchTimer = null;
 
-    "Narrative frequency detected.",
+window.addEventListener("scroll",()=>{
 
-    "A distant constellation is observing.",
-
-    "Fable integrity remains stable.",
-
-    "An unfinished story has been noticed.",
-
-    "The Star Stream continues to broadcast.",
-
-    "Someone is reading beyond the Scenario.",
-
-    "Narrative residue detected.",
-
-    "Observation channel remains active."
-
-];
-
-
-let lastSignal = -1;
-
-
-function ambientSignal(){
+    const current =
+        window.scrollY;
 
     if(
-        document.hidden ||
-        !main.classList.contains("show")
+        Math.abs(current-lastScroll) > 350 &&
+        main.classList.contains("show")
     ){
 
-        return;
+        clearTimeout(scrollGlitchTimer);
+
+        const system =
+            $(".system");
+
+        system.style.transform =
+            "translateX(1px)";
+
+        scrollGlitchTimer =
+            setTimeout(()=>{
+
+                system.style.transform =
+                    "translateX(0)";
+
+            },90);
 
     }
 
+    lastScroll = current;
 
-    let index;
+});
 
-    do{
 
-        index =
-            Math.floor(
-                Math.random() *
-                ambientSignals.length
+/* =========================================================
+   FABLE HOVER // OBSERVATION
+========================================================= */
+
+$$(".fable").forEach(fable=>{
+
+    fable.addEventListener("mouseenter",()=>{
+
+        const title =
+            fable.querySelector(".fabletitle");
+
+        if(title){
+
+            showNotification(
+                "Observing Fable: " +
+                title.textContent.trim(),
+                2200
             );
 
-    }while(
-        index === lastSignal
-    );
+        }
 
+    });
 
-    lastSignal = index;
-
-
-    showToast(
-        "STAR STREAM",
-        ambientSignals[index]
-    );
-
-}
-
-
-setInterval(
-    ambientSignal,
-    18000
-);
+});
 
 
 /* =========================================================
-   OCCASIONAL SCREEN GLITCH
+   EXTERNAL CHANNEL INTERACTION
 ========================================================= */
 
-function screenGlitch(){
+$$(".channel").forEach(channel=>{
 
-    if(
-        document.hidden ||
-        !main.classList.contains("show")
-    ){
+    channel.addEventListener("click",()=>{
 
-        return;
+        showNotification(
+            "Opening external transmission channel..."
+        );
+
+    });
+
+});
+
+
+/* =========================================================
+   FABLE ACCESS
+========================================================= */
+
+$$(".access").forEach(button=>{
+
+    button.addEventListener("click",()=>{
+
+        showNotification(
+            "Fable access granted. Redirecting..."
+        );
+
+    });
+
+});
+
+
+/* =========================================================
+   KEYBOARD COMMANDS
+========================================================= */
+
+document.addEventListener("keydown",event=>{
+
+    if(event.key === "Escape"){
+
+        notification.classList.remove("show");
 
     }
 
 
-    const system =
-        document.querySelector(
-            ".system"
-        );
+    if(event.key.toLowerCase() === "h"){
 
+        if(main.classList.contains("show")){
 
-    system.style.transform =
-        "translateX(" +
-        (Math.random() * 3 - 1.5) +
-        "px)";
-
-
-    system.style.filter =
-        "brightness(" +
-        (1 + Math.random() * .12) +
-        ")";
-
-
-    setTimeout(
-        () => {
-
-            system.style.transform =
-                "";
-
-            system.style.filter =
-                "";
-
-        },
-        90
-    );
-
-}
-
-
-setInterval(
-    screenGlitch,
-    9000
-);
-
-
-/* =========================================================
-   EASTER EGG:
-   KONAMI-STYLE OBSERVATION INPUT
-========================================================= */
-
-const secretSequence = [
-
-    "ArrowUp",
-    "ArrowUp",
-    "ArrowDown",
-    "ArrowDown",
-    "ArrowLeft",
-    "ArrowRight",
-    "ArrowLeft",
-    "ArrowRight"
-
-];
-
-
-let secretIndex = 0;
-
-
-document.addEventListener(
-    "keydown",
-    event => {
-
-        if(
-            event.key ===
-            secretSequence[secretIndex]
-        ){
-
-            secretIndex++;
-
-            if(
-                secretIndex ===
-                secretSequence.length
-            ){
-
-                secretIndex = 0;
-
-                createRedParticles();
-
-                showToast(
-                    "HIDDEN SCENARIO UNLOCKED",
-                    "The Star Stream has noticed you.",
-                    true
-                );
-
-                document.body.animate(
-                    [
-                        {
-                            filter:"none"
-                        },
-                        {
-                            filter:
-                            "brightness(1.8) contrast(1.4)"
-                        },
-                        {
-                            filter:"none"
-                        }
-                    ],
-                    {
-                        duration:700
-                    }
-                );
-
-            }
-
-        }else{
-
-            secretIndex = 0;
+            window.scrollTo({
+                top:0,
+                behavior:"smooth"
+            });
 
         }
 
     }
-);
+
+
+    if(event.key.toLowerCase() === "s"){
+
+        if(main.classList.contains("show")){
+
+            showNotification(
+                "STAR STREAM STATUS: ONLINE"
+            );
+
+        }
+
+    }
+
+});
+
+
+/* =========================================================
+   SECRET COMMAND
+========================================================= */
+
+let secretSequence = "";
+
+const secretCode = "reader";
+
+document.addEventListener("keydown",event=>{
+
+    if(!event.key || event.key.length !== 1)
+        return;
+
+    secretSequence +=
+        event.key.toLowerCase();
+
+    if(secretSequence.length > secretCode.length){
+
+        secretSequence =
+            secretSequence.slice(
+                -secretCode.length
+            );
+
+    }
+
+    if(secretSequence === secretCode){
+
+        activateReaderProtocol();
+
+        secretSequence = "";
+
+    }
+
+});
+
+
+function activateReaderProtocol(){
+
+    createRedParticles(75);
+
+    showNotification(
+        "[ HIDDEN PROTOCOL ] Observer classification elevated.",
+        6000
+    );
+
+    document.body.dataset.reader = "true";
+
+    const system = $(".system");
+
+    system.style.boxShadow =
+        "0 0 80px rgba(56,189,248,.18)";
+
+    setTimeout(()=>{
+
+        system.style.boxShadow = "";
+
+    },6000);
+
+}
+
+
+/* =========================================================
+   DOUBLE CLICK // NARRATIVE INTERFERENCE
+========================================================= */
+
+let lastClick = 0;
+
+document.addEventListener("click",event=>{
+
+    const now = Date.now();
+
+    if(now-lastClick < 300){
+
+        if(
+            main.classList.contains("show") &&
+            !event.target.closest("a") &&
+            !event.target.closest("button")
+        ){
+
+            createRedParticles(20);
+
+            showNotification(
+                "Narrative interference detected."
+            );
+
+        }
+
+    }
+
+    lastClick = now;
+
+});
 
 
 /* =========================================================
@@ -3264,17 +4143,25 @@ document.addEventListener(
 
 document.addEventListener(
     "visibilitychange",
-    () => {
+    ()=>{
 
         if(document.hidden){
 
             document.title =
-                "Star Stream // Waiting...";
+                "【 SIGNAL LOST 】";
 
         }else{
 
             document.title =
                 "Keeper of Forgotten Stories // Star Stream";
+
+            if(main.classList.contains("show")){
+
+                showNotification(
+                    "Observer connection restored."
+                );
+
+            }
 
         }
 
@@ -3283,48 +4170,27 @@ document.addEventListener(
 
 
 /* =========================================================
-   RANDOM TITLE GLITCH
+   SESSION IDENTIFIER
 ========================================================= */
 
-const title =
-    document.querySelector(
-        ".title"
-    );
+function generateSessionID(){
+
+    const random =
+        Math.random()
+        .toString(36)
+        .substring(2,7)
+        .toUpperCase();
+
+    const session =
+        "KFS-" + random;
+
+    $("#sessionID").textContent =
+        session;
+
+}
 
 
-setInterval(
-    () => {
-
-        if(
-            !main.classList.contains(
-                "show"
-            )
-        ){
-
-            return;
-
-        }
-
-
-        title.style.textShadow =
-            "0 0 10px #38bdf8," +
-            "2px 0 #22d3ee," +
-            "-2px 0 #3b82f6";
-
-
-        setTimeout(
-            () => {
-
-                title.style.textShadow =
-                    "";
-
-            },
-            90
-        );
-
-    },
-    11000
-);
+generateSessionID();
 
 
 /* =========================================================
@@ -3336,33 +4202,2651 @@ document.body.style.overflow =
 
 
 /* =========================================================
-   SAFETY:
-   REMOVE BOOT SCREEN IF SOMETHING GOES WRONG
+   SAFETY // PREVENT BROKEN EXTERNAL LINKS
 ========================================================= */
 
-setTimeout(
-    () => {
+window.addEventListener(
+    "error",
+    event=>{
 
         if(
-            connect &&
-            !connect.classList.contains(
-                "hide"
-            )
+            event.target &&
+            event.target.tagName === "IMG"
         ){
 
-            status.textContent =
-                "CONNECTION STABILIZED // MANUAL ENTRY AVAILABLE";
-
-            enter.style.display =
-                "block";
+            event.target.style.display =
+                "none";
 
         }
 
     },
-    9000
+    true
 );
+
+
+/* =========================================================
+   STAR STREAM HEARTBEAT
+========================================================= */
+
+setInterval(()=>{
+
+    if(
+        main.classList.contains("show")
+    ){
+
+        const signal =
+            document.querySelector(".signal");
+
+        if(signal){
+
+            signal.style.opacity = ".45";
+
+            setTimeout(()=>{
+
+                signal.style.opacity = "1";
+
+            },120);
+
+        }
+
+    }
+
+},7000);
+
+
+/* =========================================================
+   FINAL INITIALIZATION
+========================================================= */
+
+console.log(
+    "%c[ STAR STREAM ]%c Connection initialized.",
+    "color:#38bdf8;font-weight:bold;",
+    "color:#bae6fd;"
+);
+
+console.log(
+    "%c[ CONSTELLATION ]%c Keeper of Forgotten Stories",
+    "color:#67e8f9;font-weight:bold;",
+    "color:#dbeafe;"
+);
+
+console.log(
+    "%c[ WARNING ]%c Unauthorized observation may alter the Scenario.",
+    "color:#ef4444;font-weight:bold;",
+    "color:#fca5a5;"
+);
+
+</script>
+```html id="3xj7kd"
+<script>
+
+/* =========================================================
+   STAR STREAM // AMBIENT SIGNAL ENGINE
+========================================================= */
+
+(function(){
+
+    const system = document.querySelector(".system");
+
+    if(!system) return;
+
+    let signalTimer = null;
+
+    function createBlueSignal(){
+
+        const signal = document.createElement("div");
+
+        signal.style.position = "fixed";
+        signal.style.left =
+            Math.random() * window.innerWidth + "px";
+
+        signal.style.top =
+            Math.random() * window.innerHeight + "px";
+
+        signal.style.width =
+            (Math.random() * 2 + 1) + "px";
+
+        signal.style.height =
+            (Math.random() * 2 + 1) + "px";
+
+        signal.style.background = "#38bdf8";
+
+        signal.style.boxShadow =
+            "0 0 12px #38bdf8";
+
+        signal.style.pointerEvents = "none";
+
+        signal.style.zIndex = "60";
+
+        signal.style.opacity = "0";
+
+        signal.style.transition =
+            "opacity .5s, transform 1.8s";
+
+        document.body.appendChild(signal);
+
+        requestAnimationFrame(()=>{
+
+            signal.style.opacity =
+                String(Math.random() * .7 + .3);
+
+            signal.style.transform =
+                `translate(
+                    ${(Math.random()*100-50).toFixed(0)}px,
+                    ${(Math.random()*100-50).toFixed(0)}px
+                )`;
+
+        });
+
+        setTimeout(()=>{
+
+            signal.style.opacity = "0";
+
+            setTimeout(()=>{
+                signal.remove();
+            },600);
+
+        },700);
+
+    }
+
+
+    function ambientSignal(){
+
+        if(
+            !document.hidden &&
+            document.querySelector("#main.show")
+        ){
+
+            const amount =
+                Math.floor(Math.random()*4)+2;
+
+            for(let i=0;i<amount;i++){
+
+                setTimeout(
+                    createBlueSignal,
+                    i*80
+                );
+
+            }
+
+        }
+
+    }
+
+
+    signalTimer =
+        setInterval(
+            ambientSignal,
+            6500
+        );
+
+
+})();
+
+
+/* =========================================================
+   STAR STREAM // NARRATIVE PULSE
+========================================================= */
+
+(function(){
+
+    const title =
+        document.querySelector(".title");
+
+    if(!title) return;
+
+    let pulse = false;
+
+    setInterval(()=>{
+
+        if(
+            !document.querySelector("#main.show")
+        ) return;
+
+        pulse = !pulse;
+
+        title.style.textShadow =
+            pulse
+            ?
+            "0 0 12px rgba(56,189,248,.55),0 0 42px rgba(56,189,248,.20)"
+            :
+            "0 0 12px rgba(56,189,248,.35),0 0 25px rgba(56,189,248,.10)";
+
+    },3200);
+
+})();
+
+
+/* =========================================================
+   STAR STREAM // TRANSMISSION DISTORTION
+========================================================= */
+
+(function(){
+
+    const signal =
+        document.querySelector(".signal");
+
+    if(!signal) return;
+
+    function distortion(){
+
+        if(
+            !document.querySelector("#main.show")
+        ) return;
+
+        const original =
+            signal.textContent;
+
+        signal.textContent =
+            "【 SIGNAL INTERFERENCE DETECTED 】";
+
+        signal.style.color =
+            "#ef4444";
+
+        signal.style.textShadow =
+            "0 0 12px #ef4444";
+
+        setTimeout(()=>{
+
+            signal.textContent =
+                original;
+
+            signal.style.color =
+                "";
+
+            signal.style.textShadow =
+                "";
+
+        },180);
+
+    }
+
+
+    setInterval(()=>{
+
+        if(Math.random() > .55){
+
+            distortion();
+
+        }
+
+    },11000);
+
+})();
+
+
+/* =========================================================
+   HIDDEN FABLE EVENT
+========================================================= */
+
+(function(){
+
+    const archive =
+        document.querySelector("#fables");
+
+    if(!archive) return;
+
+    let triggered = false;
+
+    window.addEventListener("scroll",()=>{
+
+        if(triggered) return;
+
+        const rect =
+            archive.getBoundingClientRect();
+
+        if(
+            rect.top <
+            window.innerHeight * .45
+        ){
+
+            triggered = true;
+
+            setTimeout(()=>{
+
+                if(
+                    typeof showNotification ===
+                    "function"
+                ){
+
+                    showNotification(
+                        "A distant constellation has noticed the Fable Archive."
+                    );
+
+                }
+
+            },1200);
+
+        }
+
+    });
+
+})();
+
+
+/* =========================================================
+   STAR STREAM // RANDOM OBSERVER SIGNAL
+========================================================= */
+
+(function(){
+
+    const messages = [
+
+        "「The Reader has entered the Scenario.」",
+
+        "「A constellation is quietly observing the archive.」",
+
+        "「Probability fluctuates around the unfinished stories.」",
+
+        "「Someone has remembered a story that was supposed to disappear.」",
+
+        "「The Star Stream finds your persistence interesting.」",
+
+        "「A Fable has resisted narrative decay.」"
+
+    ];
+
+    function sendSignal(){
+
+        if(
+            document.hidden ||
+            !document.querySelector("#main.show")
+        ) return;
+
+        if(
+            Math.random() < .5
+        ) return;
+
+        const message =
+            messages[
+                Math.floor(
+                    Math.random() * messages.length
+                )
+            ];
+
+        if(
+            typeof showNotification ===
+            "function"
+        ){
+
+            showNotification(
+                message,
+                4000
+            );
+
+        }
+
+    }
+
+    setInterval(
+        sendSignal,
+        30000
+    );
+
+})();
+
+
+/* =========================================================
+   EMERGENCY SCENARIO MODE
+========================================================= */
+
+(function(){
+
+    let emergency = false;
+
+    window.activateScenarioAlert = function(){
+
+        if(emergency) return;
+
+        emergency = true;
+
+        document.body.classList.add(
+            "scenario-alert"
+        );
+
+        const system =
+            document.querySelector(".system");
+
+        if(system){
+
+            system.style.borderColor =
+                "#7f1d1d";
+
+            system.style.boxShadow =
+                "0 0 70px rgba(239,68,68,.15)";
+
+        }
+
+        if(
+            typeof createRedParticles ===
+            "function"
+        ){
+
+            createRedParticles(90);
+
+        }
+
+        if(
+            typeof showNotification ===
+            "function"
+        ){
+
+            showNotification(
+                "[ CRITICAL ] Scenario probability has collapsed.",
+                6000
+            );
+
+        }
+
+        setTimeout(()=>{
+
+            emergency = false;
+
+            document.body.classList.remove(
+                "scenario-alert"
+            );
+
+            if(system){
+
+                system.style.borderColor = "";
+
+                system.style.boxShadow = "";
+
+            }
+
+        },7000);
+
+    };
+
+})();
+
+
+/* =========================================================
+   SECRET KEY // EMERGENCY
+========================================================= */
+
+(function(){
+
+    let sequence = "";
+
+    const code =
+        "starstream";
+
+    document.addEventListener(
+        "keydown",
+        event=>{
+
+            if(
+                !event.key ||
+                event.key.length !== 1
+            ) return;
+
+            sequence +=
+                event.key.toLowerCase();
+
+            if(
+                sequence.length >
+                code.length
+            ){
+
+                sequence =
+                    sequence.slice(
+                        -code.length
+                    );
+
+            }
+
+            if(sequence === code){
+
+                if(
+                    typeof activateScenarioAlert ===
+                    "function"
+                ){
+
+                    activateScenarioAlert();
+
+                }
+
+                sequence = "";
+
+            }
+
+        }
+    );
+
+})();
+
+
+/* =========================================================
+   SECRET CLICK // CONSTELLATION CORE
+========================================================= */
+
+(function(){
+
+    const core =
+        document.querySelector(
+            ".constellationSymbol"
+        );
+
+    if(!core) return;
+
+    let clicks = 0;
+
+    core.addEventListener(
+        "click",
+        ()=>{
+
+            clicks++;
+
+            if(clicks < 3){
+
+                if(
+                    typeof showNotification ===
+                    "function"
+                ){
+
+                    showNotification(
+                        "Constellation core accessed. Permission level insufficient."
+                    );
+
+                }
+
+                return;
+
+            }
+
+            clicks = 0;
+
+            if(
+                typeof createRedParticles ===
+                "function"
+            ){
+
+                createRedParticles(45);
+
+            }
+
+            if(
+                typeof showNotification ===
+                "function"
+            ){
+
+                showNotification(
+                    "「The constellation has noticed you.」",
+                    5000
+                );
+
+            }
+
+        }
+    );
+
+})();
+
+
+/* =========================================================
+   FABLE COUNTER // DYNAMIC RECORD
+========================================================= */
+
+(function(){
+
+    const counter =
+        document.querySelector(
+            "#fableCounter"
+        );
+
+    if(!counter) return;
+
+    const fables =
+        document.querySelectorAll(
+            ".fable"
+        );
+
+    const number =
+        String(fables.length)
+        .padStart(2,"0");
+
+    counter.textContent =
+        number;
+
+})();
+
+
+/* =========================================================
+   DOCUMENT TITLE // LIVE SIGNAL
+========================================================= */
+
+(function(){
+
+    const originalTitle =
+        document.title;
+
+    let visible = true;
+
+    setInterval(()=>{
+
+        if(
+            document.hidden
+        ){
+
+            visible = !visible;
+
+            document.title =
+                visible
+                ? "【 SIGNAL LOST 】"
+                : "Keeper of Forgotten Stories";
+
+        }else{
+
+            if(
+                document.title !==
+                originalTitle
+            ){
+
+                document.title =
+                    originalTitle;
+
+            }
+
+        }
+
+    },1200);
+
+})();
+
+
+/* =========================================================
+   SYSTEM TIME
+========================================================= */
+
+(function(){
+
+    const timeElement =
+        document.querySelector(
+            ".headerStatus"
+        );
+
+    if(!timeElement) return;
+
+    function updateSystemTime(){
+
+        const now =
+            new Date();
+
+        const hours =
+            String(
+                now.getHours()
+            ).padStart(2,"0");
+
+        const minutes =
+            String(
+                now.getMinutes()
+            ).padStart(2,"0");
+
+        const seconds =
+            String(
+                now.getSeconds()
+            ).padStart(2,"0");
+
+        timeElement.dataset.time =
+            `${hours}:${minutes}:${seconds}`;
+
+    }
+
+    updateSystemTime();
+
+    setInterval(
+        updateSystemTime,
+        1000
+    );
+
+})();
+
+
+/* =========================================================
+   FAKE STAR STREAM PROBABILITY
+========================================================= */
+
+(function(){
+
+    const probability =
+        document.createElement(
+            "div"
+        );
+
+    probability.style.position =
+        "absolute";
+
+    probability.style.left =
+        "18px";
+
+    probability.style.top =
+        "18px";
+
+    probability.style.fontFamily =
+        '"Courier New",monospace';
+
+    probability.style.fontSize =
+        "8px";
+
+    probability.style.color =
+        "#334155";
+
+    probability.style.letterSpacing =
+        "1px";
+
+    probability.style.pointerEvents =
+        "none";
+
+    probability.textContent =
+        "PROBABILITY: STABLE";
+
+    const header =
+        document.querySelector(
+            "header"
+        );
+
+    if(header){
+
+        header.appendChild(
+            probability
+        );
+
+    }
+
+    setInterval(()=>{
+
+        if(
+            Math.random() < .13
+        ){
+
+            probability.textContent =
+                "PROBABILITY: FLUCTUATING";
+
+            probability.style.color =
+                "#f59e0b";
+
+            setTimeout(()=>{
+
+                probability.textContent =
+                    "PROBABILITY: STABLE";
+
+                probability.style.color =
+                    "#334155";
+
+            },1800);
+
+        }
+
+    },9000);
+
+})();
+
+
+/* =========================================================
+   FINAL STAR STREAM MESSAGE
+========================================================= */
+
+window.addEventListener(
+    "load",
+    ()=>{
+
+        setTimeout(()=>{
+
+            if(
+                typeof showNotification ===
+                "function"
+            ){
+
+                showNotification(
+                    "Star Stream interface initialized successfully.",
+                    3500
+                );
+
+            }
+
+        },1000);
+
+    }
+);
+
+</script>
+
+```html
+<!-- =========================================================
+     PART 4 // STAR STREAM OBSERVER PROTOCOL
+========================================================= -->
+
+<style>
+
+/* =========================================================
+   OBSERVER HUD
+========================================================= */
+
+#observerHUD{
+position:fixed;
+left:18px;
+bottom:18px;
+z-index:400;
+font-family:"Courier New",monospace;
+font-size:8px;
+letter-spacing:1px;
+color:#475569;
+pointer-events:none;
+opacity:.75;
+line-height:1.7;
+transition:.4s;
+}
+
+#observerHUD .hudLine{
+white-space:nowrap;
+}
+
+#observerHUD .hudValue{
+color:#38bdf8;
+}
+
+#observerHUD .hudDanger{
+color:#ef4444;
+}
+
+#observerHUD .hudWarning{
+color:#f59e0b;
+}
+
+#observerHUD::before{
+content:"OBSERVER PROTOCOL";
+display:block;
+font-size:7px;
+letter-spacing:2px;
+color:#155e75;
+margin-bottom:3px;
+}
+
+@media(max-width:700px){
+#observerHUD{
+left:10px;
+bottom:10px;
+font-size:7px;
+}
+}
+
+/* =========================================================
+   COMMAND CONSOLE
+========================================================= */
+
+#starConsole{
+position:fixed;
+inset:0;
+z-index:10000;
+display:flex;
+align-items:flex-end;
+justify-content:center;
+padding:25px;
+background:rgba(0,3,9,.72);
+backdrop-filter:blur(8px);
+opacity:0;
+visibility:hidden;
+pointer-events:none;
+transition:.35s;
+}
+
+#starConsole.open{
+opacity:1;
+visibility:visible;
+pointer-events:auto;
+}
+
+.consoleWindow{
+width:min(850px,100%);
+max-height:70vh;
+border:1px solid #0e7490;
+background:
+linear-gradient(
+180deg,
+rgba(3,20,39,.98),
+rgba(1,7,17,.99)
+);
+box-shadow:
+0 0 70px rgba(14,165,233,.15),
+inset 0 0 35px rgba(14,165,233,.035);
+font-family:"Courier New",monospace;
+overflow:hidden;
+transform:translateY(35px);
+transition:.4s;
+}
+
+#starConsole.open .consoleWindow{
+transform:translateY(0);
+}
+
+.consoleHeader{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:11px 15px;
+border-bottom:1px solid #164e63;
+background:#031225;
+color:#67e8f9;
+font-size:9px;
+letter-spacing:2px;
+}
+
+.consoleClose{
+border:0;
+background:none;
+color:#475569;
+cursor:pointer;
+font-family:inherit;
+font-size:13px;
+}
+
+.consoleClose:hover{
+color:#ef4444;
+}
+
+#consoleOutput{
+height:270px;
+overflow-y:auto;
+padding:15px;
+font-size:10px;
+line-height:1.8;
+color:#7dd3fc;
+scrollbar-width:thin;
+scrollbar-color:#155e75 transparent;
+}
+
+.consoleLine{
+margin-bottom:3px;
+}
+
+.consoleLine.system{
+color:#38bdf8;
+}
+
+.consoleLine.warning{
+color:#f59e0b;
+}
+
+.consoleLine.danger{
+color:#ef4444;
+}
+
+.consoleLine.success{
+color:#67e8f9;
+}
+
+.consoleInput{
+display:flex;
+align-items:center;
+border-top:1px solid #164e63;
+padding:10px 13px;
+background:#010813;
+}
+
+.consolePrompt{
+color:#38bdf8;
+margin-right:8px;
+}
+
+#consoleInput{
+flex:1;
+border:0;
+outline:0;
+background:transparent;
+color:#e0f2fe;
+font-family:"Courier New",monospace;
+font-size:11px;
+}
+
+#consoleInput::placeholder{
+color:#334155;
+}
+
+/* =========================================================
+   CONSOLE ACCESS BUTTON
+========================================================= */
+
+#consoleButton{
+position:fixed;
+right:20px;
+bottom:20px;
+z-index:300;
+width:38px;
+height:38px;
+border:1px solid #155e75;
+background:rgba(2,11,24,.88);
+color:#38bdf8;
+font-family:"Courier New",monospace;
+cursor:pointer;
+transition:.3s;
+}
+
+#consoleButton:hover{
+border-color:#38bdf8;
+box-shadow:
+0 0 18px rgba(56,189,248,.3);
+transform:translateY(-2px);
+}
+
+@media(max-width:700px){
+#consoleButton{
+right:15px;
+bottom:15px;
+}
+}
+
+/* =========================================================
+   OBSERVER PANEL
+========================================================= */
+
+.observerPanel{
+margin-top:20px;
+padding:15px;
+border:1px solid #164e63;
+background:rgba(2,11,24,.65);
+font-family:"Courier New",monospace;
+}
+
+.observerPanelTitle{
+font-size:9px;
+letter-spacing:2px;
+color:#67e8f9;
+margin-bottom:12px;
+}
+
+.observerStats{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+}
+
+.observerStat{
+border:1px solid #0c3349;
+padding:10px;
+text-align:center;
+background:#01081388;
+}
+
+.observerStat strong{
+display:block;
+font-size:16px;
+color:#e0f2fe;
+margin-bottom:4px;
+}
+
+.observerStat span{
+font-size:7px;
+letter-spacing:1px;
+color:#475569;
+}
+
+@media(max-width:600px){
+.observerStats{
+grid-template-columns:1fr;
+}
+}
+
+/* =========================================================
+   AFFINITY BAR
+========================================================= */
+
+.affinityBox{
+margin-top:14px;
+}
+
+.affinityTop{
+display:flex;
+justify-content:space-between;
+font-family:"Courier New",monospace;
+font-size:8px;
+color:#64748b;
+margin-bottom:5px;
+}
+
+#affinityValue{
+color:#67e8f9;
+}
+
+.affinityTrack{
+height:5px;
+border:1px solid #155e75;
+background:#020b18;
+overflow:hidden;
+}
+
+#affinityBar{
+height:100%;
+width:0%;
+background:
+linear-gradient(
+90deg,
+#075985,
+#0ea5e9,
+#67e8f9
+);
+box-shadow:0 0 12px #38bdf8;
+transition:width .7s cubic-bezier(.2,.8,.2,1);
+}
+
+/* =========================================================
+   AUDIO STATUS
+========================================================= */
+
+#audioButton{
+position:fixed;
+right:67px;
+bottom:20px;
+z-index:300;
+height:38px;
+padding:0 11px;
+border:1px solid #155e75;
+background:rgba(2,11,24,.88);
+color:#64748b;
+font-family:"Courier New",monospace;
+font-size:8px;
+cursor:pointer;
+transition:.3s;
+}
+
+#audioButton:hover{
+border-color:#38bdf8;
+color:#67e8f9;
+}
+
+#audioButton.active{
+color:#38bdf8;
+box-shadow:0 0 15px rgba(56,189,248,.12);
+}
+
+@media(max-width:700px){
+#audioButton{
+right:60px;
+bottom:15px;
+}
+}
+
+/* =========================================================
+   SCENARIO ALERT
+========================================================= */
+
+body.scenario-alert::before{
+background:
+linear-gradient(rgba(239,68,68,.025) 1px,transparent 1px),
+linear-gradient(90deg,rgba(239,68,68,.025) 1px,transparent 1px);
+}
+
+body.scenario-alert .system{
+animation:scenarioPulse .22s infinite alternate;
+}
+
+@keyframes scenarioPulse{
+from{
+box-shadow:
+0 0 45px rgba(239,68,68,.08);
+}
+to{
+box-shadow:
+0 0 75px rgba(239,68,68,.22);
+}
+}
+
+/* =========================================================
+   NARRATIVE INTERRUPTION
+========================================================= */
+
+#narrativeInterruption{
+position:fixed;
+inset:0;
+z-index:9990;
+display:flex;
+align-items:center;
+justify-content:center;
+background:#010308;
+opacity:0;
+visibility:hidden;
+pointer-events:none;
+transition:.35s;
+font-family:"Courier New",monospace;
+}
+
+#narrativeInterruption.active{
+opacity:1;
+visibility:visible;
+}
+
+.interruptionText{
+width:min(700px,90%);
+text-align:center;
+color:#67e8f9;
+font-size:11px;
+line-height:2;
+letter-spacing:2px;
+}
+
+.interruptionText .red{
+color:#ef4444;
+}
+
+.interruptionCursor{
+display:inline-block;
+width:6px;
+height:12px;
+background:#38bdf8;
+animation:cursorBlink .8s infinite;
+vertical-align:middle;
+}
+
+@keyframes cursorBlink{
+50%{opacity:0}
+}
+
+/* =========================================================
+   EXTRA SCANLINES
+========================================================= */
+
+#globalScan{
+position:fixed;
+inset:0;
+z-index:200;
+pointer-events:none;
+opacity:.18;
+background:
+repeating-linear-gradient(
+0deg,
+transparent 0,
+transparent 5px,
+rgba(56,189,248,.025) 6px
+);
+}
+
+/* =========================================================
+   SECRET MODE
+========================================================= */
+
+body.reader-mode .system{
+border-color:#67e8f9;
+box-shadow:
+0 0 80px rgba(56,189,248,.2),
+inset 0 0 45px rgba(56,189,248,.035);
+}
+
+body.reader-mode .title{
+text-shadow:
+0 0 15px #38bdf8,
+0 0 45px rgba(56,189,248,.3);
+}
+
+body.reader-mode #observerHUD{
+color:#67e8f9;
+}
+
+</style>
+
+
+<!-- =========================================================
+     GLOBAL STAR STREAM SCAN
+========================================================= -->
+
+<div id="globalScan"></div>
+
+
+<!-- =========================================================
+     OBSERVER HUD
+========================================================= -->
+
+<div id="observerHUD">
+
+<div class="hudLine">
+CONNECTION:
+<span class="hudValue" id="hudConnection">
+STABLE
+</span>
+</div>
+
+<div class="hudLine">
+AFFINITY:
+<span class="hudValue" id="hudAffinity">
+00%
+</span>
+</div>
+
+<div class="hudLine">
+OBSERVATIONS:
+<span class="hudValue" id="hudObservations">
+000
+</span>
+</div>
+
+<div class="hudLine">
+PROBABILITY:
+<span class="hudValue" id="hudProbability">
+100%
+</span>
+</div>
+
+</div>
+
+
+<!-- =========================================================
+     CONSOLE BUTTON
+========================================================= -->
+
+<button
+id="consoleButton"
+title="Open Star Stream Console"
+aria-label="Open Star Stream Console">
+⌘
+</button>
+
+
+<!-- =========================================================
+     AUDIO BUTTON
+========================================================= -->
+
+<button
+id="audioButton"
+title="Enable Star Stream audio">
+AUDIO: OFF
+</button>
+
+
+<!-- =========================================================
+     COMMAND CONSOLE
+========================================================= -->
+
+<div id="starConsole">
+
+<div class="consoleWindow">
+
+<div class="consoleHeader">
+
+<span>
+【 STAR STREAM COMMAND TERMINAL 】
+</span>
+
+<button
+class="consoleClose"
+id="consoleClose">
+×
+</button>
+
+</div>
+
+<div id="consoleOutput">
+
+<div class="consoleLine system">
+> STAR STREAM COMMAND TERMINAL INITIALIZED.
+</div>
+
+<div class="consoleLine">
+> Type HELP to display available commands.
+</div>
+
+</div>
+
+<div class="consoleInput">
+
+<span class="consolePrompt">
+&gt;
+</span>
+
+<input
+id="consoleInput"
+type="text"
+autocomplete="off"
+spellcheck="false"
+placeholder="ENTER COMMAND...">
+
+</div>
+
+</div>
+</div>
+
+
+<!-- =========================================================
+     NARRATIVE INTERRUPTION
+========================================================= -->
+
+<div id="narrativeInterruption">
+
+<div class="interruptionText" id="interruptionText"></div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   OBSERVER PROTOCOL // STATE
+========================================================= */
+
+(function(){
+
+"use strict";
+
+const state = {
+
+    observations:0,
+
+    affinity:0,
+
+    probability:100,
+
+    commands:0,
+
+    secrets:0,
+
+    transmissions:0,
+
+    fablesViewed:0,
+
+    audio:false,
+
+    readerMode:false
+
+};
+
+
+window.starStreamState = state;
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const hudAffinity =
+document.getElementById("hudAffinity");
+
+const hudObservations =
+document.getElementById("hudObservations");
+
+const hudProbability =
+document.getElementById("hudProbability");
+
+const hudConnection =
+document.getElementById("hudConnection");
+
+const affinityBar =
+document.getElementById("affinityBar");
+
+const consoleElement =
+document.getElementById("starConsole");
+
+const consoleButton =
+document.getElementById("consoleButton");
+
+const consoleClose =
+document.getElementById("consoleClose");
+
+const consoleInput =
+document.getElementById("consoleInput");
+
+const consoleOutput =
+document.getElementById("consoleOutput");
+
+const audioButton =
+document.getElementById("audioButton");
+
+
+/* =========================================================
+   OBSERVER SAVE SYSTEM
+========================================================= */
+
+function loadState(){
+
+    try{
+
+        const saved =
+        localStorage.getItem(
+            "KFS_STAR_STREAM_STATE"
+        );
+
+        if(!saved) return;
+
+        const data =
+        JSON.parse(saved);
+
+        Object.keys(state).forEach(key=>{
+
+            if(
+                typeof data[key] ===
+                typeof state[key]
+            ){
+
+                state[key] =
+                data[key];
+
+            }
+
+        });
+
+    }catch(error){
+
+        console.warn(
+            "Star Stream state could not be restored."
+        );
+
+    }
+
+}
+
+
+function saveState(){
+
+    try{
+
+        localStorage.setItem(
+            "KFS_STAR_STREAM_STATE",
+            JSON.stringify(state)
+        );
+
+    }catch(error){
+
+        console.warn(
+            "Star Stream state could not be saved."
+        );
+
+    }
+
+}
+
+
+loadState();
+
+
+/* =========================================================
+   HUD UPDATE
+========================================================= */
+
+function updateHUD(){
+
+    hudAffinity.textContent =
+    String(
+        Math.floor(state.affinity)
+    ).padStart(2,"0") + "%";
+
+    hudObservations.textContent =
+    String(
+        state.observations
+    ).padStart(3,"0");
+
+    hudProbability.textContent =
+    Math.max(
+        0,
+        Math.floor(state.probability)
+    ) + "%";
+
+    affinityBar.style.width =
+    Math.min(
+        100,
+        state.affinity
+    ) + "%";
+
+
+    if(state.probability <= 25){
+
+        hudProbability.className =
+        "hudDanger";
+
+    }else if(state.probability <= 55){
+
+        hudProbability.className =
+        "hudWarning";
+
+    }else{
+
+        hudProbability.className =
+        "hudValue";
+
+    }
+
+}
+
+
+updateHUD();
+
+
+/* =========================================================
+   OBSERVER ACTION
+========================================================= */
+
+function observe(amount=1){
+
+    state.observations += amount;
+
+    state.affinity =
+    Math.min(
+        100,
+        state.affinity + amount * .7
+    );
+
+    state.probability =
+    Math.max(
+        1,
+        state.probability -
+        amount * .08
+    );
+
+    updateHUD();
+
+    saveState();
+
+}
+
+
+/* =========================================================
+   GLOBAL INTERACTION TRACKING
+========================================================= */
+
+document.addEventListener(
+"click",
+event=>{
+
+    if(
+        event.target.closest(
+            "#consoleButton"
+        ) ||
+        event.target.closest(
+            "#audioButton"
+        )
+    ){
+
+        return;
+
+    }
+
+    observe(1);
+
+});
+
+
+document.addEventListener(
+"scroll",
+()=>{
+
+    if(
+        Math.random() > .55
+    ){
+
+        observe(1);
+
+    }
+
+},
+{
+    passive:true
+});
+
+
+/* =========================================================
+   OPEN CONSOLE
+========================================================= */
+
+function openConsole(){
+
+    consoleElement.classList.add(
+        "open"
+    );
+
+    setTimeout(()=>{
+
+        consoleInput.focus();
+
+    },200);
+
+}
+
+
+function closeConsole(){
+
+    consoleElement.classList.remove(
+        "open"
+    );
+
+}
+
+
+consoleButton.addEventListener(
+"click",
+openConsole
+);
+
+consoleClose.addEventListener(
+"click",
+closeConsole
+);
+
+
+/* =========================================================
+   ESC CLOSE
+========================================================= */
+
+document.addEventListener(
+"keydown",
+event=>{
+
+    if(
+        event.key === "Escape" &&
+        consoleElement.classList.contains(
+            "open"
+        )
+    ){
+
+        closeConsole();
+
+    }
+
+});
+
+
+/* =========================================================
+   CONSOLE OUTPUT
+========================================================= */
+
+function print(
+text,
+type=""
+){
+
+    const line =
+    document.createElement(
+        "div"
+    );
+
+    line.className =
+    "consoleLine " + type;
+
+    line.textContent =
+    "> " + text;
+
+    consoleOutput.appendChild(
+        line
+    );
+
+    consoleOutput.scrollTop =
+    consoleOutput.scrollHeight;
+
+}
+
+
+/* =========================================================
+   COMMANDS
+========================================================= */
+
+function executeCommand(raw){
+
+    const command =
+    raw.trim().toLowerCase();
+
+    if(!command) return;
+
+    state.commands++;
+
+    print(
+        "OBSERVER > " +
+        raw
+    );
+
+    switch(command){
+
+        case "help":
+
+            print(
+                "AVAILABLE COMMANDS:",
+                "system"
+            );
+
+            print(
+                "STATUS — display constellation status."
+            );
+
+            print(
+                "FABLES — inspect acquired Fables."
+            );
+
+            print(
+                "TRANSMISSIONS — inspect signal records."
+            );
+
+            print(
+                "CONSTELLATION — display current identity."
+            );
+
+            print(
+                "PROBABILITY — inspect Scenario probability."
+            );
+
+            print(
+                "OBSERVER — inspect your observation record."
+            );
+
+            print(
+                "CLEAR — clear terminal."
+            );
+
+            print(
+                "AWAKEN — attempt restricted protocol."
+            );
+
+            break;
+
+
+        case "status":
+
+            print(
+                "STAR STREAM: ONLINE",
+                "success"
+            );
+
+            print(
+                "CONNECTION: STABLE"
+            );
+
+            print(
+                "NARRATIVE ENGINE: ACTIVE"
+            );
+
+            print(
+                "OBSERVER: CONFIRMED"
+            );
+
+            print(
+                "SCENARIO: ONGOING"
+            );
+
+            break;
+
+
+        case "fables":
+
+            print(
+                "FABLE ARCHIVE ACCESSED.",
+                "success"
+            );
+
+            print(
+                "REGISTERED RECORDS: 04"
+            );
+
+            print(
+                "PRIMARY FABLE: FRESH START"
+            );
+
+            print(
+                "ARCHIVE STATUS: ONGOING"
+            );
+
+            state.fablesViewed++;
+
+            break;
+
+
+        case "transmissions":
+
+            print(
+                "TRANSMISSION CHANNEL ACCESSED.",
+                "success"
+            );
+
+            print(
+                "TRANSMISSION #001: RECEIVED"
+            );
+
+            print(
+                "UNKNOWN SIGNAL: DETECTED"
+            );
+
+            state.transmissions++;
+
+            break;
+
+
+        case "constellation":
+
+            print(
+                "IDENTITY: KEEPER OF FORGOTTEN STORIES",
+                "success"
+            );
+
+            print(
+                "GRADE: UNKNOWN"
+            );
+
+            print(
+                "ALIGNMENT: NARRATIVE PRESERVATION"
+            );
+
+            print(
+                "PRIMARY ATTRIBUTE: WITNESS"
+            );
+
+            break;
+
+
+        case "probability":
+
+            print(
+                "CURRENT PROBABILITY: " +
+                Math.floor(
+                    state.probability
+                ) + "%",
+                state.probability < 30
+                ? "danger"
+                : "warning"
+            );
+
+            print(
+                state.probability < 50
+                ?
+                "WARNING: Scenario stability compromised."
+                :
+                "Scenario remains within acceptable parameters."
+            );
+
+            break;
+
+
+        case "observer":
+
+            print(
+                "OBSERVER RECORD",
+                "system"
+            );
+
+            print(
+                "OBSERVATIONS: " +
+                state.observations
+            );
+
+            print(
+                "CONSTELLATION AFFINITY: " +
+                Math.floor(
+                    state.affinity
+                ) + "%"
+            );
+
+            print(
+                "COMMANDS EXECUTED: " +
+                state.commands
+            );
+
+            print(
+                "SECRETS DISCOVERED: " +
+                state.secrets
+            );
+
+            break;
+
+
+        case "clear":
+
+            consoleOutput.innerHTML = "";
+
+            print(
+                "TERMINAL CLEARED.",
+                "success"
+            );
+
+            break;
+
+
+        case "awaken":
+
+            state.secrets++;
+
+            print(
+                "RESTRICTED PROTOCOL REQUESTED.",
+                "warning"
+            );
+
+            setTimeout(()=>{
+
+                print(
+                    "ACCESSING DEEP ARCHIVE..."
+                );
+
+            },300);
+
+            setTimeout(()=>{
+
+                print(
+                    "ACCESS DENIED.",
+                    "danger"
+                );
+
+            },700);
+
+            setTimeout(()=>{
+
+                print(
+                    "WHY ARE YOU STILL READING?",
+                    "danger"
+                );
+
+                if(
+                    typeof window.activateScenarioAlert ===
+                    "function"
+                ){
+
+                    window.activateScenarioAlert();
+
+                }
+
+            },1100);
+
+            break;
+
+
+        default:
+
+            print(
+                "UNKNOWN COMMAND.",
+                "danger"
+            );
+
+            print(
+                "Type HELP for available commands."
+            );
+
+    }
+
+
+    observe(2);
+
+    updateHUD();
+
+    saveState();
+
+}
+
+
+consoleInput.addEventListener(
+"keydown",
+event=>{
+
+    if(
+        event.key === "Enter"
+    ){
+
+        executeCommand(
+            consoleInput.value
+        );
+
+        consoleInput.value = "";
+
+    }
+
+});
+
+
+/* =========================================================
+   AUDIO ENGINE
+========================================================= */
+
+let audioContext = null;
+
+function initializeAudio(){
+
+    if(audioContext) return;
+
+    try{
+
+        audioContext =
+        new (
+            window.AudioContext ||
+            window.webkitAudioContext
+        )();
+
+    }catch(error){
+
+        return;
+
+    }
+
+}
+
+
+function playTone(
+frequency=440,
+duration=.08,
+volume=.025
+){
+
+    if(!state.audio) return;
+
+    initializeAudio();
+
+    if(!audioContext) return;
+
+    const oscillator =
+    audioContext.createOscillator();
+
+    const gain =
+    audioContext.createGain();
+
+    oscillator.type =
+    "sine";
+
+    oscillator.frequency.value =
+    frequency;
+
+    gain.gain.setValueAtTime(
+        volume,
+        audioContext.currentTime
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        .0001,
+        audioContext.currentTime +
+        duration
+    );
+
+    oscillator.connect(gain);
+
+    gain.connect(
+        audioContext.destination
+    );
+
+    oscillator.start();
+
+    oscillator.stop(
+        audioContext.currentTime +
+        duration
+    );
+
+}
+
+
+/* =========================================================
+   AUDIO TOGGLE
+========================================================= */
+
+audioButton.addEventListener(
+"click",
+()=>{
+
+    state.audio =
+    !state.audio;
+
+    if(state.audio){
+
+        initializeAudio();
+
+        if(
+            audioContext &&
+            audioContext.state ===
+            "suspended"
+        ){
+
+            audioContext.resume();
+
+        }
+
+        audioButton.textContent =
+        "AUDIO: ON";
+
+        audioButton.classList.add(
+            "active"
+        );
+
+        playTone(
+            520,
+            .12,
+            .035
+        );
+
+    }else{
+
+        audioButton.textContent =
+        "AUDIO: OFF";
+
+        audioButton.classList.remove(
+            "active"
+        );
+
+    }
+
+    saveState();
+
+});
+
+
+/* =========================================================
+   AUDIO FOR INTERACTIONS
+========================================================= */
+
+document.addEventListener(
+"click",
+event=>{
+
+    if(
+        event.target.matches(
+            "a,button,summary"
+        )
+    ){
+
+        playTone(
+            380,
+            .055,
+            .018
+        );
+
+    }
+
+});
+
+
+/* =========================================================
+   AFFINITY MILESTONES
+========================================================= */
+
+let milestone25 = false;
+let milestone50 = false;
+let milestone75 = false;
+let milestone100 = false;
+
+
+function checkAffinity(){
+
+    if(
+        state.affinity >= 25 &&
+        !milestone25
+    ){
+
+        milestone25 = true;
+
+        if(
+            typeof showNotification ===
+            "function"
+        ){
+
+            showNotification(
+                "The constellation has begun to recognize your presence."
+            );
+
+        }
+
+        playTone(
+            440,
+            .15,
+            .025
+        );
+
+    }
+
+
+    if(
+        state.affinity >= 50 &&
+        !milestone50
+    ){
+
+        milestone50 = true;
+
+        if(
+            typeof showNotification ===
+            "function"
+        ){
+
+            showNotification(
+                "A constellation has become curious about the Observer."
+            );
+
+        }
+
+        playTone(
+            520,
+            .18,
+            .03
+        );
+
+    }
+
+
+    if(
+        state.affinity >= 75 &&
+        !milestone75
+    ){
+
+        milestone75 = true;
+
+        if(
+            typeof showNotification ===
+            "function"
+        ){
+
+            showNotification(
+                "The Star Stream has classified you as a persistent Observer."
+            );
+
+        }
+
+    }
+
+
+    if(
+        state.affinity >= 100 &&
+        !milestone100
+    ){
+
+        milestone100 = true;
+
+        if(
+            typeof showNotification ===
+            "function"
+        ){
+
+            showNotification(
+                "「The constellation is looking directly at you.」",
+                6000
+            );
+
+        }
+
+        if(
+            typeof createRedParticles ===
+            "function"
+        ){
+
+            createRedParticles(60);
+
+        }
+
+    }
+
+}
+
+
+setInterval(
+checkAffinity,
+1200
+);
+
+
+/* =========================================================
+   PROBABILITY EVENTS
+========================================================= */
+
+setInterval(
+()=>{
+
+    if(
+        state.probability <= 35 &&
+        Math.random() < .2
+    ){
+
+        if(
+            typeof activateScenarioAlert ===
+            "function"
+        ){
+
+            activateScenarioAlert();
+
+        }
+
+    }
+
+},
+12000
+);
+
+
+/* =========================================================
+   NARRATIVE INTERRUPTION
+========================================================= */
+
+function narrativeInterruption(
+lines
+){
+
+    const overlay =
+    document.getElementById(
+        "narrativeInterruption"
+    );
+
+    const text =
+    document.getElementById(
+        "interruptionText"
+    );
+
+    if(!overlay || !text)
+        return;
+
+    overlay.classList.add(
+        "active"
+    );
+
+    text.innerHTML = "";
+
+    let lineIndex = 0;
+
+    function nextLine(){
+
+        if(
+            lineIndex >= lines.length
+        ){
+
+            setTimeout(()=>{
+
+                overlay.classList.remove(
+                    "active"
+                );
+
+            },900);
+
+            return;
+
+        }
+
+        const line =
+        document.createElement(
+            "div"
+        );
+
+        line.style.marginBottom =
+        "10px";
+
+        text.appendChild(
+            line
+        );
+
+        let character = 0;
+
+        const timer =
+        setInterval(()=>{
+
+            line.textContent =
+            lines[lineIndex]
+            .substring(
+                0,
+                character
+            );
+
+            character++;
+
+            if(
+                character >
+                lines[lineIndex].length
+            ){
+
+                clearInterval(timer);
+
+                lineIndex++;
+
+                setTimeout(
+                    nextLine,
+                    400
+                );
+
+            }
+
+        },22);
+
+    }
+
+    nextLine();
+
+}
+
+
+/* =========================================================
+   RARE RANDOM EVENT
+========================================================= */
+
+setInterval(
+()=>{
+
+    if(
+        !document.querySelector(
+            "#main.show"
+        )
+    ) return;
+
+    if(
+        Math.random() > .035
+    ) return;
+
+    narrativeInterruption([
+
+        "【 STAR STREAM NOTICE 】",
+
+        "A story has been remembered.",
+
+        "The archive has acknowledged the Observer.",
+
+        "Please continue."
+
+    ]);
+
+},
+25000
+);
+
+
+/* =========================================================
+   READER MODE
+========================================================= */
+
+function activateReaderMode(){
+
+    if(state.readerMode)
+        return;
+
+    state.readerMode = true;
+
+    document.body.classList.add(
+        "reader-mode"
+    );
+
+    state.secrets++;
+
+    if(
+        typeof showNotification ===
+        "function"
+    ){
+
+        showNotification(
+            "「You have been recognized as a Reader.」",
+            6000
+        );
+
+    }
+
+    narrativeInterruption([
+
+        "【 READER PROTOCOL 】",
+
+        "IDENTITY CONFIRMED.",
+
+        "YOU ARE NOT MERELY OBSERVING THE STORY.",
+
+        "THE STORY HAS BEGUN OBSERVING YOU."
+
+    ]);
+
+    saveState();
+
+}
+
+
+let readerSequence = "";
+
+const readerCode =
+"reader";
+
+document.addEventListener(
+"keydown",
+event=>{
+
+    if(
+        event.key.length !== 1
+    ) return;
+
+    readerSequence +=
+    event.key.toLowerCase();
+
+    if(
+        readerSequence.length >
+        readerCode.length
+    ){
+
+        readerSequence =
+        readerSequence.slice(
+            -readerCode.length
+        );
+
+    }
+
+    if(
+        readerSequence ===
+        readerCode
+    ){
+
+        activateReaderMode();
+
+        readerSequence = "";
+
+    }
+
+});
+
+
+/* =========================================================
+   CONSOLE SECRET
+========================================================= */
+
+const oldExecute =
+executeCommand;
+
+window.starStreamCommand =
+function(command){
+
+    oldExecute(command);
+
+};
+
+
+/* =========================================================
+   SAVE AFTER STATE CHANGES
+========================================================= */
+
+window.addEventListener(
+"beforeunload",
+saveState
+);
+
+
+/* =========================================================
+   FINAL STATUS
+========================================================= */
+
+updateHUD();
+
+})();
 
 </script>
 
 </body>
 </html>
+```
