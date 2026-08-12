@@ -4,11 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#020611">
-<meta name="description" content="Keeper of Forgotten Stories — Star Stream Constellation Archive">
-<title>Keeper of Forgotten Stories</title>
+<title>Keeper of Forgotten Stories // Star Stream</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+box-sizing:border-box;
+}
 
 html{
 scroll-behavior:smooth;
@@ -19,7 +20,12 @@ margin:0;
 background:#020611;
 color:#dbeafe;
 font-family:Arial,Helvetica,sans-serif;
+overflow:hidden;
+}
+
+body.loaded{
 overflow-x:hidden;
+overflow-y:auto;
 }
 
 body:before{
@@ -27,18 +33,14 @@ content:"";
 position:fixed;
 inset:0;
 pointer-events:none;
-z-index:-5;
 background-image:
 radial-gradient(circle,#fff 0 1px,transparent 1px),
 radial-gradient(circle,#7dd3fc 0 1px,transparent 1px),
 radial-gradient(circle,#fff 0 1px,transparent 1px),
 radial-gradient(circle,#38bdf8 0 1px,transparent 1px);
-background-size:
-180px 180px,
-270px 240px,
-340px 300px,
-420px 370px;
+background-size:180px 180px,270px 240px,340px 300px,420px 370px;
 opacity:.28;
+z-index:-5;
 animation:stars 35s linear infinite;
 }
 
@@ -47,20 +49,68 @@ content:"";
 position:fixed;
 inset:0;
 pointer-events:none;
-z-index:-4;
 background:
-radial-gradient(circle at 50% 20%,#0c4a6e18,transparent 45%),
 linear-gradient(180deg,#06152d55,#020611,#03152a);
+z-index:-4;
 }
 
 @keyframes stars{
-to{
-background-position:
-180px 180px,
-270px 240px,
-340px 300px,
-420px 370px;
+from{
+background-position:0 0,0 0,0 0,0 0;
 }
+to{
+background-position:180px 180px,270px 240px,340px 300px,420px 370px;
+}
+}
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+::selection{
+background:#38bdf8;
+color:#020611;
+}
+
+button,
+a{
+-webkit-tap-highlight-color:transparent;
+}
+
+button{
+font-family:inherit;
+}
+
+.scanline{
+position:fixed;
+left:0;
+right:0;
+height:1px;
+background:#38bdf833;
+box-shadow:0 0 8px #38bdf8;
+pointer-events:none;
+z-index:9997;
+animation:scanline 6s linear infinite;
+}
+
+@keyframes scanline{
+0%{top:-2px}
+100%{top:100vh}
+}
+
+.noise{
+position:fixed;
+inset:0;
+pointer-events:none;
+z-index:9996;
+opacity:.025;
+background:
+repeating-linear-gradient(
+0deg,
+transparent 0,
+transparent 3px,
+#fff 4px
+);
 }
 
 /* =========================================================
@@ -70,13 +120,13 @@ background-position:
 #connect{
 position:fixed;
 inset:0;
-z-index:9999;
+background:#020611;
 display:flex;
 align-items:center;
 justify-content:center;
-background:#020611;
+z-index:10000;
+transition:opacity 1.2s,visibility 1.2s;
 overflow:hidden;
-transition:opacity 1s,visibility 1s;
 }
 
 #connect.hide{
@@ -86,19 +136,19 @@ pointer-events:none;
 }
 
 .boot{
-width:min(780px,92%);
-font-family:"Courier New",monospace;
+width:min(760px,91%);
+font-family:monospace;
 }
 
 .bootbox{
 position:relative;
-padding:34px 30px;
 border:1px solid #38bdf8;
+padding:32px 28px;
 background:
 linear-gradient(180deg,#06152dee,#030914f5);
 box-shadow:
-0 0 50px #0284c733,
-inset 0 0 40px #0ea5e90a;
+0 0 35px #0284c733,
+inset 0 0 35px #0ea5e90a;
 overflow:hidden;
 }
 
@@ -106,13 +156,14 @@ overflow:hidden;
 content:"";
 position:absolute;
 inset:0;
-pointer-events:none;
-background:repeating-linear-gradient(
+background:
+repeating-linear-gradient(
 0deg,
 transparent 0,
 transparent 3px,
 rgba(56,189,248,.025) 4px
 );
+pointer-events:none;
 }
 
 .bootcorner{
@@ -126,53 +177,36 @@ font-size:18px;
 .c3{bottom:8px;left:10px}
 .c4{bottom:8px;right:10px}
 
-.scan{
-position:absolute;
-left:0;
-right:0;
-height:1px;
-background:#38bdf866;
-box-shadow:0 0 10px #38bdf8;
-animation:scan 4s linear infinite;
-pointer-events:none;
-}
-
-@keyframes scan{
-from{top:0}
-to{top:100%}
-}
-
 .boottitle{
-text-align:center;
-font-size:11px;
-letter-spacing:4px;
+font-size:12px;
+letter-spacing:5px;
 color:#67e8f9;
+text-align:center;
 }
 
 .bootmain{
-margin:25px 0 8px;
-text-align:center;
-font-size:clamp(24px,6vw,42px);
+font-size:clamp(22px,6vw,38px);
 letter-spacing:3px;
-line-height:1.2;
+margin:24px 0 8px;
+text-align:center;
 color:#e0f2fe;
-text-shadow:0 0 18px #38bdf8;
+text-shadow:0 0 15px #38bdf8;
 }
 
 .bootsub{
-margin-bottom:25px;
 text-align:center;
-font-size:9px;
+font-size:10px;
 letter-spacing:2px;
 color:#475569;
+margin-bottom:25px;
 }
 
 .bootgrid{
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:6px 25px;
-font-size:9px;
-line-height:1.9;
+gap:7px 25px;
+font-size:10px;
+line-height:1.8;
 color:#64748b;
 margin-bottom:20px;
 }
@@ -183,8 +217,8 @@ color:#38bdf8;
 
 .loading{
 height:6px;
-border:1px solid #155e75;
 background:#082f49;
+border:1px solid #155e75;
 overflow:hidden;
 }
 
@@ -194,7 +228,7 @@ height:100%;
 width:0;
 background:#38bdf8;
 box-shadow:0 0 15px #38bdf8;
-animation:load 6.5s cubic-bezier(.2,.7,.2,1) forwards;
+animation:load 6s cubic-bezier(.2,.7,.2,1) forwards;
 }
 
 @keyframes load{
@@ -211,9 +245,9 @@ animation:load 6.5s cubic-bezier(.2,.7,.2,1) forwards;
 .progressline{
 display:flex;
 justify-content:space-between;
-margin-top:7px;
-font-size:8px;
+font-size:9px;
 color:#475569;
+margin-top:7px;
 }
 
 #percent{
@@ -221,56 +255,75 @@ color:#67e8f9;
 }
 
 .bootstatus{
-min-height:45px;
-margin-top:20px;
-font-size:9px;
-line-height:2;
-letter-spacing:1px;
+font-size:10px;
 color:#7dd3fc;
+letter-spacing:1.5px;
+line-height:2;
+margin-top:22px;
+min-height:42px;
 }
 
 .bootlog{
-height:95px;
-margin-top:14px;
+height:92px;
+margin-top:15px;
 padding:10px;
 border:1px solid #0c3349;
 background:#010813aa;
 overflow:hidden;
-font-size:8px;
+font-size:9px;
 line-height:1.8;
 color:#475569;
 }
 
-.bootlog .ok{color:#38bdf8}
-.bootlog .alert{color:#f59e0b}
+.bootlog div{
+animation:login .3s ease;
+}
+
+.bootlog .ok{
+color:#38bdf8;
+}
+
+.bootlog .alert{
+color:#f59e0b;
+}
+
+@keyframes login{
+from{
+opacity:0;
+transform:translateX(-5px);
+}
+to{
+opacity:1;
+transform:none;
+}
+}
 
 .bootsignal{
-margin-top:16px;
 text-align:center;
-font-size:9px;
+font-size:10px;
 letter-spacing:3px;
 color:#155e75;
+margin-top:17px;
 }
 
 .enter{
 display:none;
-margin:22px auto 0;
-padding:12px 28px;
+margin:24px auto 0;
+padding:13px 30px;
 border:1px solid #38bdf8;
-background:#0ea5e90a;
+background:rgba(14,165,233,.06);
 color:#bae6fd;
 cursor:pointer;
-font-family:monospace;
-font-size:10px;
-font-weight:bold;
 letter-spacing:3px;
+font-weight:bold;
+font-family:monospace;
 transition:.3s;
 }
 
 .enter:hover{
 background:#0ea5e922;
 box-shadow:0 0 25px #38bdf855;
-color:#fff;
+color:white;
 transform:translateY(-2px);
 }
 
@@ -288,7 +341,7 @@ opacity:1;
 }
 
 .container{
-width:min(980px,93%);
+width:min(1000px,94%);
 margin:35px auto;
 }
 
@@ -296,56 +349,95 @@ margin:35px auto;
 position:relative;
 border:1px solid #075985;
 background:#020b18e8;
-box-shadow:0 0 40px #0284c722;
+box-shadow:
+0 0 35px #0284c722,
+0 0 90px #0284c711;
 overflow:hidden;
-}
-
-.system:before{
-content:"";
-position:absolute;
-inset:0;
-pointer-events:none;
-background:
-linear-gradient(
-90deg,
-transparent,
-rgba(56,189,248,.025),
-transparent
-);
-animation:systemSweep 8s linear infinite;
-}
-
-@keyframes systemSweep{
-0%{transform:translateX(-100%)}
-100%{transform:translateX(100%)}
 }
 
 header{
 position:relative;
-padding:38px 20px;
+padding:42px 20px;
 text-align:center;
 border-bottom:1px solid #164e63;
+overflow:hidden;
+}
+
+header:before{
+content:"";
+position:absolute;
+inset:0;
+background:
+radial-gradient(circle at center,#0ea5e912,transparent 60%);
+pointer-events:none;
 }
 
 .signal{
-font-size:10px;
+position:relative;
+z-index:1;
+font-size:11px;
 color:#67e8f9;
 letter-spacing:3px;
 }
 
 .title{
-margin:15px 0 8px;
-font-size:clamp(28px,7vw,50px);
-line-height:1.08;
+position:relative;
+z-index:1;
+font-size:clamp(27px,7vw,48px);
 letter-spacing:5px;
+margin:15px 0 8px;
 color:#e0f2fe;
-text-shadow:0 0 20px #38bdf877;
+text-shadow:
+0 0 20px #38bdf877,
+0 0 60px #0284c722;
 }
 
 .subtitle{
-font-size:10px;
+position:relative;
+z-index:1;
+font-size:12px;
 color:#7dd3fc;
 letter-spacing:2px;
+}
+
+/* =========================================================
+   CONTROL BAR
+========================================================= */
+
+.controlbar{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:7px;
+flex-wrap:wrap;
+padding:10px;
+background:#010a15;
+border-bottom:1px solid #164e63;
+}
+
+.control{
+border:1px solid #164e63;
+background:#020a16;
+color:#7dd3fc;
+padding:8px 12px;
+font-family:monospace;
+font-size:9px;
+letter-spacing:1px;
+cursor:pointer;
+transition:.25s;
+}
+
+.control:hover,
+.control.active{
+border-color:#38bdf8;
+color:#fff;
+background:#0ea5e912;
+box-shadow:0 0 14px #0284c733;
+}
+
+#volumeIcon{
+display:inline-block;
+width:15px;
 }
 
 /* =========================================================
@@ -353,26 +445,26 @@ letter-spacing:2px;
 ========================================================= */
 
 nav{
-position:sticky;
-top:0;
-z-index:100;
 display:flex;
 justify-content:center;
 flex-wrap:wrap;
-gap:7px;
+gap:6px;
 padding:13px;
 border-bottom:1px solid #164e63;
-background:#031225dd;
+background:#031225;
+position:sticky;
+top:0;
+z-index:20;
 backdrop-filter:blur(10px);
 }
 
 nav a{
-padding:9px 14px;
-border:1px solid transparent;
 color:#7dd3fc;
 text-decoration:none;
-font-size:9px;
+font-size:10px;
 letter-spacing:2px;
+padding:9px 12px;
+border:1px solid transparent;
 transition:.25s;
 }
 
@@ -380,7 +472,7 @@ nav a:hover,
 nav a.active{
 border-color:#0ea5e9;
 background:#0ea5e912;
-color:#fff;
+color:white;
 text-shadow:0 0 8px #38bdf8;
 }
 
@@ -391,73 +483,77 @@ text-shadow:0 0 8px #38bdf8;
 section{
 position:relative;
 margin:18px;
-padding:24px;
+padding:23px;
 border:1px solid #164e63;
 background:#07172bb5;
-scroll-margin-top:70px;
+scroll-margin-top:80px;
 }
 
 .heading{
-font-size:12px;
+color:#67e8f9;
 font-weight:bold;
 letter-spacing:2px;
-color:#67e8f9;
+font-size:13px;
 }
 
 .line{
 height:1px;
-margin:18px 0;
 background:#164e63;
+margin:18px 0;
 }
 
 .info{
-font-size:13px;
+font-size:14px;
 line-height:1.9;
 }
 
-.label{color:#38bdf8}
-.value{color:#e0f2fe}
+.label{
+color:#38bdf8;
+}
+
+.value{
+color:#e0f2fe;
+}
 
 .message{
-padding:16px 18px;
 border-left:2px solid #38bdf8;
+padding:15px 17px;
 background:#0ea5e908;
 color:#bae6fd;
-font-size:13px;
 line-height:1.8;
 font-style:italic;
 }
 
 .fable{
-padding:18px;
-margin:10px 0;
 border:1px solid #164e63;
+padding:20px;
+margin-bottom:10px;
 background:#030d1caa;
 transition:.3s;
 }
 
 .fable:hover{
 border-color:#38bdf8;
-box-shadow:0 0 22px #0284c722;
+box-shadow:0 0 20px #0284c722;
 transform:translateY(-2px);
 }
 
 .fableid{
-font-family:monospace;
-font-size:9px;
 color:#64748b;
+font-family:monospace;
+font-size:11px;
 }
 
 .fabletitle{
-margin:8px 0;
-font-size:20px;
-letter-spacing:2px;
+font-size:21px;
 color:#e0f2fe;
+letter-spacing:2px;
+margin:8px 0;
 }
 
 .meta{
-font-size:11px;
-line-height:1.9;
+font-size:12px;
+line-height:1.8;
 color:#7dd3fc;
 }
 
@@ -465,25 +561,25 @@ color:#7dd3fc;
 margin:18px 0;
 padding-left:15px;
 border-left:1px solid #155e75;
+color:#bae6fd;
 font-size:13px;
 line-height:1.8;
-color:#bae6fd;
 }
 
 .tags{
-font-size:10px;
-line-height:1.8;
+font-size:11px;
 color:#64748b;
+line-height:1.8;
 }
 
 .access{
 display:inline-block;
-margin-top:14px;
+margin-top:15px;
 padding:10px 17px;
 border:1px solid #0ea5e9;
 color:#bae6fd;
 text-decoration:none;
-font-size:10px;
+font-size:11px;
 letter-spacing:2px;
 transition:.25s;
 }
@@ -491,7 +587,7 @@ transition:.25s;
 .access:hover{
 background:#0ea5e922;
 box-shadow:0 0 15px #38bdf855;
-color:#fff;
+color:white;
 }
 
 .transmission{
@@ -502,14 +598,14 @@ background:#020a16aa;
 }
 
 .transmission strong{
-font-family:monospace;
-font-size:11px;
 color:#67e8f9;
+font-family:monospace;
+font-size:12px;
 }
 
 .transmission p{
-font-size:12px;
-line-height:1.8;
+font-size:13px;
+line-height:1.7;
 color:#bae6fd;
 }
 
@@ -523,9 +619,9 @@ gap:10px;
 .channel{
 padding:11px 20px;
 border:1px solid #155e75;
-color:#bae6fd;
 text-decoration:none;
-font-size:10px;
+color:#bae6fd;
+font-size:11px;
 letter-spacing:2px;
 transition:.25s;
 }
@@ -533,11 +629,11 @@ transition:.25s;
 .channel:hover{
 border-color:#38bdf8;
 box-shadow:0 0 15px #38bdf844;
-color:#fff;
+color:white;
 }
 
 /* =========================================================
-   DETAILS
+   DETAILS / SECRET
 ========================================================= */
 
 details{
@@ -547,10 +643,10 @@ transition:.3s;
 }
 
 summary{
-padding:12px;
 cursor:pointer;
+padding:12px;
 color:#67e8f9;
-font-size:10px;
+font-size:12px;
 letter-spacing:1px;
 transition:.3s;
 }
@@ -561,24 +657,47 @@ background:#0ea5e90a;
 
 .hidden{
 padding:15px;
-font-size:11px;
-line-height:1.8;
 color:#64748b;
+font-size:12px;
+line-height:1.8;
 }
 
-details.secret[open]{
+.secret.revealed{
 border-color:#ef4444;
-background:#22030722;
-box-shadow:0 0 25px #ef444422;
+background:
+linear-gradient(90deg,#220307dd,#08030aee,#220307dd);
+box-shadow:
+0 0 20px #ef444422,
+inset 0 0 25px #ef444411;
+animation:secretGlitch .12s infinite alternate;
 }
 
-details.secret[open] summary{
+.secret.revealed summary{
 color:#f87171;
 border-bottom:1px solid #7f1d1d;
+text-shadow:0 0 8px #ef4444;
 }
 
-details.secret[open] .hidden{
+.secret.revealed .hidden{
 color:#fca5a5;
+text-shadow:0 0 6px #ef444433;
+}
+
+.secret.revealed .hidden:before{
+content:"[ SYSTEM BREACH DETECTED ]";
+display:block;
+color:#ef4444;
+font-family:monospace;
+letter-spacing:2px;
+margin-bottom:10px;
+}
+
+@keyframes secretGlitch{
+0%{transform:translate(0)}
+25%{transform:translate(1px,0)}
+50%{transform:translate(-1px,1px)}
+75%{transform:translate(0,-1px)}
+100%{transform:translate(1px,1px)}
 }
 
 /* =========================================================
@@ -587,21 +706,21 @@ color:#fca5a5;
 
 .warning{
 position:relative;
-padding:20px;
 overflow:hidden;
 text-align:center;
+padding:20px;
 border:1px solid #1d4ed8;
 background:#17255433;
 color:#bae6fd;
-font-size:10px;
+font-size:11px;
 line-height:1.8;
 letter-spacing:1px;
-cursor:pointer;
 transition:.4s;
+cursor:pointer;
 }
 
 .warning:hover{
-box-shadow:0 0 20px #1d4ed833;
+box-shadow:0 0 15px #1d4ed833;
 }
 
 .warning.triggered{
@@ -609,13 +728,9 @@ border-color:#ef4444;
 background:#250307aa;
 color:#fecaca;
 box-shadow:
-0 0 35px #ef444433,
+0 0 30px #ef444433,
 inset 0 0 25px #ef444411;
-animation:warningGlitch .1s infinite alternate;
-}
-
-.warningTitle{
-color:#67e8f9;
+animation:warningGlitch .12s infinite alternate;
 }
 
 .warning.triggered .warningTitle{
@@ -623,279 +738,291 @@ color:#ef4444;
 text-shadow:0 0 10px #ef4444;
 }
 
-@keyframes warningGlitch{
-from{transform:translateX(-2px)}
-to{transform:translateX(2px)}
-}
-
-/* =========================================================
-   HUD
-========================================================= */
-
-#observerHUD{
-position:fixed;
-left:15px;
-bottom:15px;
-z-index:3000;
-pointer-events:none;
-font-family:monospace;
-font-size:8px;
-line-height:1.8;
-letter-spacing:1px;
-color:#475569;
-opacity:.85;
-}
-
-#observerHUD:before{
-content:"OBSERVER PROTOCOL";
-display:block;
-margin-bottom:2px;
-font-size:7px;
-letter-spacing:2px;
-color:#155e75;
-}
-
-.hudValue{
-color:#38bdf8;
-}
-
-.hudWarning{
-color:#f59e0b!important;
-}
-
-.hudDanger{
-color:#ef4444!important;
-}
-
-/* =========================================================
-   STAR STREAM CONTROLS
-========================================================= */
-
-#starControls{
-position:fixed;
-right:15px;
-bottom:15px;
-z-index:5000;
-display:flex;
-gap:6px;
-}
-
-.starControl{
-height:38px;
-border:1px solid #155e75;
-background:#020b18f2;
-color:#38bdf8;
-font-family:monospace;
-font-size:9px;
-cursor:pointer;
+.warningTitle{
 transition:.3s;
 }
 
-#consoleButton{
-width:40px;
-font-size:16px;
-}
-
-#audioButton{
-padding:0 10px;
-}
-
-.starControl:hover{
-border-color:#67e8f9;
-color:#fff;
-box-shadow:0 0 20px #38bdf855;
-transform:translateY(-2px);
-}
-
-#audioButton.active{
-border-color:#38bdf8;
-color:#67e8f9;
-box-shadow:0 0 18px #38bdf833;
+@keyframes warningGlitch{
+0%{transform:translateX(0)}
+30%{transform:translateX(2px)}
+60%{transform:translateX(-2px)}
+100%{transform:translateX(1px)}
 }
 
 /* =========================================================
-   VOLUME
+   OBSERVATORY
 ========================================================= */
 
-#volumePanel{
-position:fixed;
-right:15px;
-bottom:62px;
-z-index:5000;
-display:none;
-padding:12px;
-border:1px solid #155e75;
-background:#020b18f5;
-font-family:monospace;
+.observatory{
+overflow:hidden;
+background:
+radial-gradient(circle at 50% 0%,#0c4a6e22,transparent 55%),
+linear-gradient(180deg,#020b18f2,#010711f5);
 }
 
-#volumePanel.show{
-display:block;
-}
-
-#volumePanel label{
-display:block;
-margin-bottom:7px;
-font-size:8px;
-letter-spacing:1px;
-color:#64748b;
-}
-
-#volume{
-width:120px;
-accent-color:#38bdf8;
-}
-
-/* =========================================================
-   CONSOLE
-========================================================= */
-
-#starConsole{
-position:fixed;
+.observatory:before{
+content:"";
+position:absolute;
 inset:0;
-z-index:9000;
+pointer-events:none;
+background:
+linear-gradient(90deg,transparent 49.8%,#38bdf80a 50%,transparent 50.2%),
+linear-gradient(0deg,transparent 49.8%,#38bdf80a 50%,transparent 50.2%);
+background-size:90px 90px;
+opacity:.45;
+}
+
+.observatory:after{
+content:"";
+position:absolute;
+inset:0;
+pointer-events:none;
+background:
+repeating-linear-gradient(
+0deg,
+transparent 0,
+transparent 5px,
+#38bdf808 6px
+);
+}
+
+.obsHeader{
+position:relative;
+z-index:2;
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.obsStatus{
+font-family:monospace;
+font-size:9px;
+letter-spacing:2px;
+color:#22d3ee;
+}
+
+.obsDot{
+display:inline-block;
+width:7px;
+height:7px;
+border-radius:50%;
+background:#22d3ee;
+box-shadow:0 0 10px #22d3ee;
+margin-right:6px;
+animation:obsPulse 1.4s infinite;
+}
+
+@keyframes obsPulse{
+0%,100%{opacity:1;transform:scale(1)}
+50%{opacity:.35;transform:scale(.7)}
+}
+
+.scenarioCore{
+position:relative;
+z-index:2;
+margin:25px auto;
+width:min(500px,90%);
+aspect-ratio:1/1;
+border:1px solid #155e75;
+border-radius:50%;
 display:flex;
 align-items:center;
 justify-content:center;
-padding:20px;
-background:#00040bd9;
-backdrop-filter:blur(8px);
-opacity:0;
-visibility:hidden;
-pointer-events:none;
-transition:.3s;
-}
-
-#starConsole.open{
-opacity:1;
-visibility:visible;
-pointer-events:auto;
-}
-
-.consoleWindow{
-width:min(850px,96%);
-border:1px solid #0ea5e9;
-background:#020b18;
+background:
+radial-gradient(circle,#0ea5e91a 0 8%,transparent 9%),
+radial-gradient(circle,#082f4918 0 30%,transparent 31%),
+radial-gradient(circle,#0ea5e908 0 60%,transparent 61%);
 box-shadow:
-0 0 70px #0284c733,
-inset 0 0 35px #0ea5e90a;
-font-family:monospace;
-transform:translateY(20px);
-transition:.3s;
+0 0 35px #0284c722,
+inset 0 0 45px #0284c711;
 }
 
-#starConsole.open .consoleWindow{
-transform:none;
+.scenarioCore:before,
+.scenarioCore:after{
+content:"";
+position:absolute;
+border:1px solid #0e7490;
+border-radius:50%;
+opacity:.55;
 }
 
-.consoleHeader{
+.scenarioCore:before{
+inset:13%;
+animation:orbit 12s linear infinite;
+}
+
+.scenarioCore:after{
+inset:28%;
+border-style:dashed;
+animation:orbitReverse 8s linear infinite;
+}
+
+@keyframes orbit{
+to{transform:rotate(360deg)}
+}
+
+@keyframes orbitReverse{
+to{transform:rotate(-360deg)}
+}
+
+.coreInner{
+width:28%;
+aspect-ratio:1;
+border-radius:50%;
+border:1px solid #67e8f9;
+background:#0ea5e91a;
+box-shadow:
+0 0 20px #38bdf8,
+0 0 60px #0284c744,
+inset 0 0 20px #38bdf822;
 display:flex;
 align-items:center;
-justify-content:space-between;
-padding:11px 15px;
-border-bottom:1px solid #164e63;
-background:#031225;
-color:#67e8f9;
+justify-content:center;
+text-align:center;
+font-family:monospace;
+font-size:9px;
+letter-spacing:1px;
+color:#e0f2fe;
+animation:corePulse 2.5s ease-in-out infinite;
+}
+
+@keyframes corePulse{
+0%,100%{
+box-shadow:0 0 20px #38bdf8,0 0 60px #0284c744;
+}
+50%{
+box-shadow:0 0 35px #67e8f9,0 0 100px #0284c766;
+}
+}
+
+.orbitLabel{
+position:absolute;
+font-family:monospace;
+font-size:8px;
+letter-spacing:1px;
+color:#38bdf8;
+white-space:nowrap;
+}
+
+.orbitA{
+top:8%;
+left:50%;
+transform:translateX(-50%);
+}
+
+.orbitB{
+right:5%;
+top:50%;
+transform:translateY(-50%);
+}
+
+.orbitC{
+bottom:8%;
+left:50%;
+transform:translateX(-50%);
+}
+
+.orbitD{
+left:5%;
+top:50%;
+transform:translateY(-50%);
+}
+
+.obsGrid{
+position:relative;
+z-index:2;
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:10px;
+margin-top:20px;
+}
+
+.obsCard{
+border:1px solid #164e63;
+background:#020a16cc;
+padding:15px;
+transition:.3s;
+position:relative;
+overflow:hidden;
+}
+
+.obsCard:hover{
+border-color:#38bdf8;
+background:#0ea5e908;
+box-shadow:0 0 18px #0284c722;
+transform:translateY(-2px);
+}
+
+.obsLabel{
+font-family:monospace;
 font-size:9px;
 letter-spacing:2px;
-}
-
-#consoleClose{
-border:0;
-background:none;
 color:#64748b;
-font-size:20px;
-cursor:pointer;
+margin-bottom:7px;
 }
 
-#consoleClose:hover{
+.obsValue{
+font-size:18px;
+color:#e0f2fe;
+letter-spacing:1px;
+}
+
+.threat{
+color:#facc15;
+}
+
+.obsBar{
+height:4px;
+background:#082f49;
+margin-top:10px;
+overflow:hidden;
+}
+
+.obsBar span{
+display:block;
+height:100%;
+background:#38bdf8;
+box-shadow:0 0 10px #38bdf8;
+transition:width 1s ease;
+}
+
+.signalList{
+position:relative;
+z-index:2;
+border:1px solid #164e63;
+margin-top:15px;
+background:#010813bb;
+font-family:monospace;
+font-size:9px;
+line-height:1.9;
+color:#64748b;
+height:120px;
+overflow:hidden;
+padding:10px;
+}
+
+.signalLine{
+animation:signalAppear .35s ease;
+}
+
+.signalLine strong{
+color:#22d3ee;
+}
+
+.signalLine.warning{
+color:#f59e0b;
+}
+
+.signalLine.danger{
 color:#ef4444;
 }
 
-#consoleOutput{
-height:300px;
-padding:15px;
-overflow-y:auto;
-font-size:10px;
-line-height:1.8;
-color:#7dd3fc;
-}
-
-.consoleLine{
-margin-bottom:3px;
-}
-
-.consoleSystem{color:#38bdf8}
-.consoleSuccess{color:#67e8f9}
-.consoleWarning{color:#f59e0b}
-.consoleDanger{color:#ef4444}
-
-.consoleInput{
-display:flex;
-padding:10px 13px;
-border-top:1px solid #164e63;
-background:#010813;
-}
-
-.consolePrompt{
-margin-right:8px;
-color:#38bdf8;
-}
-
-#consoleInput{
-width:100%;
-border:0;
-outline:0;
-background:transparent;
-color:#e0f2fe;
-font-family:monospace;
-font-size:11px;
-}
-
-#consoleInput::placeholder{
-color:#334155;
-}
-
-/* =========================================================
-   NOTIFICATIONS
-========================================================= */
-
-#notifications{
-position:fixed;
-top:18px;
-right:18px;
-z-index:8000;
-width:min(330px,calc(100% - 36px));
-pointer-events:none;
-}
-
-.notification{
-margin-bottom:8px;
-padding:12px 14px;
-border-left:2px solid #38bdf8;
-background:#020b18ed;
-box-shadow:0 0 25px #0284c722;
-font-family:monospace;
-font-size:9px;
-line-height:1.7;
-letter-spacing:1px;
-color:#bae6fd;
-animation:notificationIn .35s ease;
-}
-
-.notification.warning{
-border-color:#f59e0b;
-}
-
-.notification.danger{
-border-color:#ef4444;
-color:#fecaca;
-}
-
-@keyframes notificationIn{
+@keyframes signalAppear{
 from{
 opacity:0;
-transform:translateX(20px);
+transform:translateX(-8px);
 }
 to{
 opacity:1;
@@ -903,42 +1030,407 @@ transform:none;
 }
 }
 
-/* =========================================================
-   INTERRUPTION
-========================================================= */
-
-#interruption{
-position:fixed;
-inset:0;
-z-index:9500;
-display:flex;
-align-items:center;
-justify-content:center;
-padding:30px;
-background:#010308;
-opacity:0;
-visibility:hidden;
-pointer-events:none;
-transition:.4s;
+.scanButton{
+position:relative;
+z-index:3;
+display:block;
+margin:18px auto 0;
+padding:12px 25px;
+border:1px solid #38bdf8;
+background:#0ea5e908;
+color:#bae6fd;
+font-family:monospace;
+font-size:10px;
+letter-spacing:2px;
+cursor:pointer;
+transition:.3s;
 }
 
-#interruption.show{
-opacity:1;
-visibility:visible;
+.scanButton:hover{
+color:white;
+background:#0ea5e922;
+box-shadow:0 0 25px #38bdf855;
+transform:translateY(-2px);
 }
 
-.interruptionText{
-max-width:720px;
+.scanButton.scanning{
+color:#f87171;
+border-color:#ef4444;
+box-shadow:0 0 25px #ef444433;
+animation:scanButtonGlitch .12s infinite alternate;
+}
+
+@keyframes scanButtonGlitch{
+from{transform:translateX(-1px)}
+to{transform:translateX(1px)}
+}
+
+.scanResult{
+position:relative;
+z-index:2;
+text-align:center;
+margin-top:15px;
+min-height:20px;
+font-family:monospace;
+font-size:9px;
+letter-spacing:1px;
+color:#38bdf8;
+}
+
+.observatory.scanning{
+animation:observatoryGlitch .12s infinite alternate;
+}
+
+@keyframes observatoryGlitch{
+0%{transform:translateX(0)}
+25%{transform:translateX(1px)}
+50%{transform:translateX(-1px)}
+75%{transform:translateY(1px)}
+100%{transform:none}
+}
+
+.narrativeWarning{
+margin-top:18px;
+padding:13px;
+border:1px dashed #155e75;
 text-align:center;
 font-family:monospace;
-font-size:11px;
-line-height:2.2;
+font-size:9px;
+line-height:1.8;
+color:#64748b;
+position:relative;
+z-index:2;
+}
+
+.narrativeWarning span{
+color:#67e8f9;
+}
+
+/* =========================================================
+   CONSTELLATION TERMINAL
+========================================================= */
+
+.terminal{
+position:relative;
+overflow:hidden;
+background:
+radial-gradient(circle at 50% 100%,#0c4a6e18,transparent 55%),
+linear-gradient(180deg,#020b18f5,#01050cf8);
+}
+
+.terminal:before{
+content:"";
+position:absolute;
+inset:0;
+pointer-events:none;
+background:
+linear-gradient(90deg,transparent 49.9%,#38bdf808 50%,transparent 50.1%);
+background-size:70px 100%;
+}
+
+.terminalScreen{
+position:relative;
+z-index:2;
+border:1px solid #164e63;
+background:#010711dd;
+padding:20px;
+min-height:180px;
+box-shadow:
+inset 0 0 30px #0284c711,
+0 0 20px #0284c711;
+}
+
+.terminalTop{
+display:flex;
+justify-content:space-between;
+gap:10px;
+flex-wrap:wrap;
+font-family:monospace;
+font-size:9px;
+color:#64748b;
+letter-spacing:1px;
+}
+
+.terminalOnline{
+color:#22d3ee;
+}
+
+.terminalMessage{
+margin:25px 0;
+font-family:monospace;
+font-size:13px;
+line-height:1.9;
+color:#bae6fd;
+min-height:72px;
+}
+
+.terminalMessage strong{
+color:#67e8f9;
+}
+
+.choiceArea{
+position:relative;
+z-index:2;
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:10px;
+margin-top:15px;
+}
+
+.choice{
+position:relative;
+border:1px solid #164e63;
+background:#020a16cc;
+padding:15px;
+color:#bae6fd;
+font-family:monospace;
+font-size:10px;
+line-height:1.6;
+text-align:left;
+cursor:pointer;
+transition:.3s;
+}
+
+.choice:hover{
+border-color:#38bdf8;
+background:#0ea5e912;
+color:white;
+box-shadow:
+0 0 18px #0284c733,
+inset 0 0 15px #0ea5e908;
+transform:translateY(-2px);
+}
+
+.choice:disabled{
+cursor:not-allowed;
+opacity:.35;
+transform:none;
+}
+
+.choiceNumber{
+display:block;
+color:#155e75;
+font-size:9px;
+margin-bottom:5px;
+}
+
+.choice:hover .choiceNumber{
+color:#38bdf8;
+}
+
+.terminalResponse{
+position:relative;
+z-index:2;
+margin-top:18px;
+padding:15px;
+border-left:2px solid #38bdf8;
+background:#0ea5e908;
+font-family:monospace;
+font-size:10px;
+line-height:1.8;
+color:#7dd3fc;
+min-height:48px;
+}
+
+.terminalResponse.alert{
+border-color:#f59e0b;
+color:#fcd34d;
+}
+
+.terminalResponse.danger{
+border-color:#ef4444;
+color:#fca5a5;
+background:#450a0a18;
+}
+
+.constellationStats{
+position:relative;
+z-index:2;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:8px;
+margin-top:15px;
+}
+
+.cStat{
+border:1px solid #164e63;
+padding:12px;
+background:#020a16aa;
+text-align:center;
+}
+
+.cStatLabel{
+display:block;
+font-family:monospace;
+font-size:8px;
+letter-spacing:1px;
+color:#64748b;
+margin-bottom:5px;
+}
+
+.cStatValue{
+font-family:monospace;
+font-size:17px;
+color:#67e8f9;
+}
+
+.sponsorPanel{
+position:relative;
+z-index:2;
+margin-top:18px;
+padding:16px;
+border:1px dashed #155e75;
+background:#020a16aa;
+}
+
+.sponsorTitle{
+font-family:monospace;
+font-size:10px;
 letter-spacing:2px;
 color:#67e8f9;
 }
 
-.interruptionText .red{
-color:#ef4444;
+.sponsorName{
+margin-top:10px;
+font-size:16px;
+color:#e0f2fe;
+letter-spacing:1px;
+}
+
+.sponsorStatus{
+margin-top:7px;
+font-family:monospace;
+font-size:9px;
+color:#64748b;
+}
+
+.sponsorBar{
+height:4px;
+background:#082f49;
+margin-top:12px;
+}
+
+.sponsorBar span{
+display:block;
+height:100%;
+width:0;
+background:#38bdf8;
+box-shadow:0 0 10px #38bdf8;
+transition:width 1s ease;
+}
+
+.terminalFooter{
+position:relative;
+z-index:2;
+margin-top:18px;
+text-align:center;
+font-family:monospace;
+font-size:8px;
+letter-spacing:1px;
+color:#334155;
+line-height:1.8;
+}
+
+.terminalCorrupted{
+animation:terminalCorruption .12s infinite alternate;
+}
+
+@keyframes terminalCorruption{
+0%{
+transform:translateX(0);
+filter:none;
+}
+30%{
+transform:translateX(2px);
+filter:brightness(1.5);
+}
+60%{
+transform:translateX(-2px);
+filter:hue-rotate(15deg);
+}
+100%{
+transform:none;
+filter:none;
+}
+}
+
+/* =========================================================
+   COMMAND PANEL
+========================================================= */
+
+#commandPanel{
+position:fixed;
+right:18px;
+bottom:18px;
+width:min(390px,calc(100% - 36px));
+max-height:70vh;
+overflow:auto;
+background:#010711f5;
+border:1px solid #38bdf8;
+box-shadow:
+0 0 35px #0284c744,
+inset 0 0 30px #0284c711;
+padding:18px;
+z-index:5000;
+opacity:0;
+visibility:hidden;
+transform:translateY(15px);
+transition:.3s;
+font-family:monospace;
+}
+
+#commandPanel.open{
+opacity:1;
+visibility:visible;
+transform:none;
+}
+
+.commandHeader{
+display:flex;
+justify-content:space-between;
+align-items:center;
+color:#67e8f9;
+font-size:10px;
+letter-spacing:2px;
+padding-bottom:12px;
+border-bottom:1px solid #164e63;
+}
+
+.commandClose{
+border:0;
+background:none;
+color:#64748b;
+font-size:16px;
+cursor:pointer;
+}
+
+.commandClose:hover{
+color:#fff;
+}
+
+.commandBody{
+font-size:9px;
+line-height:1.9;
+color:#64748b;
+margin-top:12px;
+}
+
+.commandItem{
+padding:9px;
+margin-top:7px;
+border:1px solid #164e63;
+cursor:pointer;
+transition:.2s;
+}
+
+.commandItem:hover{
+border-color:#38bdf8;
+color:#bae6fd;
+background:#0ea5e90a;
+}
+
+.commandItem span{
+color:#38bdf8;
 }
 
 /* =========================================================
@@ -949,10 +1441,10 @@ color:#ef4444;
 position:fixed;
 width:3px;
 height:3px;
-z-index:9998;
-pointer-events:none;
 background:#ef4444;
-box-shadow:0 0 9px #ef4444;
+box-shadow:0 0 8px #ef4444;
+pointer-events:none;
+z-index:9998;
 animation:redParticle 1.8s linear forwards;
 }
 
@@ -961,21 +1453,59 @@ animation:redParticle 1.8s linear forwards;
 opacity:0;
 transform:translate(0,0) scale(.5);
 }
-15%{opacity:1}
+15%{
+opacity:1;
+}
 100%{
 opacity:0;
 transform:
 translate(
-calc(var(--x)*1px),
-calc(var(--y)*1px)
+calc(var(--x) * 1px),
+calc(var(--y) * 1px)
+)
+scale(0);
+}
+}
+
+.blueParticle{
+position:fixed;
+width:2px;
+height:2px;
+background:#38bdf8;
+box-shadow:0 0 8px #38bdf8;
+pointer-events:none;
+z-index:9997;
+animation:blueParticle 1.5s linear forwards;
+}
+
+@keyframes blueParticle{
+0%{
+opacity:1;
+transform:translate(0,0) scale(1);
+}
+100%{
+opacity:0;
+transform:
+translate(
+calc(var(--x) * 1px),
+calc(var(--y) * 1px)
 )
 scale(0);
 }
 }
 
 /* =========================================================
-   GLITCH / BLINK
+   FOOTER
 ========================================================= */
+
+footer{
+text-align:center;
+padding:30px 20px;
+font-size:10px;
+color:#475569;
+letter-spacing:2px;
+line-height:1.8;
+}
 
 .blink{
 animation:blink 1.4s infinite;
@@ -998,45 +1528,13 @@ animation:glitch 4s infinite;
 }
 
 /* =========================================================
-   SCENARIO BREACH
-========================================================= */
-
-body.breach .system{
-border-color:#ef4444;
-box-shadow:
-0 0 60px #ef444422,
-inset 0 0 40px #ef444411;
-}
-
-body.breach .signal{
-color:#ef4444;
-}
-
-body.breach .title{
-text-shadow:0 0 25px #ef4444;
-}
-
-/* =========================================================
-   FOOTER
-========================================================= */
-
-footer{
-padding:25px;
-text-align:center;
-font-size:9px;
-line-height:1.8;
-letter-spacing:2px;
-color:#475569;
-}
-
-/* =========================================================
-   MOBILE
+   RESPONSIVE
 ========================================================= */
 
 @media(max-width:600px){
 
 .container{
-width:97%;
+width:96%;
 margin:15px auto;
 }
 
@@ -1051,39 +1549,48 @@ letter-spacing:3px;
 
 nav a{
 padding:8px 9px;
-font-size:8px;
+font-size:9px;
 }
 
 .bootgrid{
 grid-template-columns:1fr;
+gap:3px;
 }
 
 .bootbox{
 padding:25px 17px;
 }
 
-#observerHUD{
-left:8px;
-bottom:8px;
+.obsGrid{
+grid-template-columns:1fr;
+}
+
+.scenarioCore{
+width:82vw;
+}
+
+.orbitLabel{
 font-size:7px;
 }
 
-#starControls{
-right:8px;
-bottom:8px;
+.obsValue{
+font-size:15px;
 }
 
-#consoleButton{
-width:36px;
+.choiceArea{
+grid-template-columns:1fr;
 }
 
-#audioButton{
-padding:0 8px;
+.constellationStats{
+grid-template-columns:1fr;
 }
 
-#volumePanel{
-right:8px;
-bottom:53px;
+.terminalScreen{
+padding:15px;
+}
+
+.terminalMessage{
+font-size:11px;
 }
 
 }
@@ -1092,9 +1599,12 @@ bottom:53px;
 
 <body>
 
-<!-- =========================================================
-     BOOT
-========================================================= -->
+<div class="scanline"></div>
+<div class="noise"></div>
+
+<!-- =====================================================
+     BOOT SCREEN
+===================================================== -->
 
 <div id="connect">
 
@@ -1104,8 +1614,6 @@ bottom:53px;
 <div class="bootcorner c2">┐</div>
 <div class="bootcorner c3">└</div>
 <div class="bootcorner c4">┘</div>
-
-<div class="scan"></div>
 
 <div class="boottitle">
 【 STAR STREAM CONNECTION PROTOCOL 】
@@ -1117,19 +1625,40 @@ STAR STREAM...
 </div>
 
 <div class="bootsub">
-NARRATIVE OBSERVATION SYSTEM // BUILD KFS-001
+NARRATIVE OBSERVATION SYSTEM // BUILD KFS-005
 </div>
 
 <div class="bootgrid">
 
-<div>[01] STAR STREAM: <span>SEARCHING</span></div>
-<div>[02] CONSTELLATION: <span>UNKNOWN</span></div>
-<div>[03] NARRATIVE: <span>SCANNING</span></div>
-<div>[04] FABLE ARCHIVE: <span>LOCKED</span></div>
-<div>[05] OBSERVER: <span>DETECTED</span></div>
-<div>[06] SCENARIO: <span>STANDBY</span></div>
-<div>[07] PROBABILITY: <span>CALCULATING</span></div>
-<div>[08] TRANSMISSION: <span>WAITING</span></div>
+<div>
+[01] STAR STREAM:
+<span>SEARCHING</span>
+</div>
+
+<div>
+[02] CONSTELLATION:
+<span>UNKNOWN</span>
+</div>
+
+<div>
+[03] NARRATIVE:
+<span>SCANNING</span>
+</div>
+
+<div>
+[04] FABLE ARCHIVE:
+<span>LOCKED</span>
+</div>
+
+<div>
+[05] OBSERVER:
+<span>DETECTED</span>
+</div>
+
+<div>
+[06] SCENARIO:
+<span>STANDBY</span>
+</div>
 
 </div>
 
@@ -1149,8 +1678,10 @@ INITIALIZING NARRATIVE ENGINE...
 </div>
 
 <div class="bootlog" id="bootlog">
+
 <div>> Initializing Star Stream interface...</div>
 <div>> Establishing connection...</div>
+
 </div>
 
 <div class="bootsignal">
@@ -1159,7 +1690,7 @@ WAITING FOR CONSTELLATION RESPONSE
 <span class="blink">●</span>
 </div>
 
-<button class="enter" id="enter" type="button">
+<button class="enter" id="enter">
 [ ENTER THE SCENARIO ]
 </button>
 
@@ -1167,9 +1698,9 @@ WAITING FOR CONSTELLATION RESPONSE
 </div>
 
 
-<!-- =========================================================
+<!-- =====================================================
      MAIN
-========================================================= -->
+===================================================== -->
 
 <div id="main">
 
@@ -1196,19 +1727,47 @@ CONSTELLATION RECORD // ACTIVE
 </header>
 
 
+<!-- =====================================================
+     CONTROLS
+===================================================== -->
+
+<div class="controlbar">
+
+<button class="control" id="volumeButton">
+<span id="volumeIcon">◒</span>
+VOLUME
+</button>
+
+<button class="control" id="commandButton">
+⌘ COMMAND
+</button>
+
+<button class="control" id="ambientButton">
+✦ AMBIENCE
+</button>
+
+</div>
+
+
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
+
 <nav>
 
 <a href="#home">HOME</a>
 <a href="#fables">FABLES</a>
 <a href="#transmissions">TRANSMISSIONS</a>
+<a href="#observatory">OBSERVATORY</a>
+<a href="#terminal">TERMINAL</a>
 <a href="#channels">CHANNELS</a>
 
 </nav>
 
 
-<!-- =========================================================
+<!-- =====================================================
      HOME
-========================================================= -->
+===================================================== -->
 
 <section id="home">
 
@@ -1221,20 +1780,16 @@ CONSTELLATION RECORD // ACTIVE
 <div class="info">
 
 ■ <span class="label">Modifier:</span>
-<span class="value">「Keeper of Forgotten Stories」</span>
-<br>
+<span class="value">「Keeper of Forgotten Stories」</span><br>
 
 ■ <span class="label">Grade:</span>
-<span class="value">Unknown.</span>
-<br>
+<span class="value">Unknown.</span><br>
 
 ■ <span class="label">Status:</span>
-<span class="value">Currently observing the Scenario.</span>
-<br>
+<span class="value">Currently observing the Scenario.</span><br>
 
 ■ <span class="label">Alignment:</span>
-<span class="value">Narrative Preservation.</span>
-<br>
+<span class="value">Narrative Preservation.</span><br>
 
 ■ <span class="label">Fables Registered:</span>
 <span class="value">1 and counting...</span>
@@ -1261,55 +1816,14 @@ is preserved as another Fable."
 
 </div>
 
-
-<div class="observerPanel">
-
-<div class="observerPanelTitle">
-【 OBSERVER ACTIVITY RECORD 】
-</div>
-
-<div class="observerStats">
-
-<div class="observerStat">
-<strong id="statObservations">000</strong>
-<span>OBSERVATIONS</span>
-</div>
-
-<div class="observerStat">
-<strong id="statAffinity">00%</strong>
-<span>CONSTELLATION AFFINITY</span>
-</div>
-
-<div class="observerStat">
-<strong id="statProbability">100%</strong>
-<span>NARRATIVE PROBABILITY</span>
-</div>
-
-</div>
-
-<div class="affinityBox">
-
-<div class="affinityTop">
-<span>CONSTELLATION RECOGNITION</span>
-<span id="affinityValue">00%</span>
-</div>
-
-<div class="affinityTrack">
-<div id="affinityBar"></div>
-</div>
-
-</div>
-
-</div>
-
 </section>
 
 
-<!-- =========================================================
-     FABLES
-========================================================= -->
+<!-- =====================================================
+     ACQUIRED FABLES
+===================================================== -->
 
-<section>
+<section id="fables">
 
 <div class="heading">
 【 ACQUIRED FABLES 】
@@ -1365,9 +1879,9 @@ you are ready to read them.
 </section>
 
 
-<!-- =========================================================
+<!-- =====================================================
      ATTRIBUTES
-========================================================= -->
+===================================================== -->
 
 <section>
 
@@ -1415,9 +1929,9 @@ Yet you have opened this record.
 </section>
 
 
-<!-- =========================================================
+<!-- =====================================================
      ORIGIN
-========================================================= -->
+===================================================== -->
 
 <section>
 
@@ -1452,9 +1966,377 @@ that should have been forgotten."
 </section>
 
 
-<!-- =========================================================
+<!-- =====================================================
+     OBSERVATORY
+===================================================== -->
+
+<section id="observatory" class="observatory">
+
+<div class="obsHeader">
+
+<div class="heading">
+【 SCENARIO OBSERVATORY 】
+</div>
+
+<div class="obsStatus">
+<span class="obsDot"></span>
+LIVE STAR STREAM FEED
+</div>
+
+</div>
+
+<div class="line"></div>
+
+<div class="message">
+
+The Star Stream has temporarily authorized
+this constellation to observe the surrounding
+Scenario.
+
+<br><br>
+
+Observation does not imply safety.
+
+</div>
+
+<div class="scenarioCore">
+
+<div class="orbitLabel orbitA">
+NARRATIVE FIELD
+</div>
+
+<div class="orbitLabel orbitB">
+SCENARIO VECTOR
+</div>
+
+<div class="orbitLabel orbitC">
+FABLE DENSITY
+</div>
+
+<div class="orbitLabel orbitD">
+STAR STREAM
+</div>
+
+<div class="coreInner">
+SCENARIO<br>
+#001
+</div>
+
+</div>
+
+<div class="obsGrid">
+
+<div class="obsCard">
+
+<div class="obsLabel">
+NARRATIVE STABILITY
+</div>
+
+<div class="obsValue">
+<span id="stability">87</span>%
+</div>
+
+<div class="obsBar">
+<span id="stabilityBar" style="width:87%"></span>
+</div>
+
+</div>
+
+<div class="obsCard">
+
+<div class="obsLabel">
+FABLE DENSITY
+</div>
+
+<div class="obsValue">
+<span id="density">64</span>%
+</div>
+
+<div class="obsBar">
+<span id="densityBar" style="width:64%"></span>
+</div>
+
+</div>
+
+<div class="obsCard">
+
+<div class="obsLabel">
+CONSTELLATION ACTIVITY
+</div>
+
+<div class="obsValue">
+<span id="activity">LOW</span>
+</div>
+
+<div class="obsBar">
+<span id="activityBar" style="width:31%"></span>
+</div>
+
+</div>
+
+<div class="obsCard">
+
+<div class="obsLabel">
+THREAT LEVEL
+</div>
+
+<div class="obsValue threat">
+<span id="threat">UNKNOWN</span>
+</div>
+
+<div class="obsBar">
+<span id="threatBar" style="width:18%"></span>
+</div>
+
+</div>
+
+</div>
+
+<div class="signalList" id="signalList">
+
+<div class="signalLine">
+<strong>[SYSTEM]</strong>
+Observatory connection established.
+</div>
+
+<div class="signalLine">
+<strong>[STREAM]</strong>
+Narrative frequency detected.
+</div>
+
+<div class="signalLine">
+<strong>[FABLE]</strong>
+Archive synchronization complete.
+</div>
+
+</div>
+
+<button class="scanButton" id="scanButton">
+【 ▶ SCAN CURRENT SCENARIO 】
+</button>
+
+<div class="scanResult" id="scanResult">
+AWAITING OBSERVER INPUT...
+</div>
+
+<div class="narrativeWarning">
+
+[ STAR STREAM NOTICE ]
+
+<br>
+
+<span>
+The values displayed here are estimates.
+</span>
+
+<br>
+
+Narrative probability is subject to change
+without prior notification.
+
+<br><br>
+
+[ OBSERVATION MAY ALTER RESULTS ]
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     INTERACTION TERMINAL
+===================================================== -->
+
+<section id="terminal" class="terminal">
+
+<div class="heading">
+【 CONSTELLATION INTERACTION TERMINAL 】
+</div>
+
+<div class="line"></div>
+
+<div class="message">
+
+The Star Stream has detected your presence.
+
+<br><br>
+
+A constellation is observing you.
+
+<br><br>
+
+It appears to be waiting for your response.
+
+</div>
+
+<div class="terminalScreen">
+
+<div class="terminalTop">
+
+<span>
+TERMINAL // KFS-001
+</span>
+
+<span class="terminalOnline">
+● CONNECTION STABLE
+</span>
+
+</div>
+
+<div class="terminalMessage" id="terminalMessage">
+
+<strong>[ STAR STREAM ]</strong>
+
+<br><br>
+
+An unidentified incarnation has entered
+the observation range.
+
+<br>
+
+The constellation 「Keeper of Forgotten Stories」
+is watching.
+
+<br><br>
+
+How will you proceed?
+
+</div>
+
+</div>
+
+<div class="choiceArea">
+
+<button class="choice" data-choice="observe">
+
+<span class="choiceNumber">
+[ OPTION 01 ]
+</span>
+
+Remain silent and observe the constellation.
+
+</button>
+
+<button class="choice" data-choice="speak">
+
+<span class="choiceNumber">
+[ OPTION 02 ]
+</span>
+
+Attempt to communicate with it.
+
+</button>
+
+<button class="choice" data-choice="story">
+
+<span class="choiceNumber">
+[ OPTION 03 ]
+</span>
+
+Offer one of your stories.
+
+</button>
+
+<button class="choice" data-choice="challenge">
+
+<span class="choiceNumber">
+[ OPTION 04 ]
+</span>
+
+Ask what it is hiding.
+
+</button>
+
+</div>
+
+<div class="terminalResponse" id="terminalResponse">
+
+AWAITING INCARNATION RESPONSE...
+
+</div>
+
+<div class="constellationStats">
+
+<div class="cStat">
+
+<span class="cStatLabel">
+FAVOR
+</span>
+
+<span class="cStatValue" id="favor">
+00
+</span>
+
+</div>
+
+<div class="cStat">
+
+<span class="cStatLabel">
+CURIOSITY
+</span>
+
+<span class="cStatValue" id="curiosity">
+00
+</span>
+
+</div>
+
+<div class="cStat">
+
+<span class="cStatLabel">
+NARRATIVE RISK
+</span>
+
+<span class="cStatValue" id="risk">
+00
+</span>
+
+</div>
+
+</div>
+
+<div class="sponsorPanel">
+
+<div class="sponsorTitle">
+【 SPONSORSHIP STATUS 】
+</div>
+
+<div class="sponsorName" id="sponsorName">
+NO SPONSOR DETECTED
+</div>
+
+<div class="sponsorStatus" id="sponsorStatus">
+The constellation has not yet decided
+whether you are worth observing.
+</div>
+
+<div class="sponsorBar">
+<span id="sponsorBar"></span>
+</div>
+
+</div>
+
+<div class="terminalFooter">
+
+[ WARNING ]
+
+<br>
+
+Your choices may alter the constellation's
+perception of you.
+
+<br>
+
+This interaction is being recorded.
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
      WARNING
-========================================================= -->
+===================================================== -->
 
 <section>
 
@@ -1490,11 +2372,11 @@ The consequences cannot be reversed.
 </section>
 
 
-<!-- =========================================================
+<!-- =====================================================
      FABLE ARCHIVE
-========================================================= -->
+===================================================== -->
 
-<section id="fables">
+<section>
 
 <div class="heading">
 【 FABLE ARCHIVE 】
@@ -1513,13 +2395,21 @@ FRESH START
 </div>
 
 <div class="meta">
+
 KakaObi · Naruto (Anime & Manga)
+
 <br>
+
 STATUS: ONGOING · CHAPTERS: 13/?
+
 <br>
+
 WORD COUNT: 56,950
+
 <br>
+
 RATING: TEEN AND UP AUDIENCES
+
 </div>
 
 <div class="line"></div>
@@ -1546,16 +2436,19 @@ Perhaps a different ending.
 </div>
 
 <div class="tags">
+
 TIME TRAVEL · BOTTOM UCHIHA OBITO ·
 PROTECTIVE UCHIHA OBITO · UCHIHA OBITO NEEDS A HUG
+
 </div>
 
-<a
-class="access"
+<a class="access"
 href="https://archiveofourown.org/works/84746576"
 target="_blank"
 rel="noopener noreferrer">
+
 [ ACCESS FABLE ]
+
 </a>
 
 </div>
@@ -1593,9 +2486,9 @@ another story.
 </section>
 
 
-<!-- =========================================================
+<!-- =====================================================
      TRANSMISSIONS
-========================================================= -->
+===================================================== -->
 
 <section id="transmissions">
 
@@ -1668,9 +2561,9 @@ Someone is watching from beyond the archive.
 </section>
 
 
-<!-- =========================================================
+<!-- =====================================================
      CHANNELS
-========================================================= -->
+===================================================== -->
 
 <section id="channels">
 
@@ -1682,16 +2575,14 @@ Someone is watching from beyond the archive.
 
 <div class="channels">
 
-<a
-class="channel"
+<a class="channel"
 href="https://archiveofourown.org/users/Keeper_of_Forgotten_Stories"
 target="_blank"
 rel="noopener noreferrer">
 AO3
 </a>
 
-<a
-class="channel"
+<a class="channel"
 href="https://www.wattpad.com/user/Louca_por_yaoi011"
 target="_blank"
 rel="noopener noreferrer">
@@ -1713,6 +2604,12 @@ STATUS: OBSERVING THE SCENARIO
 「Some stories survive because someone
 refused to forget them.」
 
+<br><br>
+
+<span class="blink">●</span>
+CONNECTION REMAINS ACTIVE
+<span class="blink">●</span>
+
 </footer>
 
 </div>
@@ -1720,471 +2617,136 @@ refused to forget them.」
 </div>
 
 
-<!-- =========================================================
-     HUD
-========================================================= -->
+<!-- =====================================================
+     COMMAND PANEL
+===================================================== -->
 
-<div id="observerHUD">
+<div id="commandPanel">
 
-<div>
-CONNECTION:
-<span class="hudValue" id="hudConnection">
-STABLE
-</span>
-</div>
-
-<div>
-AFFINITY:
-<span class="hudValue" id="hudAffinity">
-00%
-</span>
-</div>
-
-<div>
-OBSERVATIONS:
-<span class="hudValue" id="hudObservations">
-000
-</span>
-</div>
-
-<div>
-PROBABILITY:
-<span class="hudValue" id="hudProbability">
-100%
-</span>
-</div>
-
-</div>
-
-
-<!-- =========================================================
-     CONTROLS
-========================================================= -->
-
-<div id="starControls">
-
-<button
-type="button"
-class="starControl"
-id="audioButton">
-AUDIO: OFF
-</button>
-
-<button
-type="button"
-class="starControl"
-id="consoleButton"
-title="Star Stream Command Console">
-⌘
-</button>
-
-</div>
-
-
-<div id="volumePanel">
-
-<label>
-STAR STREAM AMBIENCE
-</label>
-
-<input
-type="range"
-id="volume"
-min="0"
-max="100"
-value="35">
-
-</div>
-
-
-<!-- =========================================================
-     CONSOLE
-========================================================= -->
-
-<div id="starConsole">
-
-<div class="consoleWindow">
-
-<div class="consoleHeader">
+<div class="commandHeader">
 
 <span>
 【 STAR STREAM COMMAND TERMINAL 】
 </span>
 
-<button
-type="button"
-id="consoleClose">
+<button class="commandClose" id="commandClose">
 ×
 </button>
 
 </div>
 
-<div id="consoleOutput">
+<div class="commandBody">
 
-<div class="consoleLine consoleSystem">
-&gt; STAR STREAM COMMAND TERMINAL INITIALIZED.
+<div class="commandItem" data-command="home">
+<span>[01]</span> RETURN TO HOME
 </div>
 
-<div class="consoleLine">
-&gt; Type HELP to display available commands.
+<div class="commandItem" data-command="scan">
+<span>[02]</span> SCAN SCENARIO
 </div>
 
+<div class="commandItem" data-command="terminal">
+<span>[03]</span> OPEN INTERACTION TERMINAL
 </div>
 
-<div class="consoleInput">
+<div class="commandItem" data-command="secret">
+<span>[04]</span> SEARCH RESTRICTED DATA
+</div>
 
-<span class="consolePrompt">
-&gt;
+<div class="commandItem" data-command="ambient">
+<span>[05]</span> TOGGLE AMBIENT SYSTEM
+</div>
+
+<div class="commandItem" data-command="clear">
+<span>[06]</span> RESET OBSERVER DATA
+</div>
+
+<br>
+
+<div>
+SYSTEM STATUS:
+<span style="color:#22d3ee">
+ONLINE
 </span>
+</div>
 
-<input
-id="consoleInput"
-type="text"
-autocomplete="off"
-spellcheck="false"
-placeholder="ENTER COMMAND...">
+<div>
+OBSERVER:
+<span style="color:#22d3ee">
+DETECTED
+</span>
+</div>
 
+<div>
+CONSTELLATION:
+<span style="color:#22d3ee">
+ACTIVE
+</span>
 </div>
 
 </div>
-
-</div>
-
-
-<!-- =========================================================
-     VOLUME PANEL
-========================================================= -->
-
-<div id="notifications"></div>
-
-
-<!-- =========================================================
-     NARRATIVE INTERRUPTION
-========================================================= -->
-
-<div id="interruption">
-
-<div
-class="interruptionText"
-id="interruptionText">
-</div>
-
 </div>
 
 
 <script>
-/* =========================================================
-   STAR STREAM ENGINE
-========================================================= */
-
-(function(){
-
 "use strict";
-
-
-/* =========================================================
-   STATE
-========================================================= */
-
-var state={
-observations:0,
-affinity:0,
-probability:100,
-commands:0,
-secrets:0,
-audio:false,
-volume:35,
-time:0
-};
-
 
 /* =========================================================
    ELEMENTS
 ========================================================= */
 
-var connect=document.getElementById("connect");
-var main=document.getElementById("main");
-var enter=document.getElementById("enter");
-var percent=document.getElementById("percent");
-var status=document.getElementById("status");
-var bootlog=document.getElementById("bootlog");
+const statusEl=document.getElementById("status");
+const enter=document.getElementById("enter");
+const connect=document.getElementById("connect");
+const main=document.getElementById("main");
+const percent=document.getElementById("percent");
+const bootlog=document.getElementById("bootlog");
 
-var audioButton=document.getElementById("audioButton");
-var volumePanel=document.getElementById("volumePanel");
-var volume=document.getElementById("volume");
+const volumeButton=document.getElementById("volumeButton");
+const volumeIcon=document.getElementById("volumeIcon");
+const commandButton=document.getElementById("commandButton");
+const ambientButton=document.getElementById("ambientButton");
 
-var consoleButton=document.getElementById("consoleButton");
-var consoleBox=document.getElementById("starConsole");
-var consoleClose=document.getElementById("consoleClose");
-var consoleInput=document.getElementById("consoleInput");
-var consoleOutput=document.getElementById("consoleOutput");
+const commandPanel=document.getElementById("commandPanel");
+const commandClose=document.getElementById("commandClose");
 
-var warning=document.getElementById("warning");
+const warning=document.getElementById("warning");
 
-var hudConnection=document.getElementById("hudConnection");
-var hudAffinity=document.getElementById("hudAffinity");
-var hudObservations=document.getElementById("hudObservations");
-var hudProbability=document.getElementById("hudProbability");
+const observatory=document.querySelector(".observatory");
+const scanButton=document.getElementById("scanButton");
+const scanResult=document.getElementById("scanResult");
+const signalList=document.getElementById("signalList");
 
-var statObservations=document.getElementById("statObservations");
-var statAffinity=document.getElementById("statAffinity");
-var statProbability=document.getElementById("statProbability");
+const stability=document.getElementById("stability");
+const density=document.getElementById("density");
+const activity=document.getElementById("activity");
+const threat=document.getElementById("threat");
 
-var affinityValue=document.getElementById("affinityValue");
-var affinityBar=document.getElementById("affinityBar");
+const stabilityBar=document.getElementById("stabilityBar");
+const densityBar=document.getElementById("densityBar");
+const activityBar=document.getElementById("activityBar");
+const threatBar=document.getElementById("threatBar");
 
-var notifications=document.getElementById("notifications");
+const terminal=document.querySelector(".terminal");
+const terminalMessage=document.getElementById("terminalMessage");
+const terminalResponse=document.getElementById("terminalResponse");
 
-var interruption=document.getElementById("interruption");
-var interruptionText=document.getElementById("interruptionText");
+const favor=document.getElementById("favor");
+const curiosity=document.getElementById("curiosity");
+const risk=document.getElementById("risk");
 
+const sponsorName=document.getElementById("sponsorName");
+const sponsorStatus=document.getElementById("sponsorStatus");
+const sponsorBar=document.getElementById("sponsorBar");
 
-/* =========================================================
-   LOAD SAVE
-========================================================= */
-
-try{
-
-var saved=localStorage.getItem(
-"KFS_STAR_STREAM_SAVE"
-);
-
-if(saved){
-
-var data=JSON.parse(saved);
-
-Object.keys(state).forEach(function(key){
-
-if(
-data[key]!==undefined &&
-typeof data[key]===typeof state[key]
-){
-
-state[key]=data[key];
-
-}
-
-});
-
-}
-
-}catch(e){}
-
-
-volume.value=state.volume;
+const choices=document.querySelectorAll(".choice");
 
 
 /* =========================================================
-   SAVE
+   BOOT SYSTEM
 ========================================================= */
 
-function save(){
-
-try{
-
-localStorage.setItem(
-"KFS_STAR_STREAM_SAVE",
-JSON.stringify(state)
-);
-
-}catch(e){}
-
-}
-
-
-/* =========================================================
-   HUD
-========================================================= */
-
-function updateHUD(){
-
-var affinity=Math.floor(state.affinity);
-var probability=Math.floor(state.probability);
-
-hudAffinity.textContent=
-String(affinity).padStart(2,"0")+"%";
-
-hudObservations.textContent=
-String(state.observations).padStart(3,"0");
-
-hudProbability.textContent=
-probability+"%";
-
-statObservations.textContent=
-String(state.observations).padStart(3,"0");
-
-statAffinity.textContent=
-String(affinity).padStart(2,"0")+"%";
-
-statProbability.textContent=
-probability+"%";
-
-affinityValue.textContent=
-String(affinity).padStart(2,"0")+"%";
-
-affinityBar.style.width=
-affinity+"%";
-
-if(probability<=30){
-
-hudProbability.className="hudDanger";
-
-}else if(probability<=55){
-
-hudProbability.className="hudWarning";
-
-}else{
-
-hudProbability.className="hudValue";
-
-}
-
-}
-
-
-updateHUD();
-
-
-/* =========================================================
-   OBSERVATION
-========================================================= */
-
-function observe(amount){
-
-amount=amount||1;
-
-state.observations+=amount;
-
-state.affinity=
-Math.min(
-100,
-state.affinity+(amount*.45)
-);
-
-state.probability=
-Math.max(
-1,
-state.probability-(amount*.025)
-);
-
-updateHUD();
-save();
-
-checkMilestones();
-
-}
-
-
-/* =========================================================
-   MILESTONES
-========================================================= */
-
-var milestone25=false;
-var milestone50=false;
-var milestone75=false;
-var milestone100=false;
-
-function checkMilestones(){
-
-if(
-state.affinity>=25 &&
-!milestone25
-){
-
-milestone25=true;
-
-notify(
-"The constellation has begun to recognize your presence."
-);
-
-}
-
-if(
-state.affinity>=50 &&
-!milestone50
-){
-
-milestone50=true;
-
-notify(
-"A constellation has become curious about the Observer."
-);
-
-}
-
-if(
-state.affinity>=75 &&
-!milestone75
-){
-
-milestone75=true;
-
-notify(
-"Observer classification updated: PERSISTENT."
-);
-
-}
-
-if(
-state.affinity>=100 &&
-!milestone100
-){
-
-milestone100=true;
-
-notify(
-"「The constellation is looking directly at you.」",
-"danger",
-6000
-);
-
-createParticles(45);
-
-}
-
-}
-
-
-/* =========================================================
-   NOTIFICATIONS
-========================================================= */
-
-function notify(text,type,duration){
-
-type=type||"";
-duration=duration||4000;
-
-var box=document.createElement("div");
-
-box.className=
-"notification "+type;
-
-box.textContent=
-"【 STAR STREAM 】 "+text;
-
-notifications.appendChild(box);
-
-setTimeout(function(){
-
-box.style.opacity="0";
-box.style.transform="translateX(20px)";
-
-setTimeout(function(){
-
-box.remove();
-
-},400);
-
-},duration);
-
-}
-
-
-/* =========================================================
-   BOOT
-========================================================= */
-
-var bootMessages=[
+const messages=[
 "INITIALIZING NARRATIVE ENGINE...",
 "SEARCHING FOR CONSTELLATION...",
 "LOCATING NARRATIVE SIGNATURE...",
@@ -2196,7 +2758,7 @@ var bootMessages=[
 "TRANSMISSION READY."
 ];
 
-var bootLogs=[
+const logs=[
 "Searching the Star Stream...",
 "Connection route established.",
 "Scanning narrative frequency...",
@@ -2211,846 +2773,337 @@ var bootLogs=[
 "Transmission channel stabilized."
 ];
 
-var bootIndex=0;
-var logIndex=0;
+let messageIndex=0;
+let logIndex=2;
+let progress=0;
 
-function nextBootMessage(){
+function updateStatus(){
 
-if(
-bootIndex>=bootMessages.length
-)return;
+if(messageIndex<messages.length){
 
-status.textContent=
-bootMessages[bootIndex++];
+statusEl.textContent=messages[messageIndex];
 
-setTimeout(
-nextBootMessage,
-650
-);
+messageIndex++;
+
+setTimeout(updateStatus,650);
 
 }
 
-nextBootMessage();
+}
 
-var progress=0;
+updateStatus();
 
-var progressTimer=setInterval(function(){
 
-progress++;
+const progressTimer=setInterval(()=>{
 
-percent.textContent=
-progress+"%";
+if(progress<100){
 
-if(progress>=100){
+progress+=1;
+
+percent.textContent=progress+"%";
+
+}else{
 
 clearInterval(progressTimer);
 
 }
 
-},65);
+},60);
 
 
-var logTimer=setInterval(function(){
+const logTimer=setInterval(()=>{
 
-if(logIndex>=bootLogs.length){
+if(logIndex<logs.length){
 
-clearInterval(logTimer);
-return;
-
-}
-
-var line=document.createElement("div");
+const line=document.createElement("div");
 
 line.className=
-bootLogs[logIndex]
-.indexOf("Warning")>=0
-?"alert":"ok";
+logs[logIndex].toLowerCase().includes("warning")
+?"alert"
+:"ok";
 
-line.textContent=
-"> "+bootLogs[logIndex++];
+line.textContent="> "+logs[logIndex];
 
 bootlog.appendChild(line);
 
-bootlog.scrollTop=
-bootlog.scrollHeight;
+bootlog.scrollTop=bootlog.scrollHeight;
 
-},480);
+logIndex++;
+
+}else{
+
+clearInterval(logTimer);
+
+}
+
+},500);
 
 
-setTimeout(function(){
+setTimeout(()=>{
 
-status.textContent=
+statusEl.innerHTML=
 "CONSTELLATION DETECTED // TRANSMISSION RECEIVED";
 
 enter.style.display="block";
 
-},6800);
+},6500);
 
 
-/* =========================================================
-   ENTER
-========================================================= */
-
-enter.onclick=function(){
+enter.addEventListener("click",()=>{
 
 connect.classList.add("hide");
 
-setTimeout(function(){
+document.body.classList.add("loaded");
 
 main.classList.add("show");
 
-document.body.style.overflowY="auto";
+startAmbient();
 
-notify(
-"Connection established. Welcome, Observer."
-);
+setTimeout(()=>{
 
-},400);
+connect.remove();
 
-};
+},1400);
+
+});
 
 
 /* =========================================================
-   AUDIO ENGINE
+   AUDIO SYSTEM
+   PROCEDURAL AMBIENT STAR STREAM
 ========================================================= */
 
-var audioContext=null;
-var masterGain=null;
-var droneGain=null;
-var shimmerGain=null;
-var pulseGain=null;
-var oscillators=[];
-var audioStarted=false;
+let audioContext=null;
+let masterGain=null;
+let ambientGain=null;
+let audioStarted=false;
+let audioMuted=
+localStorage.getItem("kfsMuted")==="true";
 
-
-function initAudio(){
+function createAudio(){
 
 if(audioContext)
-return true;
+return;
 
-var AudioContext=
+const AudioCtx=
 window.AudioContext||
 window.webkitAudioContext;
 
-if(!AudioContext){
+if(!AudioCtx)
+return;
 
-notify(
-"Your browser does not support Web Audio.",
-"warning",
-5000
-);
-
-return false;
-
-}
-
-try{
-
-audioContext=new AudioContext();
+audioContext=new AudioCtx();
 
 masterGain=
 audioContext.createGain();
 
-droneGain=
+ambientGain=
 audioContext.createGain();
 
-shimmerGain=
+masterGain.gain.value=.22;
+ambientGain.gain.value=
+audioMuted?0:.35;
+
+ambientGain.connect(masterGain);
+masterGain.connect(audioContext.destination);
+
+
+/* LOW DRONE */
+
+const drone=
+audioContext.createOscillator();
+
+const droneGain=
 audioContext.createGain();
 
-pulseGain=
+drone.type="sine";
+drone.frequency.value=55;
+
+droneGain.gain.value=.055;
+
+drone.connect(droneGain);
+droneGain.connect(ambientGain);
+
+drone.start();
+
+
+/* SECOND HARMONIC */
+
+const harmonic=
+audioContext.createOscillator();
+
+const harmonicGain=
 audioContext.createGain();
 
-masterGain.gain.value=
-state.volume/100*.12;
+harmonic.type="triangle";
+harmonic.frequency.value=82.41;
 
-droneGain.gain.value=.7;
-shimmerGain.gain.value=.25;
-pulseGain.gain.value=.15;
+harmonicGain.gain.value=.018;
 
-droneGain.connect(masterGain);
-shimmerGain.connect(masterGain);
-pulseGain.connect(masterGain);
+harmonic.connect(harmonicGain);
+harmonicGain.connect(ambientGain);
 
-masterGain.connect(
-audioContext.destination
+harmonic.start();
+
+
+/* FILTERED NOISE */
+
+const buffer=
+audioContext.createBuffer(
+1,
+audioContext.sampleRate*2,
+audioContext.sampleRate
 );
 
-return true;
+const data=buffer.getChannelData(0);
 
-}catch(e){
+for(let i=0;i<data.length;i++){
 
-notify(
-"Audio initialization failed.",
-"warning",
-5000
-);
-
-return false;
+data[i]=
+(Math.random()*2-1)*.12;
 
 }
 
+const noise=
+audioContext.createBufferSource();
+
+noise.buffer=buffer;
+noise.loop=true;
+
+const filter=
+audioContext.createBiquadFilter();
+
+filter.type="lowpass";
+filter.frequency.value=900;
+
+const noiseGain=
+audioContext.createGain();
+
+noiseGain.gain.value=.018;
+
+noise.connect(filter);
+filter.connect(noiseGain);
+noiseGain.connect(ambientGain);
+
+noise.start();
+
+
+/* SLOW PULSE */
+
+setInterval(()=>{
+
+if(!audioContext)
+return;
+
+const now=audioContext.currentTime;
+
+ambientGain.gain.cancelScheduledValues(now);
+
+ambientGain.gain.setValueAtTime(
+audioMuted?0:.28,
+now
+);
+
+ambientGain.gain.linearRampToValueAtTime(
+audioMuted?0:.40,
+now+3
+);
+
+ambientGain.gain.linearRampToValueAtTime(
+audioMuted?0:.28,
+now+7
+);
+
+},7000);
+
 }
 
+function startAmbient(){
 
-/* =========================================================
-   AMBIENT MUSIC
-========================================================= */
+createAudio();
 
-function startMusic(){
-
-if(audioStarted)
-return;
-
-if(!initAudio())
-return;
-
-if(
-audioContext.state==="suspended"
-){
+if(audioContext &&
+audioContext.state==="suspended"){
 
 audioContext.resume();
 
 }
 
-
-/* Deep cosmic drone */
-
-var drone1=
-audioContext.createOscillator();
-
-var drone2=
-audioContext.createOscillator();
-
-var drone3=
-audioContext.createOscillator();
-
-drone1.type="sine";
-drone2.type="sine";
-drone3.type="triangle";
-
-drone1.frequency.value=55;
-drone2.frequency.value=82.5;
-drone3.frequency.value=110;
-
-drone1.detune.value=-4;
-drone2.detune.value=5;
-
-drone1.connect(droneGain);
-drone2.connect(droneGain);
-drone3.connect(droneGain);
-
-drone1.start();
-drone2.start();
-drone3.start();
-
-oscillators.push(
-drone1,
-drone2,
-drone3
-);
-
-
-/* High distant harmonic */
-
-var shimmer=
-audioContext.createOscillator();
-
-shimmer.type="sine";
-shimmer.frequency.value=330;
-
-shimmer.connect(shimmerGain);
-
-shimmer.start();
-
-oscillators.push(shimmer);
-
-
-/* Slow pulse */
-
-var pulse=
-audioContext.createOscillator();
-
-pulse.type="sine";
-pulse.frequency.value=.08;
-
-pulse.connect(pulseGain);
-
-pulse.start();
-
-oscillators.push(pulse);
-
-
-/* Musical notes */
-
-var notes=[
-220,
-261.63,
-329.63,
-392,
-329.63,
-293.66
-];
-
-var noteIndex=0;
-
-setInterval(function(){
-
-if(!audioStarted)
-return;
-
-var osc=
-audioContext.createOscillator();
-
-var gain=
-audioContext.createGain();
-
-osc.type="sine";
-
-osc.frequency.value=
-notes[noteIndex++%notes.length];
-
-gain.gain.setValueAtTime(
-0,
-audioContext.currentTime
-);
-
-gain.gain.linearRampToValueAtTime(
-.018,
-audioContext.currentTime+1
-);
-
-gain.gain.exponentialRampToValueAtTime(
-.0001,
-audioContext.currentTime+4
-);
-
-osc.connect(gain);
-gain.connect(shimmerGain);
-
-osc.start();
-
-osc.stop(
-audioContext.currentTime+4
-);
-
-},5000);
-
-
 audioStarted=true;
 
-audioButton.textContent=
-"AUDIO: ON";
-
-audioButton.classList.add(
-"active"
-);
+updateVolumeUI();
 
 }
 
 
-/* =========================================================
-   STOP MUSIC
-========================================================= */
+function setMuted(state){
 
-function stopMusic(){
+audioMuted=state;
 
-audioStarted=false;
+localStorage.setItem(
+"kfsMuted",
+String(audioMuted)
+);
 
-oscillators.forEach(function(osc){
+if(ambientGain){
 
-try{
-osc.stop();
-}catch(e){}
+ambientGain.gain.value=
+audioMuted?0:.35;
+
+}
+
+updateVolumeUI();
+
+}
+
+
+function updateVolumeUI(){
+
+volumeIcon.textContent=
+audioMuted?"×":"◒";
+
+volumeButton.classList.toggle(
+"active",
+!audioMuted
+);
+
+volumeButton.title=
+audioMuted
+?"Enable Star Stream ambience"
+:"Disable Star Stream ambience";
+
+}
+
+volumeButton.addEventListener("click",()=>{
+
+if(!audioStarted)
+startAmbient();
+
+setMuted(!audioMuted);
 
 });
 
-oscillators=[];
+ambientButton.addEventListener("click",()=>{
 
-if(audioContext){
+if(!audioStarted)
+startAmbient();
 
-try{
-
-audioContext.close();
-
-}catch(e){}
-
-audioContext=null;
-
-masterGain=null;
-droneGain=null;
-shimmerGain=null;
-pulseGain=null;
-
-}
-
-audioButton.textContent=
-"AUDIO: OFF";
-
-audioButton.classList.remove(
-"active"
-);
-
-}
-
-
-/* =========================================================
-   AUDIO BUTTON
-========================================================= */
-
-audioButton.onclick=function(event){
-
-event.stopPropagation();
-
-if(!audioStarted){
-
-state.audio=true;
-
-startMusic();
-
-volumePanel.classList.add("show");
-
-notify(
-"Star Stream ambient transmission enabled."
-);
-
-}else{
-
-state.audio=false;
-
-stopMusic();
-
-volumePanel.classList.remove("show");
-
-notify(
-"Star Stream ambient transmission terminated."
-);
-
-}
-
-save();
-
-};
-
-
-/* =========================================================
-   VOLUME
-========================================================= */
-
-volume.oninput=function(){
-
-state.volume=
-Number(volume.value);
-
-if(masterGain){
-
-masterGain.gain.value=
-state.volume/100*.12;
-
-}
-
-save();
-
-};
-
-
-/* =========================================================
-   SIMPLE SOUND EFFECT
-========================================================= */
-
-function tone(freq,duration,volumeAmount){
-
-if(!audioContext || !audioStarted)
-return;
-
-var osc=
-audioContext.createOscillator();
-
-var gain=
-audioContext.createGain();
-
-osc.type="sine";
-
-osc.frequency.value=freq;
-
-gain.gain.setValueAtTime(
-volumeAmount,
-audioContext.currentTime
-);
-
-gain.gain.exponentialRampToValueAtTime(
-.0001,
-audioContext.currentTime+duration
-);
-
-osc.connect(gain);
-gain.connect(masterGain);
-
-osc.start();
-
-osc.stop(
-audioContext.currentTime+duration
-);
-
-}
-
-
-/* =========================================================
-   CONSOLE
-========================================================= */
-
-function openConsole(){
-
-consoleBox.classList.add("open");
-
-setTimeout(function(){
-
-consoleInput.focus();
-
-},150);
-
-}
-
-
-function closeConsole(){
-
-consoleBox.classList.remove("open");
-
-}
-
-
-consoleButton.onclick=function(event){
-
-event.stopPropagation();
-
-openConsole();
-
-tone(440,.08,.025);
-
-};
-
-
-consoleClose.onclick=function(){
-
-closeConsole();
-
-};
-
-
-consoleBox.onclick=function(event){
-
-if(event.target===consoleBox){
-
-closeConsole();
-
-}
-
-};
-
-
-document.addEventListener(
-"keydown",
-function(event){
-
-if(
-event.key==="Escape" &&
-consoleBox.classList.contains("open")
-){
-
-closeConsole();
-
-}
+setMuted(!audioMuted);
 
 });
 
 
-function print(text,type){
-
-var line=document.createElement("div");
-
-line.className=
-"consoleLine "+(type||"");
-
-line.textContent=
-"> "+text;
-
-consoleOutput.appendChild(line);
-
-consoleOutput.scrollTop=
-consoleOutput.scrollHeight;
-
-}
-
-
-function executeCommand(input){
-
-var cmd=
-input.trim().toLowerCase();
-
-if(!cmd)
-return;
-
-state.commands++;
-
-print(
-"OBSERVER > "+input
-);
-
-
-if(cmd==="help"){
-
-print(
-"AVAILABLE COMMANDS:",
-"consoleSystem"
-);
-
-print(
-"STATUS"
-);
-
-print(
-"FABLES"
-);
-
-print(
-"TRANSMISSIONS"
-);
-
-print(
-"CONSTELLATION"
-);
-
-print(
-"OBSERVER"
-);
-
-print(
-"PROBABILITY"
-);
-
-print(
-"AWAKEN"
-);
-
-print(
-"CLEAR"
-);
-
-print(
-"Type READER using your keyboard for a hidden protocol."
-);
-
-}
-
-
-else if(cmd==="status"){
-
-print(
-"STAR STREAM: ONLINE",
-"consoleSuccess"
-);
-
-print("CONNECTION: STABLE");
-print("NARRATIVE ENGINE: ACTIVE");
-print("OBSERVER: CONFIRMED");
-print("SCENARIO: ONGOING");
-
-}
-
-
-else if(cmd==="fables"){
-
-print(
-"FABLE ARCHIVE ACCESSED.",
-"consoleSuccess"
-);
-
-print("REGISTERED RECORDS: 04");
-print("PRIMARY FABLE: FRESH START");
-print("ARCHIVE STATUS: ONGOING");
-
-state.secrets++;
-
-}
-
-
-else if(cmd==="transmissions"){
-
-print(
-"TRANSMISSION CHANNEL ACCESSED.",
-"consoleSuccess"
-);
-
-print("TRANSMISSION #001: RECEIVED");
-print(
-"UNKNOWN SIGNAL: DETECTED",
-"consoleWarning"
-);
-
-}
-
-
-else if(cmd==="constellation"){
-
-print(
-"KEEPER OF FORGOTTEN STORIES",
-"consoleSuccess"
-);
-
-print("GRADE: UNKNOWN");
-print("ALIGNMENT: NARRATIVE PRESERVATION");
-print("PRIMARY ATTRIBUTE: WITNESS");
-
-
-}
-
-
-else if(cmd==="observer"){
-
-print(
-"OBSERVER RECORD",
-"consoleSystem"
-);
-
-print(
-"OBSERVATIONS: "+
-state.observations
-);
-
-print(
-"AFFINITY: "+
-Math.floor(state.affinity)+
-"%"
-);
-
-print(
-"COMMANDS: "+
-state.commands
-);
-
-print(
-"RESTRICTED RECORDS: "+
-state.secrets
-);
-
-}
-
-
-else if(cmd==="probability"){
-
-print(
-"CURRENT PROBABILITY: "+
-Math.floor(state.probability)+
-"%",
-state.probability<40
-?"consoleDanger"
-:"consoleWarning"
-);
-
-}
-
-
-else if(cmd==="clear"){
-
-consoleOutput.innerHTML="";
-
-print(
-"TERMINAL CLEARED.",
-"consoleSuccess"
-);
-
-}
-
-
-else if(cmd==="awaken"){
-
-state.secrets++;
-
-print(
-"RESTRICTED PROTOCOL REQUESTED.",
-"consoleWarning"
-);
-
-setTimeout(function(){
-
-print(
-"SEARCHING DEEP ARCHIVE..."
-);
-
-},300);
-
-setTimeout(function(){
-
-print(
-"ACCESS DENIED.",
-"consoleDanger"
-);
-
-},800);
-
-setTimeout(function(){
-
-print(
-"THE STAR STREAM HAS NOTICED YOU.",
-"consoleDanger"
-);
-
-activateBreach();
-
-},1300);
-
-}
-
-
-else{
-
-print(
-"UNKNOWN COMMAND.",
-"consoleDanger"
-);
-
-print(
-"TYPE HELP FOR AVAILABLE COMMANDS."
-);
-
-}
-
-observe(2);
-
-save();
-
-}
-
-
-consoleInput.onkeydown=function(event){
-
-if(event.key==="Enter"){
-
-executeCommand(
-consoleInput.value
-);
-
-consoleInput.value="";
-
-}
-
-};
-
-
 /* =========================================================
-   RED PARTICLES
+   PARTICLES
 ========================================================= */
 
-function createParticles(amount){
+function createRedParticles(count=35){
 
-amount=amount||30;
+for(let i=0;i<count;i++){
 
-for(var i=0;i<amount;i++){
+const particle=document.createElement("div");
 
-var particle=
-document.createElement("div");
-
-particle.className=
-"redParticle";
+particle.className="redParticle";
 
 particle.style.left=
 Math.random()*window.innerWidth+"px";
@@ -3060,31 +3113,57 @@ Math.random()*window.innerHeight+"px";
 
 particle.style.setProperty(
 "--x",
-Math.floor(
-Math.random()*300-150
-)
+(Math.random()*240-120).toFixed(0)
 );
 
 particle.style.setProperty(
 "--y",
-Math.floor(
-Math.random()*300-150
-)
+(Math.random()*240-120).toFixed(0)
 );
 
-document.body.appendChild(
-particle
+particle.style.animationDelay=
+(Math.random()*.6).toFixed(2)+"s";
+
+document.body.appendChild(particle);
+
+setTimeout(()=>{
+particle.remove();
+},2500);
+
+}
+
+}
+
+
+function createBlueParticles(count=18){
+
+for(let i=0;i<count;i++){
+
+const particle=document.createElement("div");
+
+particle.className="blueParticle";
+
+particle.style.left=
+window.innerWidth/2+"px";
+
+particle.style.top=
+window.innerHeight/2+"px";
+
+particle.style.setProperty(
+"--x",
+(Math.random()*500-250).toFixed(0)
 );
 
-setTimeout(function(p){
+particle.style.setProperty(
+"--y",
+(Math.random()*500-250).toFixed(0)
+);
 
-return function(){
+document.body.appendChild(particle);
 
-p.remove();
-
-};
-
-}(particle),2200);
+setTimeout(()=>{
+particle.remove();
+},1700);
 
 }
 
@@ -3092,33 +3171,19 @@ p.remove();
 
 
 /* =========================================================
-   SECRET DETAILS
+   SECRET RECORDS
 ========================================================= */
 
-document.querySelectorAll(
-"details.secret"
-).forEach(function(detail){
+document.querySelectorAll("details.secret")
+.forEach(detail=>{
 
-detail.addEventListener(
-"toggle",
-function(){
+detail.addEventListener("toggle",()=>{
 
 if(detail.open){
 
-state.secrets++;
+detail.classList.add("revealed");
 
-observe(3);
-
-tone(130,.2,.03);
-
-createParticles(18);
-
-notify(
-"Restricted narrative data accessed.",
-"warning"
-);
-
-save();
+createRedParticles();
 
 }
 
@@ -3131,293 +3196,695 @@ save();
    WARNING
 ========================================================= */
 
-warning.onclick=function(){
+warning.addEventListener("click",()=>{
 
-warning.classList.add(
-"triggered"
-);
+warning.classList.add("triggered");
 
-state.secrets++;
+createRedParticles(45);
 
-observe(5);
+setTimeout(()=>{
 
-createParticles(35);
+warning.classList.remove("triggered");
 
-tone(80,.5,.035);
-
-notify(
-"WARNING: Scenario stability temporarily compromised.",
-"danger",
-5000
-);
-
-setTimeout(function(){
-
-warning.classList.remove(
-"triggered"
-);
-
-},2300);
-
-};
-
-
-/* =========================================================
-   BREACH
-========================================================= */
-
-function activateBreach(){
-
-document.body.classList.add("breach");
-
-hudConnection.textContent=
-"UNSTABLE";
-
-hudConnection.className=
-"hudDanger";
-
-createParticles(50);
-
-tone(65,.7,.04);
-
-setTimeout(function(){
-
-document.body.classList.remove(
-"breach"
-);
-
-hudConnection.textContent=
-"STABLE";
-
-hudConnection.className=
-"hudValue";
-
-},3000);
-
-}
-
-
-/* =========================================================
-   READER EASTER EGG
-========================================================= */
-
-var typed="";
-
-document.addEventListener(
-"keydown",
-function(event){
-
-if(
-consoleBox.classList.contains("open")
-)
-return;
-
-if(event.key.length!==1)
-return;
-
-typed+=
-event.key.toLowerCase();
-
-if(typed.length>6){
-
-typed=
-typed.slice(-6);
-
-}
-
-if(typed==="reader"){
-
-typed="";
-
-readerProtocol();
-
-}
+},2200);
 
 });
 
 
-function readerProtocol(){
+/* =========================================================
+   OBSERVATORY
+========================================================= */
 
-interruption.classList.add("show");
+const scanMessages=[
+"SCANNING NARRATIVE FREQUENCY...",
+"LOCATING ACTIVE SCENARIO...",
+"ANALYZING FABLE INTERFERENCE...",
+"SEARCHING FOR CONSTELLATION ACTIVITY...",
+"MEASURING NARRATIVE STABILITY...",
+"COMPARING OBSERVED TIMELINES...",
+"CALCULATING SURVIVAL PROBABILITY...",
+"SCAN COMPLETE."
+];
 
-interruptionText.innerHTML=
-"【 READER PROTOCOL 】"+
-"<br><br>"+
-"IDENTITY CONFIRMED."+
-"<br><br>"+
-"YOU ARE NOT MERELY OBSERVING THE STORY."+
-"<br><br>"+
-"<span class='red'>THE STORY HAS BEGUN OBSERVING YOU.</span>";
+const streamSignals=[
+"[STREAM] Minor narrative fluctuation detected.",
+"[FABLE] An archived memory has resurfaced.",
+"[SYSTEM] Observer presence confirmed.",
+"[STREAM] Unknown constellation signal detected.",
+"[FABLE] Narrative density increasing.",
+"[SYSTEM] Scenario remains structurally stable.",
+"[WARNING] Probability deviation detected.",
+"[STREAM] Someone is observing the observer.",
+"[SYSTEM] No further anomalies detected.",
+"[UNKNOWN] ...you should not be here."
+];
 
-state.secrets++;
 
-observe(10);
+function addSignal(text,type=""){
 
-createParticles(45);
+const line=document.createElement("div");
 
-tone(220,.8,.04);
+line.className="signalLine "+type;
 
-notify(
-"Hidden protocol recognized.",
-"danger",
-5000
+if(text.startsWith("[WARNING]")){
+
+line.innerHTML=
+"<strong>[WARNING]</strong>"+
+text.substring(9);
+
+}else if(text.startsWith("[UNKNOWN]")){
+
+line.innerHTML=
+"<strong>[UNKNOWN]</strong>"+
+text.substring(9);
+
+}else if(text.startsWith("[STREAM]")){
+
+line.innerHTML=
+"<strong>[STREAM]</strong>"+
+text.substring(8);
+
+}else if(text.startsWith("[FABLE]")){
+
+line.innerHTML=
+"<strong>[FABLE]</strong>"+
+text.substring(7);
+
+}else{
+
+line.innerHTML=
+"<strong>[SYSTEM]</strong>"+
+text.substring(8);
+
+}
+
+signalList.appendChild(line);
+
+while(signalList.children.length>7){
+
+signalList.removeChild(
+signalList.firstChild
 );
 
-setTimeout(function(){
+}
 
-interruption.classList.remove("show");
-
-},4800);
-
-save();
+signalList.scrollTop=
+signalList.scrollHeight;
 
 }
 
 
-/* =========================================================
-   RANDOM STAR STREAM EVENTS
-========================================================= */
+function randomizeScenario(){
 
-var randomMessages=[
-"A forgotten Fable has stirred.",
-"Someone has read your record.",
-"The Star Stream is observing.",
-"An unknown constellation is listening.",
-"Your presence has been registered.",
-"A narrative thread has changed.",
-"Something beyond the archive noticed you.",
-"The probability of an unexpected ending has increased."
-];
+const s=
+Math.floor(Math.random()*21)+72;
 
-setInterval(function(){
+const d=
+Math.floor(Math.random()*25)+55;
 
-if(
-!main.classList.contains("show")
-)
+const a=
+Math.floor(Math.random()*55)+20;
+
+const t=
+Math.floor(Math.random()*38)+8;
+
+stability.textContent=s;
+density.textContent=d;
+
+stabilityBar.style.width=s+"%";
+densityBar.style.width=d+"%";
+activityBar.style.width=a+"%";
+threatBar.style.width=t+"%";
+
+if(a<35){
+
+activity.textContent="LOW";
+
+}else if(a<65){
+
+activity.textContent="MODERATE";
+
+}else{
+
+activity.textContent="HIGH";
+
+}
+
+if(t<20){
+
+threat.textContent="LOW";
+
+}else if(t<40){
+
+threat.textContent="ELEVATED";
+
+}else{
+
+threat.textContent="CRITICAL";
+
+}
+
+}
+
+
+scanButton.addEventListener("click",()=>{
+
+if(scanButton.classList.contains("scanning"))
 return;
 
-if(
-Math.random()<.08
-){
+scanButton.classList.add("scanning");
+observatory.classList.add("scanning");
 
-var msg=
-randomMessages[
+let step=0;
+
+scanResult.textContent=
+scanMessages[0];
+
+const scanTimer=setInterval(()=>{
+
+step++;
+
+if(step<scanMessages.length){
+
+scanResult.textContent=
+scanMessages[step];
+
+}else{
+
+clearInterval(scanTimer);
+
+scanButton.classList.remove("scanning");
+observatory.classList.remove("scanning");
+
+randomizeScenario();
+createBlueParticles();
+
+scanResult.textContent=
+"SCAN COMPLETE // SCENARIO DATA UPDATED";
+
+const signal=
+streamSignals[
 Math.floor(
-Math.random()*randomMessages.length
+Math.random()*streamSignals.length
 )
 ];
 
-notify(
-msg,
-Math.random()<.2
-?"warning":""
-);
+const type=
+signal.includes("[WARNING]")
+?"warning"
+:
+signal.includes("[UNKNOWN]")
+?"danger"
+:"";
 
-observe(1);
+addSignal(signal,type);
 
 }
 
-},18000);
+},520);
+
+});
+
+
+setInterval(()=>{
+
+if(
+Math.random()>.45 &&
+document.visibilityState==="visible"
+){
+
+const signal=
+streamSignals[
+Math.floor(
+Math.random()*streamSignals.length
+)
+];
+
+const type=
+signal.includes("[WARNING]")
+?"warning"
+:
+signal.includes("[UNKNOWN]")
+?"danger"
+:"";
+
+addSignal(signal,type);
+
+}
+
+},6500);
 
 
 /* =========================================================
-   TIME OBSERVATION
+   CONSTELLATION TERMINAL
 ========================================================= */
 
-setInterval(function(){
+const responses={
 
-if(main.classList.contains("show")){
+observe:{
+message:
+`<strong>[ STAR STREAM ]</strong><br><br>
+The incarnation chooses silence.<br><br>
+Interesting.<br><br>
+The constellation does not seem disappointed.
+If anything... it appears relieved.`,
 
-state.time++;
+response:
+"[CONSTELLATION] 「Silence can preserve stories words would destroy.」",
 
-if(
-state.time%30===0
-){
+type:""
+},
 
-observe(2);
+speak:{
+message:
+`<strong>[ TRANSMISSION RECEIVED ]</strong><br><br>
+Your voice reaches the constellation.<br><br>
+For several seconds, there is no response.<br><br>
+Then, a message appears.`,
+
+response:
+"[KEEPER] 「I remember those who were forgotten. Why have you come?」",
+
+type:""
+},
+
+story:{
+message:
+`<strong>[ FABLE EXCHANGE DETECTED ]</strong><br><br>
+You offer a story.<br><br>
+The Star Stream pauses.<br><br>
+A new Fable has been temporarily registered.`,
+
+response:
+"[SYSTEM] Fable accepted. Constellation interest increased.",
+
+type:""
+},
+
+challenge:{
+message:
+`<strong>[ WARNING ]</strong><br><br>
+You ask what the constellation is hiding.<br><br>
+The transmission suddenly becomes unstable.<br><br>
+Something on the other side noticed you.`,
+
+response:
+"[UNKNOWN] 「You should be careful about asking questions you want answered.」",
+
+type:"danger"
+}
+
+};
+
+
+let constellationFavor=
+Number(localStorage.getItem("kfsFavor"))||0;
+
+let constellationCuriosity=
+Number(localStorage.getItem("kfsCuriosity"))||0;
+
+let narrativeRisk=
+Number(localStorage.getItem("kfsRisk"))||0;
+
+let interactionCount=
+Number(localStorage.getItem("kfsInteractions"))||0;
+
+
+function updateTerminalStats(){
+
+favor.textContent=
+String(constellationFavor).padStart(2,"0");
+
+curiosity.textContent=
+String(constellationCuriosity).padStart(2,"0");
+
+risk.textContent=
+String(narrativeRisk).padStart(2,"0");
+
+const sponsorLevel=
+Math.min(
+100,
+constellationFavor*4+
+constellationCuriosity*2
+);
+
+sponsorBar.style.width=
+sponsorLevel+"%";
+
+if(sponsorLevel<20){
+
+sponsorName.textContent=
+"NO SPONSOR DETECTED";
+
+sponsorStatus.textContent=
+"The constellation is observing from a distance.";
+
+}else if(sponsorLevel<45){
+
+sponsorName.textContent=
+"「UNKNOWN OBSERVER」";
+
+sponsorStatus.textContent=
+"Your actions have attracted mild constellation interest.";
+
+}else if(sponsorLevel<70){
+
+sponsorName.textContent=
+"「KEEPER OF FORGOTTEN STORIES」";
+
+sponsorStatus.textContent=
+"The constellation has begun paying closer attention.";
+
+}else{
+
+sponsorName.textContent=
+"「KEEPER OF FORGOTTEN STORIES」";
+
+sponsorStatus.textContent=
+"★ The constellation has recognized your narrative value.";
 
 }
 
 }
 
-},1000);
+
+function terminalGlitch(){
+
+terminal.classList.add(
+"terminalCorrupted"
+);
+
+setTimeout(()=>{
+
+terminal.classList.remove(
+"terminalCorrupted"
+);
+
+},700);
+
+}
+
+
+function processChoice(choice){
+
+const data=responses[choice];
+
+if(!data)
+return;
+
+interactionCount++;
+
+choices.forEach(button=>{
+button.disabled=true;
+});
+
+terminalGlitch();
+
+terminalMessage.innerHTML=
+data.message;
+
+terminalResponse.textContent=
+data.response;
+
+terminalResponse.className=
+"terminalResponse "+(data.type||"");
+
+
+switch(choice){
+
+case"observe":
+
+constellationFavor+=2;
+constellationCuriosity+=1;
+
+break;
+
+case"speak":
+
+constellationFavor+=4;
+constellationCuriosity+=3;
+
+break;
+
+case"story":
+
+constellationFavor+=7;
+constellationCuriosity+=4;
+narrativeRisk+=2;
+
+break;
+
+case"challenge":
+
+constellationCuriosity+=8;
+narrativeRisk+=10;
+
+break;
+
+}
+
+localStorage.setItem(
+"kfsFavor",
+constellationFavor
+);
+
+localStorage.setItem(
+"kfsCuriosity",
+constellationCuriosity
+);
+
+localStorage.setItem(
+"kfsRisk",
+narrativeRisk
+);
+
+localStorage.setItem(
+"kfsInteractions",
+interactionCount
+);
+
+updateTerminalStats();
+
+setTimeout(()=>{
+
+choices.forEach(button=>{
+button.disabled=false;
+});
+
+},1800);
+
+if(interactionCount>=3){
+
+setTimeout(()=>{
+
+terminalResponse.className=
+"terminalResponse alert";
+
+terminalResponse.innerHTML=
+"[STAR STREAM] The constellation has begun to recognize you.<br><br>"+
+"Further interaction may produce an unexpected Fable.";
+
+},1200);
+
+}
+
+}
+
+
+choices.forEach(button=>{
+
+button.addEventListener(
+"click",
+()=>{
+
+if(!audioStarted)
+startAmbient();
+
+processChoice(
+button.dataset.choice
+);
+
+});
+
+});
+
+updateTerminalStats();
+
+
+/* =========================================================
+   COMMAND PANEL
+========================================================= */
+
+commandButton.addEventListener("click",()=>{
+
+commandPanel.classList.toggle("open");
+
+commandButton.classList.toggle(
+"active",
+commandPanel.classList.contains("open")
+);
+
+});
+
+
+commandClose.addEventListener("click",()=>{
+
+commandPanel.classList.remove("open");
+
+commandButton.classList.remove("active");
+
+});
+
+
+document.querySelectorAll(".commandItem")
+.forEach(item=>{
+
+item.addEventListener("click",()=>{
+
+const command=item.dataset.command;
+
+if(command==="home"){
+
+document.getElementById("home")
+.scrollIntoView({
+behavior:"smooth"
+});
+
+}
+
+if(command==="scan"){
+
+document.getElementById("observatory")
+.scrollIntoView({
+behavior:"smooth"
+});
+
+setTimeout(()=>{
+scanButton.click();
+},700);
+
+}
+
+if(command==="terminal"){
+
+document.getElementById("terminal")
+.scrollIntoView({
+behavior:"smooth"
+});
+
+}
+
+if(command==="secret"){
+
+const secrets=
+document.querySelectorAll(
+"details.secret"
+);
+
+const randomSecret=
+secrets[
+Math.floor(Math.random()*secrets.length)
+];
+
+randomSecret.open=true;
+
+randomSecret.scrollIntoView({
+behavior:"smooth",
+block:"center"
+});
+
+}
+
+if(command==="ambient"){
+
+if(!audioStarted)
+startAmbient();
+
+setMuted(!audioMuted);
+
+}
+
+if(command==="clear"){
+
+localStorage.removeItem("kfsFavor");
+localStorage.removeItem("kfsCuriosity");
+localStorage.removeItem("kfsRisk");
+localStorage.removeItem("kfsInteractions");
+
+constellationFavor=0;
+constellationCuriosity=0;
+narrativeRisk=0;
+interactionCount=0;
+
+updateTerminalStats();
+
+terminalResponse.textContent=
+"OBSERVER DATA RESET.";
+
+}
+
+commandPanel.classList.remove("open");
+commandButton.classList.remove("active");
+
+});
+
+});
 
 
 /* =========================================================
    NAV ACTIVE STATE
 ========================================================= */
 
-var sections=
-document.querySelectorAll(
-"section[id]"
+const sections=
+document.querySelectorAll("section[id]");
+
+const navLinks=
+document.querySelectorAll("nav a");
+
+const observer=
+new IntersectionObserver(
+entries=>{
+
+entries.forEach(entry=>{
+
+if(entry.isIntersecting){
+
+navLinks.forEach(link=>{
+
+link.classList.toggle(
+"active",
+link.getAttribute("href")==="#"+
+entry.target.id
 );
 
-var navLinks=
-document.querySelectorAll(
-"nav a"
-);
-
-window.addEventListener(
-"scroll",
-function(){
-
-var current="home";
-
-sections.forEach(function(section){
-
-var top=
-section.getBoundingClientRect().top;
-
-if(top<=130){
-
-current=section.id;
+});
 
 }
 
 });
 
-navLinks.forEach(function(link){
-
-link.classList.remove("active");
-
-if(
-link.getAttribute("href")===
-"#"+current
-){
-
-link.classList.add("active");
-
+},
+{
+rootMargin:"-25% 0px -65% 0px"
 }
+);
 
-});
-
+sections.forEach(section=>{
+observer.observe(section);
 });
 
 
 /* =========================================================
-   CLICK OBSERVATION
+   CLOSE COMMAND PANEL WITH ESC
 ========================================================= */
 
-document.addEventListener(
-"click",
-function(event){
+document.addEventListener("keydown",event=>{
 
-if(
-event.target.closest(
-"#starControls,#starConsole"
-)
-)
-return;
+if(event.key==="Escape"){
 
-if(
-event.target.closest(
-"a,summary,.fable,nav"
-)
-){
+commandPanel.classList.remove("open");
 
-observe(1);
-
-tone(390,.06,.015);
+commandButton.classList.remove("active");
 
 }
 
@@ -3425,54 +3892,79 @@ tone(390,.06,.015);
 
 
 /* =========================================================
-   RANDOM INTERFERENCE
+   KEYBOARD SHORTCUT
 ========================================================= */
 
-setInterval(function(){
+document.addEventListener("keydown",event=>{
 
 if(
+event.key.toLowerCase()==="m" &&
+!event.ctrlKey &&
+!event.altKey
+){
+
+if(!audioStarted)
+startAmbient();
+
+setMuted(!audioMuted);
+
+}
+
+if(
+event.key==="/" &&
+!event.ctrlKey &&
+!event.altKey
+){
+
+event.preventDefault();
+
+commandPanel.classList.toggle("open");
+
+}
+
+});
+
+
+/* =========================================================
+   INITIAL UI
+========================================================= */
+
+updateVolumeUI();
+
+
+/* =========================================================
+   PERIODIC STAR STREAM INTERFERENCE
+========================================================= */
+
+setInterval(()=>{
+
+if(
+document.visibilityState!=="visible" ||
 !main.classList.contains("show")
 )
 return;
 
-if(
-Math.random()<.025
-){
+if(Math.random()>.72){
 
-interruption.classList.add(
-"show"
+const system=
+document.querySelector(".system");
+
+system.classList.add(
+"terminalCorrupted"
 );
 
-interruptionText.innerHTML=
-"【 UNKNOWN SIGNAL 】"+
-"<br><br>"+
-"TRANSMISSION INTERRUPTED."+
-"<br><br>"+
-"「...are you still there?」";
+setTimeout(()=>{
 
-tone(100,.5,.03);
-
-setTimeout(function(){
-
-interruption.classList.remove(
-"show"
+system.classList.remove(
+"terminalCorrupted"
 );
 
-},1800);
+},180);
 
 }
 
-},12000);
+},9000);
 
-
-/* =========================================================
-   INITIAL
-========================================================= */
-
-updateHUD();
-save();
-
-})();
 </script>
 
 </body>
