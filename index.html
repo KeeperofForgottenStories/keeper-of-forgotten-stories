@@ -1967,7 +1967,6 @@ END OF TRANSMISSION
 
 <button id="topButton" aria-label="Return to top">↑</button>
 
-```html
 <script>
 
 /* =========================================================
@@ -3169,7 +3168,6 @@ console.log(
 
 </script>
 
-```html id="3xj7kd"
 <script>
 
 /* =========================================================
@@ -3907,244 +3905,235 @@ window.addEventListener(
 
 </body>
 </html>
-
 <!-- =========================================================
-     PART 4 // STAR STREAM OBSERVER PROTOCOL
-     CORRECTED VERSION
+     PART 4 // STAR STREAM COMMAND SYSTEM
 ========================================================= -->
 
 <style>
 
-/* =========================================================
-   GLOBAL STAR STREAM SCAN
-========================================================= */
-
-#globalScan{
-position:fixed;
-inset:0;
-z-index:200;
-pointer-events:none;
-opacity:.16;
-background:
-repeating-linear-gradient(
-0deg,
-transparent 0px,
-transparent 5px,
-rgba(56,189,248,.025) 6px
-);
-}
-
-
-/* =========================================================
-   OBSERVER HUD
-========================================================= */
-
-#observerHUD{
-position:fixed;
-left:18px;
-bottom:18px;
-z-index:400;
-pointer-events:none;
-font-family:"Courier New",monospace;
-font-size:8px;
-letter-spacing:1px;
-color:#475569;
-line-height:1.7;
-opacity:.78;
-}
-
-#observerHUD:before{
-content:"OBSERVER PROTOCOL";
-display:block;
-font-size:7px;
-letter-spacing:2px;
-color:#155e75;
-margin-bottom:3px;
-}
-
-.hudValue{
-color:#38bdf8;
-}
-
-.hudDanger{
-color:#ef4444;
-}
-
-.hudWarning{
-color:#f59e0b;
-}
-
-@media(max-width:700px){
-
-#observerHUD{
-left:10px;
-bottom:10px;
-font-size:7px;
-}
-
-}
-
-
-/* =========================================================
-   COMMAND BUTTON
-========================================================= */
+/* ================= COMMAND BUTTON ================= */
 
 #consoleButton{
-position:fixed;
-right:20px;
-bottom:20px;
-z-index:9998;
-width:40px;
-height:40px;
+position:fixed !important;
+right:20px !important;
+bottom:20px !important;
+z-index:2147483647 !important;
+
+width:44px;
+height:44px;
+
 padding:0;
-border:1px solid #155e75;
+margin:0;
+
+border:1px solid #38bdf8;
 outline:none;
-background:rgba(2,11,24,.94);
-color:#38bdf8;
-font-family:"Courier New",monospace;
-font-size:18px;
-line-height:38px;
-text-align:center;
+
+background:#020b18;
+color:#67e8f9;
+
+font-family:monospace;
+font-size:20px;
+font-weight:bold;
+
 cursor:pointer;
+pointer-events:auto !important;
+
+box-shadow:
+0 0 10px #38bdf822,
+inset 0 0 10px #38bdf811;
+
 transition:
-background .25s,
-border-color .25s,
-box-shadow .25s,
-transform .25s;
+.25s ease;
 }
 
 #consoleButton:hover{
 border-color:#67e8f9;
+color:#fff;
+
 background:#062038;
-color:#e0f2fe;
+
 box-shadow:
-0 0 10px #38bdf855,
-0 0 30px #38bdf822;
+0 0 12px #38bdf8,
+0 0 35px #38bdf833;
+
 transform:translateY(-2px);
 }
 
 #consoleButton:active{
-transform:translateY(0) scale(.94);
-}
-
-@media(max-width:700px){
-
-#consoleButton{
-right:14px;
-bottom:14px;
-}
-
+transform:scale(.9);
 }
 
 
-/* =========================================================
-   COMMAND CONSOLE
-========================================================= */
+/* ================= COMMAND TERMINAL ================= */
 
 #starConsole{
 position:fixed;
+
 inset:0;
-z-index:9999;
+
+z-index:2147483646;
+
 display:flex;
-align-items:flex-end;
+
+align-items:center;
 justify-content:center;
-padding:25px;
-background:rgba(0,3,9,.76);
+
+padding:20px;
+
+background:
+rgba(0,3,10,.82);
+
 backdrop-filter:blur(8px);
 -webkit-backdrop-filter:blur(8px);
+
 opacity:0;
 visibility:hidden;
 pointer-events:none;
+
 transition:
 opacity .3s ease,
 visibility .3s ease;
 }
 
 #starConsole.open{
+
 opacity:1;
 visibility:visible;
 pointer-events:auto;
+
 }
 
+
 .consoleWindow{
+
 position:relative;
-width:min(850px,100%);
-max-height:70vh;
-border:1px solid #0e7490;
+
+width:min(850px,95%);
+
+border:1px solid #0ea5e9;
+
 background:
 linear-gradient(
 180deg,
-rgba(3,20,39,.99),
-rgba(1,7,17,.99)
+#03172bee,
+#010813f8
 );
+
 box-shadow:
-0 0 70px rgba(14,165,233,.18),
-inset 0 0 35px rgba(14,165,233,.04);
-font-family:"Courier New",monospace;
+0 0 60px #0284c733,
+inset 0 0 35px #0ea5e911;
+
+font-family:
+"Courier New",
+monospace;
+
 overflow:hidden;
-transform:translateY(35px);
-transition:transform .35s ease;
+
+transform:translateY(20px);
+
+transition:
+transform .3s ease;
 }
 
-#starConsole.open .consoleWindow{
+#starConsole.open
+.consoleWindow{
+
 transform:translateY(0);
+
 }
+
 
 .consoleWindow:before{
+
 content:"";
+
 position:absolute;
+
 inset:0;
+
 pointer-events:none;
+
 background:
 repeating-linear-gradient(
 0deg,
-transparent,
-transparent 3px,
-rgba(56,189,248,.018) 4px
+transparent 0px,
+transparent 4px,
+rgba(56,189,248,.025) 5px
 );
+
 }
+
 
 .consoleHeader{
+
 position:relative;
-z-index:1;
+
 display:flex;
-align-items:center;
+
 justify-content:space-between;
-padding:11px 15px;
-border-bottom:1px solid #164e63;
+align-items:center;
+
+padding:12px 15px;
+
+border-bottom:
+1px solid #164e63;
+
 background:#031225;
+
 color:#67e8f9;
-font-size:9px;
+
+font-size:10px;
+
 letter-spacing:2px;
+
 }
 
-.consoleClose{
+
+#consoleClose{
+
 border:0;
-outline:none;
 background:none;
+
 color:#64748b;
-font-family:"Courier New",monospace;
-font-size:18px;
-line-height:1;
+
+font-family:monospace;
+font-size:20px;
+
 cursor:pointer;
+
 transition:.2s;
 }
 
-.consoleClose:hover{
+#consoleClose:hover{
+
 color:#ef4444;
-text-shadow:0 0 8px #ef4444;
+
+text-shadow:
+0 0 10px #ef4444;
+
 }
 
+
 #consoleOutput{
-position:relative;
-height:270px;
+
+height:300px;
+
 overflow-y:auto;
-padding:15px;
-font-size:10px;
+
+padding:16px;
+
+font-size:11px;
+
 line-height:1.8;
+
 color:#7dd3fc;
+
 scrollbar-width:thin;
-scrollbar-color:#155e75 transparent;
+
+scrollbar-color:
+#155e75
+transparent;
+
 }
 
 #consoleOutput::-webkit-scrollbar{
@@ -4155,9 +4144,9 @@ width:5px;
 background:#155e75;
 }
 
+
 .consoleLine{
 margin-bottom:3px;
-word-break:break-word;
 }
 
 .consoleLine.system{
@@ -4174,32 +4163,57 @@ color:#f59e0b;
 
 .consoleLine.danger{
 color:#ef4444;
+
+text-shadow:
+0 0 7px #ef444444;
 }
+
 
 .consoleInput{
-position:relative;
-z-index:1;
+
 display:flex;
 align-items:center;
-padding:10px 13px;
-border-top:1px solid #164e63;
+
+padding:11px 15px;
+
+border-top:
+1px solid #164e63;
+
 background:#010813;
+
 }
+
 
 .consolePrompt{
+
 color:#38bdf8;
+
 margin-right:8px;
+
+font-family:monospace;
+
 }
 
+
 #consoleInput{
-width:100%;
+
 flex:1;
+
+width:100%;
+
 border:0;
 outline:0;
+
 background:transparent;
+
 color:#e0f2fe;
-font-family:"Courier New",monospace;
+
+font-family:
+"Courier New",
+monospace;
+
 font-size:11px;
+
 }
 
 #consoleInput::placeholder{
@@ -4207,180 +4221,101 @@ color:#334155;
 }
 
 
-/* =========================================================
-   OBSERVER PANEL
-========================================================= */
+/* ================= OBSERVER HUD ================= */
 
-.observerPanel{
-margin-top:20px;
-padding:15px;
-border:1px solid #164e63;
-background:rgba(2,11,24,.65);
-font-family:"Courier New",monospace;
-}
+#observerHUD{
 
-.observerPanelTitle{
-font-size:9px;
-letter-spacing:2px;
-color:#67e8f9;
-margin-bottom:12px;
-}
+position:fixed;
 
-.observerStats{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:10px;
-}
+left:15px;
+bottom:15px;
 
-.observerStat{
-padding:10px;
-border:1px solid #0c3349;
-background:#01081388;
-text-align:center;
-}
+z-index:500;
 
-.observerStat strong{
-display:block;
-font-size:16px;
-color:#e0f2fe;
-margin-bottom:4px;
-}
+pointer-events:none;
 
-.observerStat span{
-font-size:7px;
-letter-spacing:1px;
-color:#475569;
-}
+font-family:
+"Courier New",
+monospace;
 
-.affinityBox{
-margin-top:14px;
-}
-
-.affinityTop{
-display:flex;
-justify-content:space-between;
-margin-bottom:5px;
 font-size:8px;
-color:#64748b;
+
+letter-spacing:1px;
+
+line-height:1.8;
+
+color:#475569;
+
 }
 
-#affinityValue{
-color:#67e8f9;
+#observerHUD span{
+color:#38bdf8;
 }
 
-.affinityTrack{
-height:5px;
-border:1px solid #155e75;
-background:#020b18;
-overflow:hidden;
-}
-
-#affinityBar{
-width:0%;
-height:100%;
-background:
-linear-gradient(
-90deg,
-#075985,
-#0ea5e9,
-#67e8f9
-);
-box-shadow:0 0 12px #38bdf8;
-transition:width .7s cubic-bezier(.2,.8,.2,1);
-}
 
 @media(max-width:600px){
 
-.observerStats{
-grid-template-columns:1fr;
+#consoleButton{
+
+right:12px !important;
+bottom:12px !important;
+
+width:40px;
+height:40px;
+
+font-size:18px;
+
+}
+
+#observerHUD{
+
+left:8px;
+bottom:8px;
+
+font-size:7px;
+
+}
+
+.consoleWindow{
+
+width:96%;
+
+}
+
+#consoleOutput{
+
+height:250px;
+
 }
 
 }
 
 
-/* =========================================================
-   NARRATIVE INTERRUPTION
-========================================================= */
+/* ================= SCENARIO GLITCH ================= */
 
-#narrativeInterruption{
-position:fixed;
-inset:0;
-z-index:9997;
-display:flex;
-align-items:center;
-justify-content:center;
-background:#010308;
-opacity:0;
-visibility:hidden;
-pointer-events:none;
-transition:.35s;
-font-family:"Courier New",monospace;
-}
+body.star-alert
+#starConsole{
 
-#narrativeInterruption.active{
-opacity:1;
-visibility:visible;
-}
-
-.interruptionText{
-width:min(700px,90%);
-text-align:center;
-color:#67e8f9;
-font-size:11px;
-line-height:2;
-letter-spacing:2px;
-}
-
-
-/* =========================================================
-   SCENARIO ALERT
-========================================================= */
-
-body.scenario-alert .system{
 animation:
-scenarioPulse .18s infinite alternate;
+consoleAlert .12s infinite alternate;
+
 }
 
-@keyframes scenarioPulse{
+@keyframes consoleAlert{
 
 from{
-box-shadow:
-0 0 35px rgba(239,68,68,.08);
+filter:none;
 }
 
 to{
-box-shadow:
-0 0 75px rgba(239,68,68,.22);
+filter:
+hue-rotate(10deg)
+brightness(1.15);
 }
 
-}
-
-
-/* =========================================================
-   READER MODE
-========================================================= */
-
-body.reader-mode .system{
-border-color:#67e8f9;
-box-shadow:
-0 0 80px rgba(56,189,248,.2),
-inset 0 0 45px rgba(56,189,248,.035);
-}
-
-body.reader-mode .title{
-text-shadow:
-0 0 15px #38bdf8,
-0 0 45px rgba(56,189,248,.3);
 }
 
 </style>
-
-
-<!-- =========================================================
-     GLOBAL SCAN
-========================================================= -->
-
-<div id="globalScan"></div>
 
 
 <!-- =========================================================
@@ -4389,79 +4324,59 @@ text-shadow:
 
 <div id="observerHUD">
 
-<div>
 CONNECTION:
-<span id="hudConnection" class="hudValue">
+<span id="hudConnection">
 STABLE
 </span>
-</div>
 
-<div>
+<br>
+
 AFFINITY:
-<span id="hudAffinity" class="hudValue">
+<span id="hudAffinity">
 00%
 </span>
-</div>
 
-<div>
+<br>
+
 OBSERVATIONS:
-<span id="hudObservations" class="hudValue">
+<span id="hudObservations">
 000
 </span>
-</div>
 
-<div>
+<br>
+
 PROBABILITY:
-<span id="hudProbability" class="hudValue">
+<span id="hudProbability">
 100%
 </span>
-</div>
 
 </div>
 
 
 <!-- =========================================================
-     STAR STREAM COMMAND BUTTON
+     COMMAND BUTTON
 ========================================================= -->
 
 <button
 id="consoleButton"
 type="button"
 aria-label="Open Star Stream Command Terminal"
-style="
-position:fixed;
-right:20px;
-bottom:20px;
-z-index:2147483647;
-width:42px;
-height:42px;
-padding:0;
-margin:0;
-border:1px solid #38bdf8;
-background:#020b18;
-color:#67e8f9;
-font-family:monospace;
-font-size:19px;
-cursor:pointer;
-pointer-events:auto;
-">
+title="Star Stream Command Terminal">
+
 ⌘
+
 </button>
 
 
 <!-- =========================================================
-     STAR STREAM COMMAND CONSOLE
+     COMMAND TERMINAL
 ========================================================= -->
 
 <div
 id="starConsole"
 aria-hidden="true">
 
-<div
-class="consoleWindow"
-role="dialog"
-aria-modal="true"
-aria-label="Star Stream Command Terminal">
+<div class="consoleWindow">
 
 <div class="consoleHeader">
 
@@ -4470,11 +4385,12 @@ aria-label="Star Stream Command Terminal">
 </span>
 
 <button
-type="button"
-class="consoleClose"
 id="consoleClose"
+type="button"
 aria-label="Close terminal">
+
 ×
+
 </button>
 
 </div>
@@ -4483,11 +4399,15 @@ aria-label="Close terminal">
 <div id="consoleOutput">
 
 <div class="consoleLine system">
+
 &gt; STAR STREAM COMMAND TERMINAL INITIALIZED.
+
 </div>
 
 <div class="consoleLine">
+
 &gt; TYPE HELP TO DISPLAY AVAILABLE COMMANDS.
+
 </div>
 
 </div>
@@ -4514,24 +4434,10 @@ aria-label="Star Stream command input">
 </div>
 
 
-<!-- =========================================================
-     NARRATIVE INTERRUPTION
-========================================================= -->
-
-<div id="narrativeInterruption">
-
-<div
-class="interruptionText"
-id="interruptionText">
-</div>
-
-</div>
-
-
 <script>
 
 /* =========================================================
-   STAR STREAM OBSERVER PROTOCOL
+   STAR STREAM COMMAND SYSTEM
 ========================================================= */
 
 (function(){
@@ -4539,92 +4445,65 @@ id="interruptionText">
 "use strict";
 
 
-/* =========================================================
-   STATE
-========================================================= */
+/* ================= ELEMENTS ================= */
 
-const state={
-
-observations:0,
-affinity:0,
-probability:100,
-commands:0,
-secrets:0
-
-};
-
-window.starStreamState=state;
-
-
-/* =========================================================
-   ELEMENTS
-========================================================= */
-
-const consoleButton=
+var button =
 document.getElementById(
 "consoleButton"
 );
 
-const starConsole=
+var terminal =
 document.getElementById(
 "starConsole"
 );
 
-const consoleClose=
+var closeButton =
 document.getElementById(
 "consoleClose"
 );
 
-const consoleInput=
+var input =
 document.getElementById(
 "consoleInput"
 );
 
-const consoleOutput=
+var output =
 document.getElementById(
 "consoleOutput"
 );
 
-const hudAffinity=
+var hudAffinity =
 document.getElementById(
 "hudAffinity"
 );
 
-const hudObservations=
+var hudObservations =
 document.getElementById(
 "hudObservations"
 );
 
-const hudProbability=
+var hudProbability =
 document.getElementById(
 "hudProbability"
 );
 
-const hudConnection=
-document.getElementById(
-"hudConnection"
+
+/* ================= CHECK ================= */
+
+if(!button){
+
+console.error(
+"[STAR STREAM] ⌘ BUTTON NOT FOUND."
 );
 
-const affinityBar=
-document.getElementById(
-"affinityBar"
-);
+return;
 
+}
 
-/* =========================================================
-   SAFETY CHECK
-========================================================= */
+if(!terminal){
 
-if(
-!consoleButton ||
-!starConsole ||
-!consoleClose ||
-!consoleInput ||
-!consoleOutput
-){
-
-console.warn(
-"[STAR STREAM] Command terminal failed to initialize."
+console.error(
+"[STAR STREAM] TERMINAL NOT FOUND."
 );
 
 return;
@@ -4632,263 +4511,171 @@ return;
 }
 
 
-/* =========================================================
-   SAVE / LOAD
-========================================================= */
+/* ================= STATE ================= */
 
-function loadState(){
+var state = {
 
-try{
+observations:0,
 
-const saved=
-localStorage.getItem(
-"KFS_STAR_STREAM_STATE"
-);
+affinity:0,
 
-if(!saved)
-return;
+probability:100,
 
-const data=
-JSON.parse(saved);
+commands:0,
 
-if(
-typeof data.observations==="number"
-)
-state.observations=data.observations;
+secrets:0
 
-if(
-typeof data.affinity==="number"
-)
-state.affinity=data.affinity;
-
-if(
-typeof data.probability==="number"
-)
-state.probability=data.probability;
-
-if(
-typeof data.commands==="number"
-)
-state.commands=data.commands;
-
-if(
-typeof data.secrets==="number"
-)
-state.secrets=data.secrets;
-
-}catch(error){
-
-console.warn(
-"[STAR STREAM] Saved state unavailable."
-);
-
-}
-
-}
+};
 
 
-function saveState(){
-
-try{
-
-localStorage.setItem(
-"KFS_STAR_STREAM_STATE",
-JSON.stringify(state)
-);
-
-}catch(error){}
-
-}
-
-
-loadState();
-
-
-/* =========================================================
-   HUD
-========================================================= */
+/* ================= HUD ================= */
 
 function updateHUD(){
 
-hudAffinity.textContent=
-Math.floor(
-state.affinity
-)
-.toString()
-.padStart(2,"0")+"%";
+if(hudAffinity){
 
-hudObservations.textContent=
+hudAffinity.textContent =
+String(
+Math.floor(state.affinity)
+).padStart(2,"0")+"%";
+
+}
+
+if(hudObservations){
+
+hudObservations.textContent =
+String(
 state.observations
-.toString()
-.padStart(3,"0");
+).padStart(3,"0");
 
-hudProbability.textContent=
+}
+
+if(hudProbability){
+
+hudProbability.textContent =
 Math.floor(
 state.probability
 )+"%";
 
-affinityBar.style.width=
-Math.min(
-100,
-state.affinity
-)+"%";
-
-
-if(
-state.probability<=25
-){
-
-hudProbability.className=
-"hudDanger";
-
-}else if(
-state.probability<=55
-){
-
-hudProbability.className=
-"hudWarning";
-
-}else{
-
-hudProbability.className=
-"hudValue";
-
 }
 
 }
 
 
-updateHUD();
+/* ================= OBSERVE ================= */
 
+function observe(){
 
-/* =========================================================
-   OBSERVATION
-========================================================= */
+state.observations++;
 
-function observe(amount){
-
-amount=amount||1;
-
-state.observations+=amount;
-
-state.affinity=
+state.affinity =
 Math.min(
 100,
-state.affinity+
-amount*.5
+state.affinity+.5
 );
 
-state.probability=
+state.probability =
 Math.max(
 1,
-state.probability-
-amount*.03
+state.probability-.05
 );
 
 updateHUD();
 
-saveState();
-
 }
 
 
-/* =========================================================
-   CONSOLE OPEN
-========================================================= */
+/* ================= OPEN ================= */
 
-function openConsole(){
+function openTerminal(){
 
-starConsole.classList.add(
-"open"
-);
+terminal.classList.add("open");
 
-starConsole.setAttribute(
+terminal.setAttribute(
 "aria-hidden",
 "false"
 );
 
-document.body.style.overflow=
+document.body.style.overflow =
 "hidden";
 
 setTimeout(
 function(){
 
-consoleInput.focus();
+if(input){
+
+input.focus();
+
+}
 
 },
-120
+150
 );
 
 }
 
 
-/* =========================================================
-   CONSOLE CLOSE
-========================================================= */
+/* ================= CLOSE ================= */
 
-function closeConsole(){
+function closeTerminal(){
 
-starConsole.classList.remove(
-"open"
-);
+terminal.classList.remove("open");
 
-starConsole.setAttribute(
+terminal.setAttribute(
 "aria-hidden",
 "true"
 );
 
-document.body.style.overflow="";
+document.body.style.overflow = "";
 
 }
 
 
-/* =========================================================
-   BUTTON
-========================================================= */
+/* ================= BUTTON ================= */
 
-consoleButton.addEventListener(
+button.addEventListener(
 "click",
 function(event){
 
 event.preventDefault();
+
 event.stopPropagation();
 
-openConsole();
+openTerminal();
 
 }
 );
 
 
-/* =========================================================
-   CLOSE BUTTON
-========================================================= */
+/* ================= CLOSE BUTTON ================= */
 
-consoleClose.addEventListener(
+if(closeButton){
+
+closeButton.addEventListener(
 "click",
 function(event){
 
 event.preventDefault();
-event.stopPropagation();
 
-closeConsole();
+closeTerminal();
 
 }
 );
 
+}
 
-/* =========================================================
-   CLICK OUTSIDE
-========================================================= */
 
-starConsole.addEventListener(
+/* ================= OUTSIDE CLICK ================= */
+
+terminal.addEventListener(
 "click",
 function(event){
 
 if(
-event.target===starConsole
+event.target === terminal
 ){
 
-closeConsole();
+closeTerminal();
 
 }
 
@@ -4896,20 +4683,18 @@ closeConsole();
 );
 
 
-/* =========================================================
-   ESCAPE
-========================================================= */
+/* ================= ESC ================= */
 
 document.addEventListener(
 "keydown",
 function(event){
 
 if(
-event.key==="Escape" &&
-starConsole.classList.contains("open")
+event.key === "Escape" &&
+terminal.classList.contains("open")
 ){
 
-closeConsole();
+closeTerminal();
 
 }
 
@@ -4917,397 +4702,247 @@ closeConsole();
 );
 
 
-/* =========================================================
-   CONSOLE OUTPUT
-========================================================= */
+/* ================= OUTPUT ================= */
 
-function printConsole(
-text,
-type
-){
+function print(text,type){
 
-const line=
-document.createElement(
-"div"
-);
+var line =
+document.createElement("div");
 
-line.className=
+line.className =
 "consoleLine "+
-(type||"");
+(type || "");
 
-line.textContent=
+line.textContent =
 "> "+text;
 
-consoleOutput.appendChild(
-line
-);
+output.appendChild(line);
 
-consoleOutput.scrollTop=
-consoleOutput.scrollHeight;
+output.scrollTop =
+output.scrollHeight;
 
 }
 
 
-/* =========================================================
-   SCENARIO ALERT
-========================================================= */
+/* ================= COMMANDS ================= */
 
-function activateScenarioAlert(){
+function command(raw){
 
-document.body.classList.add(
-"scenario-alert"
-);
-
-hudConnection.textContent=
-"UNSTABLE";
-
-hudConnection.className=
-"hudDanger";
-
-
-setTimeout(
-function(){
-
-document.body.classList.remove(
-"scenario-alert"
-);
-
-hudConnection.textContent=
-"STABLE";
-
-hudConnection.className=
-"hudValue";
-
-},
-2500
-);
-
-}
-
-window.activateScenarioAlert=
-activateScenarioAlert;
-
-
-/* =========================================================
-   NARRATIVE INTERRUPTION
-========================================================= */
-
-function narrativeInterruption(lines){
-
-const overlay=
-document.getElementById(
-"narrativeInterruption"
-);
-
-const text=
-document.getElementById(
-"interruptionText"
-);
-
-if(!overlay||!text)
-return;
-
-overlay.classList.add(
-"active"
-);
-
-text.innerHTML="";
-
-let index=0;
-
-function nextLine(){
-
-if(
-index>=lines.length
-){
-
-setTimeout(
-function(){
-
-overlay.classList.remove(
-"active"
-);
-
-},
-1000
-);
-
-return;
-
-}
-
-const line=
-document.createElement(
-"div"
-);
-
-text.appendChild(
-line
-);
-
-let character=0;
-
-const timer=
-setInterval(
-function(){
-
-line.textContent=
-lines[index].substring(
-0,
-character
-);
-
-character++;
-
-if(
-character>
-lines[index].length
-){
-
-clearInterval(timer);
-
-index++;
-
-setTimeout(
-nextLine,
-350
-);
-
-}
-
-},
-20
-);
-
-}
-
-nextLine();
-
-}
-
-
-/* =========================================================
-   COMMAND SYSTEM
-========================================================= */
-
-function executeCommand(raw){
-
-const command=
+var cmd =
 raw.trim().toLowerCase();
 
-if(!command)
+if(!cmd){
+
 return;
+
+}
+
 
 state.commands++;
 
-printConsole(
+observe();
+
+
+print(
 "OBSERVER > "+raw
 );
 
 
-switch(command){
+if(cmd === "help"){
 
-
-case "help":
-
-printConsole(
+print(
 "AVAILABLE COMMANDS:",
 "system"
 );
 
-printConsole(
-"STATUS — current Star Stream status."
+print(
+"STATUS"
 );
 
-printConsole(
-"FABLES — inspect acquired Fables."
+print(
+"FABLES"
 );
 
-printConsole(
-"TRANSMISSIONS — inspect signal records."
+print(
+"TRANSMISSIONS"
 );
 
-printConsole(
-"CONSTELLATION — inspect identity."
+print(
+"CONSTELLATION"
 );
 
-printConsole(
-"PROBABILITY — inspect Scenario probability."
+print(
+"PROBABILITY"
 );
 
-printConsole(
-"OBSERVER — inspect Observer record."
+print(
+"OBSERVER"
 );
 
-printConsole(
-"AWAKEN — access restricted protocol."
+print(
+"AWAKEN"
 );
 
-printConsole(
-"CLEAR — clear terminal."
+print(
+"CLEAR"
 );
 
-break;
+return;
+
+}
 
 
-case "status":
+if(cmd === "status"){
 
-printConsole(
+print(
 "STAR STREAM: ONLINE",
 "success"
 );
 
-printConsole(
+print(
 "CONNECTION: STABLE"
 );
 
-printConsole(
+print(
 "NARRATIVE ENGINE: ACTIVE"
 );
 
-printConsole(
+print(
 "OBSERVER: CONFIRMED"
 );
 
-printConsole(
+print(
 "SCENARIO: ONGOING"
 );
 
-break;
+return;
+
+}
 
 
-case "fables":
+if(cmd === "fables"){
 
-printConsole(
+print(
 "FABLE ARCHIVE ACCESSED.",
 "success"
 );
 
-printConsole(
+print(
 "REGISTERED RECORDS: 04"
 );
 
-printConsole(
+print(
 "PRIMARY FABLE: FRESH START"
 );
 
-printConsole(
+print(
 "ARCHIVE STATUS: ONGOING"
 );
 
-break;
+return;
+
+}
 
 
-case "transmissions":
+if(cmd === "transmissions"){
 
-printConsole(
+print(
 "TRANSMISSION CHANNEL ACCESSED.",
 "success"
 );
 
-printConsole(
+print(
 "TRANSMISSION #001: RECEIVED"
 );
 
-printConsole(
+print(
 "UNKNOWN SIGNAL: DETECTED",
 "warning"
 );
 
-break;
+return;
+
+}
 
 
-case "constellation":
+if(cmd === "constellation"){
 
-printConsole(
+print(
 "IDENTITY: KEEPER OF FORGOTTEN STORIES",
 "success"
 );
 
-printConsole(
+print(
 "GRADE: UNKNOWN"
 );
 
-printConsole(
+print(
 "ALIGNMENT: NARRATIVE PRESERVATION"
 );
 
-printConsole(
+print(
 "PRIMARY ATTRIBUTE: WITNESS"
 );
 
-break;
+return;
+
+}
 
 
-case "probability":
+if(cmd === "probability"){
 
-printConsole(
+print(
 "CURRENT PROBABILITY: "+
 Math.floor(
 state.probability
 )+"%",
-state.probability<=30
-?"danger"
-:"warning"
+"warning"
 );
 
-if(
-state.probability<=50
-){
-
-printConsole(
-"WARNING: SCENARIO STABILITY COMPROMISED.",
-"danger"
-);
-
-}else{
-
-printConsole(
-"SCENARIO REMAINS WITHIN ACCEPTABLE PARAMETERS."
-);
+return;
 
 }
 
-break;
 
+if(cmd === "observer"){
 
-case "observer":
-
-printConsole(
+print(
 "OBSERVER RECORD",
 "system"
 );
 
-printConsole(
+print(
 "OBSERVATIONS: "+
 state.observations
 );
 
-printConsole(
-"CONSTELLATION AFFINITY: "+
+print(
+"AFFINITY: "+
 Math.floor(
 state.affinity
 )+"%"
 );
 
-printConsole(
+print(
 "COMMANDS EXECUTED: "+
 state.commands
 );
 
-printConsole(
-"SECRETS DISCOVERED: "+
+print(
+"RESTRICTED RECORDS: "+
 state.secrets
 );
 
-break;
+return;
+
+}
 
 
-case "awaken":
+if(cmd === "awaken"){
 
 state.secrets++;
 
-printConsole(
+print(
 "RESTRICTED PROTOCOL REQUESTED.",
 "warning"
 );
@@ -5315,7 +4950,7 @@ printConsole(
 setTimeout(
 function(){
 
-printConsole(
+print(
 "ACCESSING DEEP ARCHIVE..."
 );
 
@@ -5326,91 +4961,102 @@ printConsole(
 setTimeout(
 function(){
 
-printConsole(
+print(
 "ACCESS DENIED.",
 "danger"
 );
 
 },
-750
+800
 );
 
 setTimeout(
 function(){
 
-printConsole(
-"WHY ARE YOU STILL READING?",
+print(
+"THE STAR STREAM HAS NOTICED YOU.",
 "danger"
 );
 
-activateScenarioAlert();
-
-},
-1200
+document.body.classList.add(
+"star-alert"
 );
 
-break;
+setTimeout(
+function(){
+
+document.body.classList.remove(
+"star-alert"
+);
+
+},
+1800
+);
+
+},
+1300
+);
+
+return;
+
+}
 
 
-case "clear":
+if(cmd === "clear"){
 
-consoleOutput.innerHTML="";
+output.innerHTML = "";
 
-printConsole(
+print(
 "TERMINAL CLEARED.",
 "success"
 );
 
-break;
+return;
+
+}
 
 
-default:
-
-printConsole(
+print(
 "UNKNOWN COMMAND.",
 "danger"
 );
 
-printConsole(
+print(
 "TYPE HELP FOR AVAILABLE COMMANDS."
 );
 
 }
 
 
-observe(2);
+/* ================= INPUT ================= */
 
-}
+if(input){
 
-
-/* =========================================================
-   INPUT
-========================================================= */
-
-consoleInput.addEventListener(
+input.addEventListener(
 "keydown",
 function(event){
 
 if(
-event.key==="Enter"
+event.key === "Enter"
 ){
 
 event.preventDefault();
 
-executeCommand(
-consoleInput.value
+command(
+input.value
 );
 
-consoleInput.value="";
+input.value = "";
 
 }
 
-});
+}
+);
+
+}
 
 
-/* =========================================================
-   CTRL + SHIFT + K
-========================================================= */
+/* ================= CTRL SHIFT K ================= */
 
 document.addEventListener(
 "keydown",
@@ -5419,20 +5065,20 @@ function(event){
 if(
 event.ctrlKey &&
 event.shiftKey &&
-event.key.toLowerCase()==="k"
+event.key.toLowerCase() === "k"
 ){
 
 event.preventDefault();
 
 if(
-starConsole.classList.contains("open")
+terminal.classList.contains("open")
 ){
 
-closeConsole();
+closeTerminal();
 
 }else{
 
-openConsole();
+openTerminal();
 
 }
 
@@ -5442,59 +5088,26 @@ openConsole();
 );
 
 
-/* =========================================================
-   GENERAL OBSERVATION TRACKING
-========================================================= */
+/* ================= SCROLL ================= */
 
-document.addEventListener(
-"click",
-function(event){
-
-if(
-event.target.closest("#consoleButton") ||
-event.target.closest("#starConsole")
-){
-
-return;
-
-}
-
-if(
-event.target.closest(
-"a,button,summary"
-)
-){
-
-observe(1);
-
-}
-
-}
-);
-
-
-/* =========================================================
-   SCROLL OBSERVATION
-========================================================= */
-
-let scrollTimeout;
+var scrollTimer;
 
 window.addEventListener(
 "scroll",
 function(){
 
 clearTimeout(
-scrollTimeout
+scrollTimer
 );
 
-scrollTimeout=
+scrollTimer =
 setTimeout(
 function(){
 
-observe(1);
+observe();
 
 },
-250
+300
 );
 
 },
@@ -5504,395 +5117,14 @@ passive:true
 );
 
 
-/* =========================================================
-   READER EASTER EGG
-   TYPE "reader"
-========================================================= */
-
-let secretInput="";
-
-document.addEventListener(
-"keydown",
-function(event){
-
-if(
-event.target.tagName==="INPUT" ||
-event.target.tagName==="TEXTAREA"
-){
-
-return;
-
-}
-
-if(
-event.key.length!==1
-){
-
-return;
-
-}
-
-secretInput+=
-event.key.toLowerCase();
-
-if(
-secretInput.length>6
-){
-
-secretInput=
-secretInput.slice(-6);
-
-}
-
-if(
-secretInput==="reader"
-){
-
-document.body.classList.add(
-"reader-mode"
-);
-
-state.secrets++;
-
-saveState();
-
-narrativeInterruption([
-
-"【 READER PROTOCOL 】",
-
-"IDENTITY CONFIRMED.",
-
-"YOU ARE NOT MERELY OBSERVING THE STORY.",
-
-"THE STORY HAS BEGUN OBSERVING YOU."
-
-]);
-
-secretInput="";
-
-}
-
-}
-);
-
-
-/* =========================================================
-   RARE STAR STREAM EVENT
-========================================================= */
-
-setInterval(
-function(){
-
-if(
-Math.random()>.035
-)
-return;
-
-const main=
-document.getElementById(
-"main"
-);
-
-if(
-!main ||
-!main.classList.contains("show")
-)
-return;
-
-narrativeInterruption([
-
-"【 STAR STREAM NOTICE 】",
-
-"A forgotten story has been remembered.",
-
-"The archive has acknowledged your presence.",
-
-"Please continue."
-
-]);
-
-},
-25000
-);
-
-
-/* =========================================================
-   AFFINITY MILESTONES
-========================================================= */
-
-let milestone25=false;
-let milestone50=false;
-let milestone75=false;
-let milestone100=false;
-
-setInterval(
-function(){
-
-if(
-state.affinity>=25 &&
-!milestone25
-){
-
-milestone25=true;
-
-printConsole(
-"CONSTELLATION AFFINITY: 25%",
-"success"
-);
-
-}
-
-if(
-state.affinity>=50 &&
-!milestone50
-){
-
-milestone50=true;
-
-milestone50=true;
-
-narrativeInterruption([
-
-"【 CONSTELLATION NOTICE 】",
-
-"Your presence has become recognizable.",
-
-"Continue observing."
-
-]);
-
-}
-
-if(
-state.affinity>=75 &&
-!milestone75
-){
-
-milestone75=true;
-
-printConsole(
-"OBSERVER CLASSIFICATION UPDATED.",
-"warning"
-);
-
-}
-
-if(
-state.affinity>=100 &&
-!milestone100
-){
-
-milestone100=true;
-
-narrativeInterruption([
-
-"【 STAR STREAM ERROR 】",
-
-"The constellation is looking directly at you.",
-
-"Do not look back."
-
-]);
-
-}
-
-},
-1000
-);
-
-
-/* =========================================================
-   INITIALIZE
-========================================================= */
+/* ================= READY ================= */
 
 updateHUD();
-
-})();
-
-</script>   
-<script>
-(function(){
-
-const button = document.getElementById("consoleButton");
-const terminal = document.getElementById("starConsole");
-const close = document.getElementById("consoleClose");
-const input = document.getElementById("consoleInput");
-
-if(!button){
-console.error("[STAR STREAM] ⌘ BUTTON NOT FOUND.");
-return;
-}
-
-if(!terminal){
-console.error("[STAR STREAM] TERMINAL NOT FOUND.");
-return;
-}
-
-
-/* ===============================
-   OPEN TERMINAL
-================================ */
-
-function openTerminal(){
-
-terminal.classList.add("open");
-
-terminal.style.opacity="1";
-terminal.style.visibility="visible";
-terminal.style.pointerEvents="auto";
-
-terminal.setAttribute(
-"aria-hidden",
-"false"
-);
-
-document.body.style.overflow="hidden";
-
-if(input){
-
-setTimeout(function(){
-input.focus();
-},100);
-
-}
-
-}
-
-
-/* ===============================
-   CLOSE TERMINAL
-================================ */
-
-function closeTerminal(){
-
-terminal.classList.remove("open");
-
-terminal.style.opacity="";
-terminal.style.visibility="";
-terminal.style.pointerEvents="";
-
-terminal.setAttribute(
-"aria-hidden",
-"true"
-);
-
-document.body.style.overflow="";
-
-}
-
-
-/* ===============================
-   ⌘ BUTTON
-================================ */
-
-button.onclick=function(event){
-
-event.preventDefault();
-event.stopPropagation();
-
-openTerminal();
-
-};
-
-
-/* ===============================
-   CLOSE
-================================ */
-
-if(close){
-
-close.onclick=function(event){
-
-event.preventDefault();
-event.stopPropagation();
-
-closeTerminal();
-
-};
-
-}
-
-
-/* ===============================
-   CLICK OUTSIDE
-================================ */
-
-terminal.addEventListener(
-"click",
-function(event){
-
-if(event.target===terminal){
-
-closeTerminal();
-
-}
-
-}
-);
-
-
-/* ===============================
-   ESC
-================================ */
-
-document.addEventListener(
-"keydown",
-function(event){
-
-if(
-event.key==="Escape" &&
-terminal.classList.contains("open")
-){
-
-closeTerminal();
-
-}
-
-}
-);
-
-
-/* ===============================
-   CTRL + SHIFT + K
-================================ */
-
-document.addEventListener(
-"keydown",
-function(event){
-
-if(
-event.ctrlKey &&
-event.shiftKey &&
-event.key.toLowerCase()==="k"
-){
-
-event.preventDefault();
-
-if(
-terminal.classList.contains("open")
-){
-
-closeTerminal();
-
-}else{
-
-openTerminal();
-
-}
-
-}
-
-}
-);
-
-
-/* ===============================
-   DEBUG
-================================ */
 
 console.log(
 "[STAR STREAM] COMMAND TERMINAL ONLINE."
 );
 
 })();
+
 </script>
