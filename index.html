@@ -3,3092 +3,2301 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#020611">
+
 <title>Keeper of Forgotten Stories</title>
 
 <style>
+
 *{
- box-sizing:border-box;
+box-sizing:border-box;
 }
 
 html{
- scroll-behavior:smooth;
-}
-
-:root{
- --bg:#020611;
- --bg2:#030b18;
- --panel:rgba(4,16,34,.82);
- --panel2:rgba(7,25,49,.72);
- --line:#164e63;
- --cyan:#38bdf8;
- --cyan2:#67e8f9;
- --blue:#2563eb;
- --text:#dbeafe;
- --soft:#94a3b8;
- --muted:#475569;
- --danger:#60a5fa;
+scroll-behavior:smooth;
 }
 
 body{
- margin:0;
- min-height:100vh;
- background:
- radial-gradient(circle at 50% 0%,rgba(14,116,144,.14),transparent 35%),
- linear-gradient(180deg,#020611,#030918 50%,#020611);
- color:var(--text);
- font-family:Arial,Helvetica,sans-serif;
- overflow-x:hidden;
- cursor:default;
-}
-
-body.no-scroll{
- overflow:hidden;
-}
-
-body::before{
- content:"";
- position:fixed;
- inset:0;
- pointer-events:none;
- z-index:-10;
- background-image:
- radial-gradient(circle,#fff 0 1px,transparent 1.5px),
- radial-gradient(circle,#7dd3fc 0 1px,transparent 1.5px),
- radial-gradient(circle,#fff 0 .7px,transparent 1.2px);
- background-size:170px 160px,270px 250px,330px 310px;
- background-position:0 0,70px 100px,140px 40px;
- opacity:.34;
- animation:starDrift 35s linear infinite;
-}
-
-body::after{
- content:"";
- position:fixed;
- inset:0;
- pointer-events:none;
- z-index:1000;
- background:
- repeating-linear-gradient(
-  0deg,
-  rgba(255,255,255,.012) 0,
-  rgba(255,255,255,.012) 1px,
-  transparent 1px,
-  transparent 4px
- );
- mix-blend-mode:screen;
-}
-
-@keyframes starDrift{
- from{transform:translateY(0)}
- to{transform:translateY(-120px)}
+margin:0;
+background:#020611;
+color:#dbeafe;
+font-family:Arial,Helvetica,sans-serif;
+overflow-x:hidden;
+min-height:100vh;
 }
 
 /* =========================
-   CUSTOM CURSOR
+   STARFIELD
 ========================= */
 
-#cursorGlow{
- position:fixed;
- width:220px;
- height:220px;
- border-radius:50%;
- pointer-events:none;
- z-index:9998;
- background:radial-gradient(circle,rgba(56,189,248,.12),transparent 65%);
- transform:translate(-50%,-50%);
- opacity:0;
- transition:opacity:.3s;
+body:before{
+content:"";
+position:fixed;
+inset:0;
+pointer-events:none;
+
+background-image:
+radial-gradient(circle at 12% 18%,#fff 0 1px,transparent 1px),
+radial-gradient(circle at 78% 30%,#7dd3fc 0 1px,transparent 1px),
+radial-gradient(circle at 42% 72%,#fff 0 1px,transparent 1px),
+radial-gradient(circle at 91% 82%,#38bdf8 0 1px,transparent 1px),
+radial-gradient(circle at 62% 12%,#fff 0 1px,transparent 1px);
+
+background-size:
+180px 170px,
+250px 230px,
+310px 280px,
+220px 240px,
+340px 310px;
+
+opacity:.42;
+z-index:-2;
+
+animation:stars 35s linear infinite;
 }
 
-.cursorDot{
- position:fixed;
- width:5px;
- height:5px;
- border-radius:50%;
- background:#fff;
- box-shadow:0 0 12px 4px rgba(56,189,248,.8);
- pointer-events:none;
- z-index:9999;
- transform:translate(-50%,-50%);
+body:after{
+content:"";
+position:fixed;
+inset:0;
+pointer-events:none;
+
+background:
+linear-gradient(
+180deg,
+rgba(14,116,144,.14),
+transparent 35%,
+rgba(2,6,23,.7)
+);
+
+z-index:-1;
 }
+
+@keyframes stars{
+
+0%{
+background-position:
+0 0,
+0 0,
+0 0,
+0 0,
+0 0;
+}
+
+100%{
+background-position:
+180px 170px,
+250px 230px,
+310px 280px,
+220px 240px,
+340px 310px;
+}
+
+}
+
 
 /* =========================
-   INTRO
+   STAR STREAM CONNECTION
 ========================= */
 
-#intro{
- position:fixed;
- inset:0;
- z-index:5000;
- display:flex;
- align-items:center;
- justify-content:center;
- background:#020611;
- transition:
- opacity 1.2s ease,
- visibility 1.2s ease;
+#connect{
+position:fixed;
+inset:0;
+
+background:#020611;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+z-index:9999;
+
+transition:
+opacity 1.2s ease,
+visibility 1.2s ease;
 }
 
-#intro.hidden{
- opacity:0;
- visibility:hidden;
- pointer-events:none;
+#connect.hide{
+opacity:0;
+visibility:hidden;
+pointer-events:none;
 }
 
-.introStars{
- position:absolute;
- inset:0;
- overflow:hidden;
+.boot{
+width:min(680px,90%);
+text-align:center;
+font-family:monospace;
 }
 
-.introStar{
- position:absolute;
- width:2px;
- height:2px;
- background:#fff;
- border-radius:50%;
- box-shadow:0 0 7px #38bdf8;
- animation:twinkle var(--duration) infinite alternate;
+.bootbox{
+border:1px solid #38bdf8;
+
+padding:38px 25px;
+
+background:
+linear-gradient(
+180deg,
+rgba(3,15,31,.98),
+rgba(2,8,20,.98)
+);
+
+box-shadow:
+0 0 35px rgba(2,132,199,.18),
+inset 0 0 30px rgba(14,165,233,.03);
 }
 
-@keyframes twinkle{
- from{opacity:.15;transform:scale(.6)}
- to{opacity:1;transform:scale(1.5)}
+.boottitle{
+font-size:12px;
+letter-spacing:5px;
+color:#67e8f9;
 }
 
-.introBox{
- width:min(700px,90%);
- text-align:center;
- position:relative;
- z-index:2;
+.bootmain{
+font-size:clamp(22px,6vw,38px);
+letter-spacing:3px;
+margin:25px 0;
+color:#e0f2fe;
+
+text-shadow:
+0 0 15px #38bdf8,
+0 0 35px rgba(56,189,248,.25);
 }
 
-.systemTag{
- color:var(--cyan2);
- font-size:11px;
- letter-spacing:5px;
- margin-bottom:28px;
+.loading{
+height:5px;
+
+background:#082f49;
+
+margin:22px 0;
+
+overflow:hidden;
+
+border:1px solid #155e75;
 }
 
-.connectTitle{
- font-size:clamp(21px,5vw,35px);
- letter-spacing:3px;
- color:#e0f2fe;
- text-shadow:
- 0 0 10px rgba(56,189,248,.7),
- 0 0 30px rgba(56,189,248,.25);
-}
+.loading span{
+display:block;
+height:100%;
+width:0;
 
-.loadingFrame{
- width:min(500px,85%);
- height:5px;
- margin:28px auto 12px;
- border:1px solid #155e75;
- background:#061322;
- overflow:hidden;
-}
+background:#38bdf8;
 
-.loadingBar{
- height:100%;
- width:0;
- background:linear-gradient(90deg,#0ea5e9,#67e8f9,#38bdf8);
- box-shadow:0 0 18px #38bdf8;
- animation:load 4.4s cubic-bezier(.2,.8,.2,1) forwards;
+box-shadow:
+0 0 12px #38bdf8,
+0 0 25px rgba(56,189,248,.5);
+
+animation:load 3.2s forwards;
 }
 
 @keyframes load{
- 0%{width:0}
- 17%{width:14%}
- 31%{width:27%}
- 46%{width:44%}
- 62%{width:58%}
- 78%{width:76%}
- 91%{width:88%}
- 100%{width:100%}
+
+0%{
+width:0;
 }
 
-.loadingPercent{
- font-size:10px;
- color:#64748b;
- letter-spacing:2px;
+25%{
+width:19%;
 }
 
-.terminal{
- margin:25px auto 0;
- width:min(560px,90%);
- min-height:90px;
- padding:14px;
- border:1px solid rgba(22,78,99,.8);
- background:rgba(1,8,18,.7);
- text-align:left;
- font-family:"Courier New",monospace;
- font-size:11px;
- color:#67e8f9;
- line-height:1.8;
+50%{
+width:47%;
 }
 
-.terminalLine{
- opacity:0;
+72%{
+width:76%;
 }
 
-.terminalLine.show{
- animation:terminalIn .35s forwards;
+90%{
+width:91%;
 }
 
-@keyframes terminalIn{
- from{opacity:0;transform:translateX(-8px)}
- to{opacity:1;transform:translateX(0)}
+100%{
+width:100%;
 }
 
-.transmissionReveal{
- display:none;
- margin-top:25px;
- animation:reveal .9s ease forwards;
 }
 
-@keyframes reveal{
- from{opacity:0;transform:translateY(15px)}
- to{opacity:1;transform:none}
+.bootstatus{
+font-size:11px;
+color:#7dd3fc;
+letter-spacing:2px;
+line-height:2;
+min-height:22px;
 }
 
-.enterButton{
- border:1px solid var(--cyan);
- color:#bae6fd;
- background:rgba(14,165,233,.06);
- padding:14px 28px;
- letter-spacing:3px;
- cursor:pointer;
- margin-top:22px;
- transition:.35s;
+.enter{
+display:none;
+
+margin-top:22px;
+
+padding:13px 30px;
+
+border:1px solid #38bdf8;
+
+background:rgba(14,165,233,.05);
+
+color:#bae6fd;
+
+cursor:pointer;
+
+letter-spacing:3px;
+
+font-weight:bold;
+
+transition:.3s;
 }
 
-.enterButton:hover{
- color:#fff;
- background:rgba(14,165,233,.18);
- box-shadow:
- 0 0 15px rgba(56,189,248,.3),
- inset 0 0 15px rgba(56,189,248,.05);
- transform:translateY(-2px);
+.enter:hover{
+background:rgba(14,165,233,.16);
+
+box-shadow:
+0 0 20px rgba(56,189,248,.45),
+inset 0 0 15px rgba(56,189,248,.08);
+
+color:white;
+
+transform:translateY(-2px);
 }
+
 
 /* =========================
-   SITE
+   MAIN
 ========================= */
 
-#site{
- opacity:0;
- transition:opacity 1.4s ease;
+#main{
+opacity:0;
+
+transition:
+opacity 1.2s ease;
+
+pointer-events:none;
 }
 
-#site.visible{
- opacity:1;
+#main.show{
+opacity:1;
+pointer-events:auto;
 }
 
-.siteShell{
- width:min(1050px,94%);
- margin:35px auto 60px;
- position:relative;
+.container{
+width:min(950px,92%);
+margin:35px auto;
 }
 
-.systemWindow{
- border:1px solid var(--cyan);
- background:rgba(2,9,21,.91);
- box-shadow:
- 0 0 35px rgba(14,165,233,.12),
- inset 0 0 40px rgba(14,165,233,.025);
- position:relative;
- overflow:hidden;
+.system{
+border:1px solid #075985;
+
+background:rgba(2,11,24,.92);
+
+box-shadow:
+0 0 35px rgba(2,132,199,.15),
+0 0 100px rgba(14,165,233,.03);
+
+position:relative;
 }
 
-.systemWindow::before{
- content:"";
- position:absolute;
- top:0;
- left:-100%;
- width:70%;
- height:1px;
- background:linear-gradient(90deg,transparent,#67e8f9,transparent);
- animation:scanLine 7s linear infinite;
+
+/* =========================
+   HEADER
+========================= */
+
+header{
+padding:35px 20px;
+
+text-align:center;
+
+border-bottom:1px solid #164e63;
+
+position:relative;
+
+overflow:hidden;
 }
 
-@keyframes scanLine{
- 0%{left:-100%}
- 55%,100%{left:150%}
+header:before{
+content:"";
+
+position:absolute;
+
+left:50%;
+bottom:0;
+
+width:80%;
+height:1px;
+
+transform:translateX(-50%);
+
+background:
+linear-gradient(
+90deg,
+transparent,
+#38bdf8,
+transparent
+);
+
+box-shadow:
+0 0 12px #38bdf8;
 }
 
-.topBar{
- min-height:32px;
- border-bottom:1px solid var(--line);
- display:flex;
- justify-content:space-between;
- align-items:center;
- padding:0 14px;
- color:#64748b;
- font-size:9px;
- letter-spacing:2px;
-}
+.signal{
+font-size:11px;
 
-.connection{
- color:#67e8f9;
-}
+color:#67e8f9;
 
-.connectionDot{
- display:inline-block;
- width:5px;
- height:5px;
- border-radius:50%;
- background:#38bdf8;
- box-shadow:0 0 9px #38bdf8;
- margin-right:6px;
- animation:pulse 1.5s infinite;
-}
-
-@keyframes pulse{
- 50%{opacity:.25;transform:scale(.7)}
-}
-
-.header{
- padding:48px 25px 42px;
- text-align:center;
- border-bottom:1px solid var(--line);
- position:relative;
- overflow:hidden;
-}
-
-.header::before{
- content:"✦";
- position:absolute;
- font-size:160px;
- color:rgba(56,189,248,.025);
- left:50%;
- top:50%;
- transform:translate(-50%,-50%);
- pointer-events:none;
-}
-
-.small{
- color:var(--cyan2);
- font-size:10px;
- letter-spacing:4px;
+letter-spacing:3px;
 }
 
 .title{
- position:relative;
- margin:14px 0 8px;
- font-size:clamp(27px,7vw,54px);
- letter-spacing:6px;
- line-height:1.05;
- color:#e0f2fe;
- text-shadow:
- 0 0 12px rgba(56,189,248,.7),
- 0 0 35px rgba(14,165,233,.2);
- cursor:pointer;
+font-size:clamp(27px,7vw,48px);
+
+letter-spacing:5px;
+
+margin:15px 0 8px;
+
+color:#e0f2fe;
+
+text-shadow:
+0 0 20px rgba(56,189,248,.55),
+0 0 45px rgba(56,189,248,.12);
+
 }
 
 .subtitle{
- color:#7dd3fc;
- font-size:11px;
- letter-spacing:3px;
+font-size:12px;
+
+color:#7dd3fc;
+
+letter-spacing:2px;
 }
 
-.statusReadout{
- margin-top:22px;
- color:#475569;
- font-size:9px;
- letter-spacing:2px;
+
+/* =========================
+   NAVIGATION
+========================= */
+
+nav{
+display:flex;
+
+justify-content:center;
+
+flex-wrap:wrap;
+
+gap:6px;
+
+padding:13px;
+
+border-bottom:1px solid #164e63;
+
+background:rgba(3,18,37,.95);
+
+position:sticky;
+
+top:0;
+
+z-index:20;
+
+backdrop-filter:blur(8px);
 }
 
-.statusReadout span{
- color:#67e8f9;
+nav button{
+color:#7dd3fc;
+
+background:transparent;
+
+border:1px solid transparent;
+
+font-size:11px;
+
+letter-spacing:2px;
+
+padding:10px 16px;
+
+cursor:pointer;
+
+transition:.3s;
 }
 
-.nav{
- display:flex;
- flex-wrap:wrap;
- justify-content:center;
- border-bottom:1px solid var(--line);
- background:rgba(1,7,17,.8);
- position:sticky;
- top:0;
- z-index:50;
- backdrop-filter:blur(12px);
+nav button:hover,
+nav button.active{
+border-color:#0ea5e9;
+
+background:rgba(14,165,233,.08);
+
+color:white;
+
+text-shadow:
+0 0 8px #38bdf8;
+
+box-shadow:
+inset 0 0 10px rgba(56,189,248,.03);
 }
 
-.nav button{
- position:relative;
- background:none;
- border:0;
- color:#64748b;
- padding:16px 24px;
- font-size:10px;
- letter-spacing:2px;
- cursor:pointer;
- transition:.3s;
-}
-
-.nav button::after{
- content:"";
- position:absolute;
- bottom:0;
- left:50%;
- width:0;
- height:1px;
- background:#38bdf8;
- transition:.3s;
- transform:translateX(-50%);
- box-shadow:0 0 8px #38bdf8;
-}
-
-.nav button:hover,
-.nav button.active{
- color:#e0f2fe;
-}
-
-.nav button.active::after{
- width:70%;
-}
 
 /* =========================
    PAGES
 ========================= */
 
 .page{
- display:none;
- min-height:500px;
+display:none;
+
+animation:pageIn .5s ease;
 }
 
 .page.active{
- display:block;
- animation:pageEnter .65s ease;
+display:block;
 }
 
-@keyframes pageEnter{
- from{
-  opacity:0;
-  transform:translateY(12px);
- }
- to{
-  opacity:1;
-  transform:none;
- }
+@keyframes pageIn{
+
+from{
+opacity:0;
+transform:translateY(10px);
 }
 
-.section{
- margin:18px;
- padding:24px;
- border:1px solid var(--line);
- background:linear-gradient(
-  135deg,
-  rgba(8,25,48,.72),
-  rgba(2,12,27,.78)
- );
- position:relative;
- overflow:hidden;
+to{
+opacity:1;
+transform:translateY(0);
 }
 
-.section::after{
- content:"";
- position:absolute;
- width:100px;
- height:100px;
- border:1px solid rgba(56,189,248,.06);
- right:-45px;
- top:-45px;
- transform:rotate(45deg);
- pointer-events:none;
 }
 
-.sectionTitle{
- color:#67e8f9;
- font-size:12px;
- font-weight:bold;
- letter-spacing:2px;
- margin-bottom:18px;
+
+/* =========================
+   SECTIONS
+========================= */
+
+section{
+margin:18px;
+
+padding:23px;
+
+border:1px solid #164e63;
+
+background:rgba(7,23,43,.72);
+
+scroll-margin-top:80px;
+
+transition:
+border-color .3s,
+box-shadow .3s;
+}
+
+section:hover{
+border-color:#155e75;
+}
+
+.heading{
+color:#67e8f9;
+
+font-weight:bold;
+
+letter-spacing:2px;
+
+font-size:13px;
 }
 
 .line{
- height:1px;
- background:linear-gradient(
-  90deg,
-  transparent,
-  #164e63,
-  transparent
- );
- margin:20px 0;
+height:1px;
+
+background:
+linear-gradient(
+90deg,
+#164e63,
+rgba(22,78,99,.2)
+);
+
+margin:18px 0;
 }
 
 .info{
- font-size:13px;
- line-height:2;
+font-size:14px;
+
+line-height:1.9;
 }
 
 .label{
- color:#38bdf8;
+color:#38bdf8;
 }
 
 .value{
- color:#e0f2fe;
+color:#e0f2fe;
 }
 
-.quote{
- border-left:2px solid #38bdf8;
- padding:14px 17px;
- color:#bae6fd;
- font-size:13px;
- line-height:1.8;
- font-style:italic;
- background:rgba(14,165,233,.035);
+.message{
+border-left:2px solid #38bdf8;
+
+padding:15px 17px;
+
+background:rgba(14,165,233,.035);
+
+color:#bae6fd;
+
+line-height:1.8;
+
+font-style:italic;
+
+box-shadow:
+inset 10px 0 20px rgba(14,165,233,.015);
 }
 
-.revealOnScroll{
- opacity:0;
- transform:translateY(20px);
- transition:.7s ease;
-}
-
-.revealOnScroll.revealed{
- opacity:1;
- transform:none;
-}
-
-/* =========================
-   STATUS CARDS
-========================= */
-
-.statusGrid{
- display:grid;
- grid-template-columns:repeat(3,1fr);
- gap:10px;
-}
-
-.statCard{
- padding:17px 12px;
- border:1px solid #123d52;
- background:rgba(2,12,27,.65);
- text-align:center;
- transition:.3s;
-}
-
-.statCard:hover{
- border-color:#38bdf8;
- box-shadow:0 0 18px rgba(56,189,248,.08);
- transform:translateY(-3px);
-}
-
-.statNumber{
- color:#e0f2fe;
- font-size:21px;
- margin-bottom:5px;
- text-shadow:0 0 8px rgba(56,189,248,.35);
-}
-
-.statLabel{
- color:#64748b;
- font-size:8px;
- letter-spacing:2px;
-}
 
 /* =========================
    FABLES
 ========================= */
 
 .fable{
- padding:13px 14px;
- margin:8px 0;
- border:1px solid transparent;
- background:rgba(2,13,28,.35);
- transition:.3s;
- cursor:pointer;
+border:1px solid #164e63;
+
+padding:20px;
+
+background:rgba(3,13,28,.72);
+
+transition:.35s;
+
+position:relative;
+
+overflow:hidden;
 }
 
-.fable::before{
- content:"✦ ";
- color:#38bdf8;
+.fable:before{
+content:"";
+
+position:absolute;
+
+top:0;
+left:-100%;
+
+width:100%;
+height:1px;
+
+background:#38bdf8;
+
+transition:.5s;
+}
+
+.fable:hover:before{
+left:100%;
 }
 
 .fable:hover{
- border-color:#0ea5e9;
- background:rgba(14,165,233,.08);
- transform:translateX(7px);
+border-color:#38bdf8;
+
+box-shadow:
+0 0 20px rgba(2,132,199,.15);
+
+transform:translateY(-3px);
 }
 
-.fableName{
- color:#dbeafe;
- font-style:italic;
+.fableid{
+color:#64748b;
+
+font-family:monospace;
+
+font-size:11px;
+
+letter-spacing:1px;
 }
 
-.fableStatus{
- float:right;
- font-size:8px;
- letter-spacing:1px;
- color:#64748b;
- margin-top:3px;
+.fabletitle{
+font-size:21px;
+
+color:#e0f2fe;
+
+letter-spacing:2px;
+
+margin:8px 0;
 }
 
-details{
- margin-top:13px;
- border:1px dashed #155e75;
+.meta{
+font-size:12px;
+
+line-height:1.8;
+
+color:#7dd3fc;
 }
 
-summary{
- padding:12px;
- cursor:pointer;
- color:#67e8f9;
- font-size:10px;
- letter-spacing:1px;
+.summary{
+margin:18px 0;
+
+padding-left:15px;
+
+border-left:1px solid #155e75;
+
+color:#bae6fd;
+
+font-size:13px;
+
+line-height:1.8;
 }
 
-.hiddenInfo{
- padding:14px;
- color:#64748b;
- font-size:11px;
- line-height:1.8;
+.tags{
+font-size:11px;
+
+color:#64748b;
+
+line-height:1.8;
 }
+
+.access{
+display:inline-block;
+
+margin-top:15px;
+
+padding:10px 17px;
+
+border:1px solid #0ea5e9;
+
+color:#bae6fd;
+
+text-decoration:none;
+
+font-size:11px;
+
+letter-spacing:2px;
+
+transition:.3s;
+}
+
+.access:hover{
+background:rgba(14,165,233,.12);
+
+box-shadow:
+0 0 15px rgba(56,189,248,.35);
+
+color:white;
+
+transform:translateX(3px);
+}
+
 
 /* =========================
-   FABLE ARCHIVE
+   SMALL FABLE RECORDS
 ========================= */
 
-.archiveHeader{
- display:flex;
- justify-content:space-between;
- gap:15px;
- align-items:end;
- margin-bottom:18px;
+.fableList{
+padding:12px;
+
+margin:8px 0;
+
+border:1px solid transparent;
+
+transition:.3s;
 }
 
-.archiveCount{
- font-size:9px;
- letter-spacing:2px;
- color:#475569;
+.fableList:hover{
+border-color:#0ea5e9;
+
+background:rgba(14,165,233,.07);
+
+transform:translateX(5px);
 }
 
-.storyCard{
- position:relative;
- margin:13px 0;
- padding:20px;
- border:1px solid #164e63;
- background:
- linear-gradient(135deg,rgba(8,25,48,.75),rgba(2,10,23,.8));
- cursor:pointer;
- transition:.4s;
- overflow:hidden;
+.fableList:before{
+content:"✦ ";
+
+color:#38bdf8;
 }
 
-.storyCard::before{
- content:"";
- position:absolute;
- top:0;
- left:-120%;
- width:70%;
- height:100%;
- background:linear-gradient(
-  90deg,
-  transparent,
-  rgba(56,189,248,.06),
-  transparent
- );
- transform:skewX(-20deg);
- transition:.6s;
-}
-
-.storyCard:hover::before{
- left:150%;
-}
-
-.storyCard:hover{
- border-color:#38bdf8;
- box-shadow:
- 0 0 22px rgba(14,165,233,.1),
- inset 0 0 20px rgba(14,165,233,.025);
- transform:translateY(-3px);
-}
-
-.storyNumber{
- color:#38bdf8;
- font-size:9px;
- letter-spacing:2px;
- margin-bottom:8px;
-}
-
-.storyTitle{
- color:#e0f2fe;
- font-size:18px;
- margin-bottom:9px;
-}
-
-.storyMeta{
- color:#67e8f9;
- font-size:8px;
- letter-spacing:1.5px;
- margin-bottom:12px;
-}
-
-.storyDescription{
- color:#94a3b8;
- font-size:12px;
- line-height:1.7;
-}
-
-.storyFooter{
- margin-top:15px;
- display:flex;
- justify-content:space-between;
- align-items:center;
- color:#475569;
- font-size:8px;
- letter-spacing:1px;
-}
-
-.openFable{
- color:#bae6fd;
- border:1px solid #155e75;
- padding:7px 10px;
- transition:.3s;
-}
-
-.storyCard:hover .openFable{
- border-color:#38bdf8;
- color:white;
-}
 
 /* =========================
    TRANSMISSIONS
 ========================= */
 
-.transmissionCard{
- margin:14px 0;
- padding:18px;
- border-left:2px solid #0ea5e9;
- background:rgba(14,165,233,.035);
- position:relative;
- animation:transmissionGlow 5s infinite;
+.transmission{
+padding:17px;
+
+margin:13px 0;
+
+border:1px dashed #155e75;
+
+background:rgba(2,10,22,.68);
+
+position:relative;
+
+transition:.3s;
 }
 
-@keyframes transmissionGlow{
- 50%{
-  box-shadow:inset 8px 0 20px rgba(14,165,233,.025);
- }
+.transmission:hover{
+border-color:#38bdf8;
+
+background:rgba(14,165,233,.035);
+
+transform:translateX(3px);
 }
 
-.transmissionID{
- color:#38bdf8;
- font-size:9px;
- letter-spacing:2px;
- margin-bottom:10px;
+.transmission strong{
+color:#67e8f9;
+
+font-family:monospace;
+
+font-size:12px;
+
+letter-spacing:2px;
 }
 
-.transmissionText{
- color:#bae6fd;
- font-size:12px;
- line-height:1.9;
+.transmission p{
+font-size:13px;
+
+line-height:1.7;
+
+color:#bae6fd;
+
+margin-bottom:0;
 }
 
-.transmissionTime{
- color:#475569;
- font-size:8px;
- margin-top:10px;
-}
-
-.receiveButton{
- margin-top:17px;
- padding:11px 17px;
- border:1px solid #155e75;
- background:rgba(14,165,233,.04);
- color:#bae6fd;
- cursor:pointer;
- font-size:9px;
- letter-spacing:2px;
- transition:.3s;
-}
-
-.receiveButton:hover{
- border-color:#38bdf8;
- box-shadow:0 0 14px rgba(56,189,248,.15);
- color:white;
-}
 
 /* =========================
-   CONSOLE
+   DETAILS
 ========================= */
 
-#consoleButton{
- position:fixed;
- right:22px;
- bottom:22px;
- width:52px;
- height:52px;
- border:1px solid #155e75;
- background:rgba(2,10,23,.88);
- color:#67e8f9;
- cursor:pointer;
- z-index:300;
- font-size:18px;
- box-shadow:0 0 20px rgba(14,165,233,.08);
- transition:.3s;
+details{
+margin-top:15px;
+
+border:1px dashed #155e75;
+
+background:rgba(2,10,22,.3);
 }
 
-#consoleButton:hover{
- border-color:#38bdf8;
- box-shadow:0 0 25px rgba(56,189,248,.25);
- transform:rotate(15deg);
+summary{
+cursor:pointer;
+
+padding:12px;
+
+color:#67e8f9;
+
+font-size:12px;
+
+letter-spacing:1px;
+
+transition:.3s;
 }
 
-#console{
- position:fixed;
- right:22px;
- bottom:86px;
- width:min(350px,calc(100% - 30px));
- border:1px solid #38bdf8;
- background:rgba(2,9,20,.96);
- box-shadow:0 0 35px rgba(14,165,233,.16);
- z-index:299;
- padding:18px;
- opacity:0;
- visibility:hidden;
- transform:translateY(15px) scale(.98);
- transition:.35s;
- backdrop-filter:blur(15px);
+summary:hover{
+background:rgba(14,165,233,.05);
+
+color:white;
 }
 
-#console.open{
- opacity:1;
- visibility:visible;
- transform:none;
+.hidden{
+padding:15px;
+
+color:#64748b;
+
+font-size:12px;
+
+line-height:1.8;
 }
 
-.consoleTitle{
- color:#67e8f9;
- font-size:10px;
- letter-spacing:2px;
- margin-bottom:14px;
-}
-
-.consoleRow{
- display:flex;
- justify-content:space-between;
- border-bottom:1px solid rgba(22,78,99,.5);
- padding:9px 0;
- font-size:9px;
- color:#64748b;
-}
-
-.consoleRow span:last-child{
- color:#bae6fd;
-}
-
-.consoleLog{
- margin-top:13px;
- color:#475569;
- font-family:"Courier New",monospace;
- font-size:9px;
- line-height:1.7;
-}
 
 /* =========================
-   MODAL
+   CHANNELS
 ========================= */
 
-#modal{
- position:fixed;
- inset:0;
- z-index:4000;
- display:flex;
- align-items:center;
- justify-content:center;
- padding:20px;
- background:rgba(0,3,10,.78);
- backdrop-filter:blur(8px);
- opacity:0;
- visibility:hidden;
- transition:.35s;
+.channels{
+display:flex;
+
+justify-content:center;
+
+flex-wrap:wrap;
+
+gap:10px;
 }
 
-#modal.open{
- opacity:1;
- visibility:visible;
+.channel{
+padding:11px 20px;
+
+border:1px solid #155e75;
+
+text-decoration:none;
+
+color:#bae6fd;
+
+font-size:11px;
+
+letter-spacing:2px;
+
+transition:.3s;
 }
 
-.modalBox{
- width:min(720px,100%);
- max-height:88vh;
- overflow-y:auto;
- border:1px solid #38bdf8;
- background:
- linear-gradient(135deg,rgba(5,21,42,.98),rgba(1,8,19,.98));
- box-shadow:
- 0 0 50px rgba(14,165,233,.18),
- inset 0 0 40px rgba(14,165,233,.025);
- transform:translateY(20px) scale(.97);
- transition:.4s;
+.channel:hover{
+border-color:#38bdf8;
+
+box-shadow:
+0 0 15px rgba(56,189,248,.3);
+
+color:white;
+
+transform:translateY(-2px);
 }
 
-#modal.open .modalBox{
- transform:none;
-}
-
-.modalTop{
- padding:13px 17px;
- border-bottom:1px solid #164e63;
- display:flex;
- justify-content:space-between;
- align-items:center;
- color:#64748b;
- font-size:9px;
- letter-spacing:2px;
-}
-
-.closeModal{
- background:none;
- border:0;
- color:#64748b;
- cursor:pointer;
- font-size:16px;
- transition:.2s;
-}
-
-.closeModal:hover{
- color:#fff;
-}
-
-.modalContent{
- padding:25px;
-}
-
-.modalTitle{
- font-size:25px;
- color:#e0f2fe;
- margin-bottom:8px;
- text-shadow:0 0 12px rgba(56,189,248,.3);
-}
-
-.modalMeta{
- color:#38bdf8;
- font-size:9px;
- letter-spacing:2px;
- margin-bottom:20px;
-}
-
-.modalText{
- color:#94a3b8;
- font-size:13px;
- line-height:1.9;
-}
-
-.modalStats{
- display:grid;
- grid-template-columns:repeat(3,1fr);
- gap:8px;
- margin:20px 0;
-}
-
-.modalStat{
- border:1px solid #123d52;
- padding:12px;
- text-align:center;
-}
-
-.modalStat strong{
- display:block;
- color:#e0f2fe;
- font-size:14px;
- margin-bottom:4px;
-}
-
-.modalStat small{
- color:#475569;
- font-size:7px;
- letter-spacing:1px;
-}
-
-/* =========================
-   NOTIFICATIONS
-========================= */
-
-#notifications{
- position:fixed;
- top:18px;
- right:18px;
- z-index:3500;
- width:min(330px,calc(100% - 36px));
- pointer-events:none;
-}
-
-.notification{
- border:1px solid #155e75;
- background:rgba(2,10,23,.94);
- padding:14px;
- margin-bottom:8px;
- box-shadow:0 0 25px rgba(14,165,233,.08);
- animation:notifIn .45s ease forwards;
-}
-
-.notificationTitle{
- color:#67e8f9;
- font-size:9px;
- letter-spacing:2px;
- margin-bottom:7px;
-}
-
-.notificationText{
- color:#94a3b8;
- font-size:10px;
- line-height:1.6;
-}
-
-.notification.remove{
- animation:notifOut .45s ease forwards;
-}
-
-@keyframes notifIn{
- from{opacity:0;transform:translateX(30px)}
- to{opacity:1;transform:none}
-}
-
-@keyframes notifOut{
- from{opacity:1}
- to{opacity:0;transform:translateX(30px)}
-}
-
-/* =========================
-   SECRET MESSAGE
-========================= */
-
-#secret{
- position:fixed;
- inset:0;
- z-index:4500;
- display:flex;
- align-items:center;
- justify-content:center;
- background:rgba(0,2,8,.93);
- opacity:0;
- visibility:hidden;
- transition:.5s;
-}
-
-#secret.open{
- opacity:1;
- visibility:visible;
-}
-
-.secretBox{
- width:min(600px,90%);
- text-align:center;
- padding:35px;
- border:1px solid #2563eb;
- box-shadow:0 0 45px rgba(37,99,235,.15);
-}
-
-.secretCode{
- color:#475569;
- font-size:9px;
- letter-spacing:3px;
- margin-bottom:20px;
-}
-
-.secretText{
- color:#dbeafe;
- font-size:20px;
- line-height:1.7;
- text-shadow:0 0 15px rgba(56,189,248,.4);
-}
-
-.secretClose{
- margin-top:25px;
- background:none;
- border:1px solid #155e75;
- color:#94a3b8;
- padding:9px 15px;
- cursor:pointer;
-}
-
-/* =========================
-   EXTERNAL LINKS
-========================= */
-
-.links{
- display:flex;
- flex-wrap:wrap;
- justify-content:center;
- gap:10px;
-}
-
-.link{
- text-decoration:none;
- color:#bae6fd;
- border:1px solid #155e75;
- padding:11px 19px;
- font-size:9px;
- letter-spacing:2px;
- transition:.3s;
-}
-
-.link:hover{
- border-color:#38bdf8;
- color:white;
- box-shadow:0 0 15px rgba(56,189,248,.2);
- transform:translateY(-2px);
-}
 
 /* =========================
    WARNING
 ========================= */
 
 .warning{
- border:1px solid #2563eb;
- padding:20px;
- text-align:center;
- color:#bae6fd;
- font-size:10px;
- letter-spacing:1px;
- line-height:1.9;
- background:rgba(30,64,175,.07);
+text-align:center;
+
+padding:20px;
+
+border:1px solid #1d4ed8;
+
+background:rgba(23,37,84,.2);
+
+color:#bae6fd;
+
+font-size:11px;
+
+line-height:1.8;
+
+letter-spacing:1px;
+
+box-shadow:
+inset 0 0 20px rgba(30,64,175,.04);
 }
 
-.blink{
- animation:blink 1.6s infinite;
-}
-
-@keyframes blink{
- 0%,45%{opacity:1}
- 50%,100%{opacity:.3}
-}
-
-.glitch{
- animation:glitch 6s infinite;
-}
-
-@keyframes glitch{
- 0%,94%,100%{transform:none}
- 95%{transform:translateX(2px);text-shadow:2px 0 #38bdf8}
- 96%{transform:translateX(-2px);text-shadow:-2px 0 #2563eb}
- 97%{transform:none}
-}
 
 /* =========================
    FOOTER
 ========================= */
 
-.footer{
- text-align:center;
- padding:30px 20px;
- color:#334155;
- font-size:9px;
- letter-spacing:2px;
- line-height:2;
+footer{
+text-align:center;
+
+padding:25px;
+
+font-size:10px;
+
+color:#475569;
+
+letter-spacing:2px;
+
+line-height:1.8;
 }
+
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+.blink{
+animation:blink 1.4s infinite;
+}
+
+@keyframes blink{
+
+0%,45%{
+opacity:1;
+}
+
+50%,100%{
+opacity:.3;
+}
+
+}
+
+.glitch{
+animation:glitch 4s infinite;
+}
+
+@keyframes glitch{
+
+0%,94%,100%{
+transform:none;
+}
+
+95%{
+transform:translateX(2px);
+text-shadow:
+2px 0 #38bdf8,
+-2px 0 #0ea5e9;
+}
+
+96%{
+transform:translateX(-2px);
+text-shadow:
+-2px 0 #38bdf8,
+2px 0 #0ea5e9;
+}
+
+97%{
+transform:none;
+}
+
+}
+
+.signalPulse{
+animation:pulseSignal 2.5s infinite;
+}
+
+@keyframes pulseSignal{
+
+0%,100%{
+text-shadow:0 0 5px rgba(56,189,248,.2);
+}
+
+50%{
+text-shadow:
+0 0 10px rgba(56,189,248,.7),
+0 0 25px rgba(56,189,248,.2);
+}
+
+}
+
 
 /* =========================
    MOBILE
 ========================= */
 
-@media(max-width:700px){
+@media(max-width:600px){
 
- .siteShell{
-  width:96%;
-  margin:15px auto 40px;
- }
+.container{
+width:96%;
+margin:15px auto;
+}
 
- .header{
-  padding:38px 15px;
- }
+section{
+margin:10px;
+padding:17px;
+}
 
- .title{
-  letter-spacing:3px;
- }
+.title{
+letter-spacing:3px;
+}
 
- .section{
-  margin:10px;
-  padding:18px;
- }
+nav{
+gap:3px;
+}
 
- .statusGrid{
-  grid-template-columns:1fr;
- }
+nav button{
+padding:9px 10px;
+font-size:9px;
+}
 
- .nav button{
-  padding:14px 12px;
-  font-size:8px;
- }
+.fabletitle{
+font-size:18px;
+}
 
- .fableStatus{
-  float:none;
-  display:block;
-  margin-top:5px;
- }
-
- .archiveHeader{
-  display:block;
- }
-
- .modalStats{
-  grid-template-columns:1fr;
- }
-
- #consoleButton{
-  right:14px;
-  bottom:14px;
- }
-
- #console{
-  right:14px;
-  bottom:78px;
- }
+.bootbox{
+padding:30px 18px;
+}
 
 }
+
+
+/* =========================
+   REDUCED MOTION
+========================= */
 
 @media(prefers-reduced-motion:reduce){
 
- *,
- *::before,
- *::after{
-  animation-duration:.01ms!important;
-  animation-iteration-count:1!important;
-  scroll-behavior:auto!important;
-  transition-duration:.01ms!important;
- }
+*{
+animation-duration:.01ms !important;
+animation-iteration-count:1 !important;
+scroll-behavior:auto !important;
+}
 
 }
+
 </style>
 </head>
 
 
 <body>
 
-<!-- =========================================================
-     CURSOR
-========================================================= -->
 
-<div id="cursorGlow"></div>
-<div class="cursorDot" id="cursorDot"></div>
+<!-- =====================================================
+     STAR STREAM CONNECTION
+===================================================== -->
 
+<div id="connect">
 
-<!-- =========================================================
-     INTRO
-========================================================= -->
+<div class="bootbox boot">
 
-<div id="intro">
-
- <div class="introStars" id="introStars"></div>
-
- <div class="introBox">
-
-  <div class="systemTag">
-   【 STAR STREAM INITIALIZATION 】
-  </div>
-
-  <div class="connectTitle glitch" id="connectTitle">
-   CONNECTING TO STAR STREAM...
-  </div>
-
-  <div class="loadingFrame">
-   <div class="loadingBar"></div>
-  </div>
-
-  <div class="loadingPercent" id="loadingPercent">
-   00%
-  </div>
-
-  <div class="terminal" id="terminal">
-
-   <div class="terminalLine">> establishing narrative connection...</div>
-   <div class="terminalLine">> searching for active constellation...</div>
-   <div class="terminalLine">> scanning forgotten stories...</div>
-   <div class="terminalLine">> checking fable records...</div>
-   <div class="terminalLine">> observer detected.</div>
-   <div class="terminalLine">> connection accepted.</div>
-
-  </div>
-
-  <div class="transmissionReveal" id="transmissionReveal">
-
-   <div class="systemTag">
-    【 TRANSMISSION RECEIVED 】
-   </div>
-
-   <div class="quote">
-
-    A constellation has noticed your presence.
-
-    <br><br>
-
-    「Keeper of Forgotten Stories」
-
-    <br><br>
-
-    The Star Stream is currently allowing
-    you to observe this scenario.
-
-   </div>
-
-   <button class="enterButton" onclick="enterSite()">
-    ENTER THE SCENARIO
-   </button>
-
-  </div>
-
- </div>
-
+<div class="boottitle">
+【 STAR STREAM CONNECTION 】
 </div>
 
-
-<!-- =========================================================
-     MAIN SITE
-========================================================= -->
-
-<div id="site">
-
- <div class="siteShell">
-
-  <div class="systemWindow">
-
-
-   <!-- TOP SYSTEM BAR -->
-
-   <div class="topBar">
-
-    <div>
-     <span class="connectionDot"></span>
-     STAR STREAM
-    </div>
-
-    <div>
-     CONNECTION:
-     <span class="connection">STABLE</span>
-    </div>
-
-   </div>
-
-
-   <!-- HEADER -->
-
-   <header class="header">
-
-    <div class="small">
-     【 CONSTELLATION IDENTIFIED 】
-    </div>
-
-    <h1 class="title glitch" id="mainTitle">
-     KEEPER OF<br>FORGOTTEN STORIES
-    </h1>
-
-    <div class="subtitle">
-     <span class="blink">●</span>
-     NARRATIVE PRESERVATION // ACTIVE
-    </div>
-
-    <div class="statusReadout">
-
-     STAR STREAM STATUS:
-     <span>OBSERVING</span>
-     //
-     SCENARIO:
-     <span>ACTIVE</span>
-     //
-     FABLES:
-     <span id="fableCounter">04</span>
-
-    </div>
-
-   </header>
-
-
-   <!-- NAVIGATION -->
-
-   <nav class="nav">
-
-    <button class="active" onclick="showPage('home',this)">
-     HOME
-    </button>
-
-    <button onclick="showPage('fables',this)">
-     FABLE ARCHIVE
-    </button>
-
-    <button onclick="showPage('transmissions',this)">
-     TRANSMISSIONS
-    </button>
-
-   </nav>
-
-
-   <!-- =====================================================
-        HOME
-   ====================================================== -->
-
-   <main id="home" class="page active">
-
-
-    <section class="section revealOnScroll">
-
-     <div class="sectionTitle">
-      【 ▶ TRANSMISSION RECEIVED: CONSTELLATION DATA 】
-     </div>
-
-     <div class="line"></div>
-
-     <div class="sectionTitle">
-      [ CONSTELLATION STATUS SHEET ]
-     </div>
-
-     <div class="info">
-
-      ■ <span class="label">Modifier:</span>
-      <span class="value">
-       「Keeper of Forgotten Stories」
-      </span>
-      <br>
-
-      ■ <span class="label">Grade:</span>
-      <span class="value">Unknown.</span>
-      <br>
-
-      ■ <span class="label">Status:</span>
-      <span class="value">
-       Currently observing the Scenario.
-      </span>
-      <br>
-
-      ■ <span class="label">Alignment:</span>
-      <span class="value">
-       Narrative Preservation.
-      </span>
-      <br>
-
-      ■ <span class="label">Primary Function:</span>
-      <span class="value">
-       Preservation of forgotten narratives.
-      </span>
-      <br>
-
-      ■ <span class="label">Current Activity:</span>
-      <span class="value">
-       Watching another story unfold.
-      </span>
-
-     </div>
-
-     <div class="line"></div>
-
-     <div class="sectionTitle">
-      [ STAR STREAM EVALUATION ]
-     </div>
-
-     <div class="quote">
-
-      "The Star Stream has recognized this constellation's
-      unusual attachment to unfinished stories.
-
-      <br><br>
-
-      Every forgotten tale entrusted to this constellation
-      may become another Fable."
-
-     </div>
-
-    </section>
-
-
-    <!-- LIVE STATUS -->
-
-    <section class="section revealOnScroll">
-
-     <div class="sectionTitle">
-      [ LIVE SCENARIO DATA ]
-     </div>
-
-     <div class="statusGrid">
-
-      <div class="statCard">
-       <div class="statNumber" id="observerCount">01</div>
-       <div class="statLabel">OBSERVERS</div>
-      </div>
-
-      <div class="statCard">
-       <div class="statNumber">04</div>
-       <div class="statLabel">RECORDED FABLES</div>
-      </div>
-
-      <div class="statCard">
-       <div class="statNumber" id="interactionCount">00</div>
-       <div class="statLabel">INTERACTIONS</div>
-      </div>
-
-     </div>
-
-    </section>
-
-
-    <!-- LIVE TRANSMISSION -->
-
-    <section class="section revealOnScroll">
-
-     <div class="sectionTitle">
-      【 LIVE TRANSMISSION 】
-     </div>
-
-     <div class="transmissionCard">
-
-      <div class="transmissionID">
-       STAR STREAM // CURRENT MESSAGE
-      </div>
-
-      <div class="transmissionText" id="liveMessage">
-
-       The constellation is currently observing
-       the scenario.
-
-      </div>
-
-      <div class="transmissionTime">
-       STATUS: LIVE
-      </div>
-
-     </div>
-
-    </section>
-
-
-    <!-- FABLES -->
-
-    <section class="section revealOnScroll">
-
-     <div class="sectionTitle">
-      [ ACQUIRED FABLES ]
-     </div>
-
-     <div class="fable" onclick="openFable(1)">
-      <span class="fableName">
-       The One Who Stayed Until The End
-      </span>
-      <span class="fableStatus">
-       COMPLETE
-      </span>
-     </div>
-
-     <div class="fable" onclick="openFable(2)">
-      <span class="fableName">
-       The Author Who Loved Her Characters Too Much
-      </span>
-      <span class="fableStatus">
-       CLASSIFIED
-      </span>
-     </div>
-
-     <div class="fable" onclick="openFable(3)">
-      <span class="fableName">
-       The Witness Beyond The Ending
-      </span>
-      <span class="fableStatus">
-       UNKNOWN
-      </span>
-     </div>
-
-     <div class="fable" onclick="openFable(4)">
-      <span class="fableName">
-       The Keeper of Unfinished Stories
-      </span>
-      <span class="fableStatus">
-       ONGOING
-      </span>
-     </div>
-
-     <details>
-
-      <summary>
-       【 ▶ REVEAL REMAINING FABLE DATA... 】
-      </summary>
-
-      <div class="hiddenInfo">
-
-       [RESTRICTED INFORMATION]
-
-       <br><br>
-
-       Additional records exist beyond the
-       currently displayed Fables.
-
-       <br><br>
-
-       The Star Stream has classified
-       them as unnecessary information.
-
-       <br><br>
-
-       <span class="blink">
-        PERMISSION DENIED.
-       </span>
-
-      </div>
-
-     </details>
-
-    </section>
-
-
-    <!-- ATTRIBUTES -->
-
-    <section class="section revealOnScroll">
-
-     <div class="sectionTitle">
-      [ CONSTELLATION ATTRIBUTES ]
-     </div>
-
-     <div class="fable">
-      <span class="fableName">
-       「Witness to Unfinished Stories」
-      </span>
-     </div>
-
-     <div class="fable">
-      <span class="fableName">
-       「The Hand That Writes Their Second Chances」
-      </span>
-     </div>
-
-     <div class="fable">
-      <span class="fableName">
-       「Observer Beyond The Final Page」
-      </span>
-     </div>
-
-     <details>
-
-      <summary>
-       【 ▶ REVEAL HIDDEN ATTRIBUTE... 】
-      </summary>
-
-      <div class="hiddenInfo">
-
-       [ERROR]
-
-       <br><br>
-
-       This attribute has not yet
-       been fully identified.
-
-       <br><br>
-
-       Attempting to observe it may
-       cause narrative instability.
-
-      </div>
-
-     </details>
-
-    </section>
-
-
-    <!-- ORIGIN -->
-
-    <section class="section revealOnScroll">
-
-     <div class="sectionTitle">
-      [ ORIGIN RECORD ]
-     </div>
-
-     <div class="quote">
-
-      "Born from countless unfinished stories
-      and the readers who refused to let them disappear."
-
-     </div>
-
-     <div class="line"></div>
-
-     <div class="sectionTitle">
-      [ CONSTELLATION REPUTATION ]
-     </div>
-
-     <div class="quote">
-
-      "A quiet presence known for preserving
-      stories that should have been forgotten."
-
-     </div>
-
-    </section>
-
-
-    <!-- WARNING -->
-
-    <section class="section revealOnScroll">
-
-     <div class="warning">
-
-      ━━━━━━━━━━━━━━━━━━━━━
-
-      <br>
-
-      <span class="blink">
-       [ SYSTEM WARNING ]
-      </span>
-
-      <br><br>
-
-      Interaction with this constellation may
-      alter your perception of the Scenario.
-
-      <br><br>
-
-      The consequences cannot be reversed.
-
-      <br>
-
-      ━━━━━━━━━━━━━━━━━━━━━
-
-     </div>
-
-    </section>
-
-   </main>
-
-
-   <!-- =====================================================
-        FABLE ARCHIVE
-   ====================================================== -->
-
-   <main id="fables" class="page">
-
-    <section class="section">
-
-     <div class="archiveHeader">
-
-      <div>
-
-       <div class="sectionTitle">
-        【 FABLE ARCHIVE 】
-       </div>
-
-       <div class="quote">
-        The Star Stream has opened a restricted archive.
-        Every story recorded here has been classified
-        as a Fable.
-       </div>
-
-      </div>
-
-      <div class="archiveCount">
-       RECORDS: 04
-      </div>
-
-     </div>
-
-
-     <!-- STORY 1 -->
-
-     <div class="storyCard" onclick="openFable(1)">
-
-      <div class="storyNumber">
-       FABLE RECORD #001
-      </div>
-
-      <div class="storyTitle">
-       The One Who Stayed Until The End
-      </div>
-
-      <div class="storyMeta">
-       COMPLETE // NARRATIVE // EMOTIONAL RISK: HIGH
-      </div>
-
-      <div class="storyDescription">
-
-       A story about the person who remained
-       when everyone else had already decided
-       that the ending had arrived.
-
-      </div>
-
-      <div class="storyFooter">
-
-       <span>
-        STAR STREAM STATUS: REGISTERED
-       </span>
-
-       <span class="openFable">
-        OPEN FABLE →
-       </span>
-
-      </div>
-
-     </div>
-
-
-     <!-- STORY 2 -->
-
-     <div class="storyCard" onclick="openFable(2)">
-
-      <div class="storyNumber">
-       FABLE RECORD #002
-      </div>
-
-      <div class="storyTitle">
-       The Author Who Loved Her Characters Too Much
-      </div>
-
-      <div class="storyMeta">
-       CLASSIFIED // CREATOR // EMOTIONAL RISK: EXTREME
-      </div>
-
-      <div class="storyDescription">
-
-       The boundary between creator and creation
-       appears to have become unstable.
-
-       Further observation is recommended.
-
-      </div>
-
-      <div class="storyFooter">
-
-       <span>
-        STAR STREAM STATUS: WATCHING
-       </span>
-
-       <span class="openFable">
-        OPEN FABLE →
-       </span>
-
-      </div>
-
-     </div>
-
-
-     <!-- STORY 3 -->
-
-     <div class="storyCard" onclick="openFable(3)">
-
-      <div class="storyNumber">
-       FABLE RECORD #003
-      </div>
-
-      <div class="storyTitle">
-       The Witness Beyond The Ending
-      </div>
-
-      <div class="storyMeta">
-       UNKNOWN // OBSERVER // RISK LEVEL: UNKNOWN
-      </div>
-
-      <div class="storyDescription">
-
-       Someone remained after the final page.
-
-       The Star Stream has not determined why.
-
-      </div>
-
-      <div class="storyFooter">
-
-       <span>
-        STAR STREAM STATUS: UNRESOLVED
-       </span>
-
-       <span class="openFable">
-        OPEN FABLE →
-       </span>
-
-      </div>
-
-     </div>
-
-
-     <!-- STORY 4 -->
-
-     <div class="storyCard" onclick="openFable(4)">
-
-      <div class="storyNumber">
-       FABLE RECORD #004
-      </div>
-
-      <div class="storyTitle">
-       The Keeper of Unfinished Stories
-      </div>
-
-      <div class="storyMeta">
-       ONGOING // PRESERVATION // RISK LEVEL: UNKNOWN
-      </div>
-
-      <div class="storyDescription">
-
-       Some stories were never meant to end.
-
-       Someone decided to keep them alive.
-
-      </div>
-
-      <div class="storyFooter">
-
-       <span>
-        STAR STREAM STATUS: ACTIVE
-       </span>
-
-       <span class="openFable">
-        OPEN FABLE →
-       </span>
-
-      </div>
-
-     </div>
-
-
-     <details>
-
-      <summary>
-       【 ▶ ACCESS CLASSIFIED RECORDS... 】
-      </summary>
-
-      <div class="hiddenInfo">
-
-       [SYSTEM ERROR]
-
-       <br><br>
-
-       The requested records cannot be displayed.
-
-       <br><br>
-
-       Reason:
-
-       <br>
-
-       The stories are still being written.
-
-       <br><br>
-
-       Perhaps the author has not yet decided
-       how their endings should look.
-
-      </div>
-
-     </details>
-
-    </section>
-
-   </main>
-
-
-   <!-- =====================================================
-        TRANSMISSIONS
-   ====================================================== -->
-
-   <main id="transmissions" class="page">
-
-    <section class="section">
-
-     <div class="sectionTitle">
-      【 STAR STREAM TRANSMISSIONS 】
-     </div>
-
-     <div class="quote">
-
-      Incoming messages detected.
-
-      <br>
-
-      Some transmissions may not have been
-      intended for human observation.
-
-     </div>
-
-
-     <div id="transmissionList">
-
-      <div class="transmissionCard">
-
-       <div class="transmissionID">
-        TRANSMISSION #001
-       </div>
-
-       <div class="transmissionText">
-
-        A new story has been detected.
-
-        <br><br>
-
-        The constellation
-        「Keeper of Forgotten Stories」
-        has added another Fable to its collection.
-
-       </div>
-
-       <div class="transmissionTime">
-        RECORD STATUS: ARCHIVED
-       </div>
-
-      </div>
-
-
-      <div class="transmissionCard">
-
-       <div class="transmissionID">
-        TRANSMISSION #002
-       </div>
-
-       <div class="transmissionText">
-
-        Someone is reading.
-
-        <br><br>
-
-        Someone is always reading.
-
-       </div>
-
-       <div class="transmissionTime">
-        RECORD STATUS: ARCHIVED
-       </div>
-
-      </div>
-
-
-      <div class="transmissionCard">
-
-       <div class="transmissionID">
-        TRANSMISSION #003
-       </div>
-
-       <div class="transmissionText">
-
-        [ SYSTEM NOTICE ]
-
-        <br><br>
-
-        The author has once again become
-        emotionally attached to a fictional character.
-
-        <br><br>
-
-        This behavior has been recorded
-        as recurring.
-
-       </div>
-
-       <div class="transmissionTime">
-        RECORD STATUS: DOCUMENTED
-       </div>
-
-      </div>
-
-
-      <div class="transmissionCard">
-
-       <div class="transmissionID">
-        TRANSMISSION #004
-       </div>
-
-       <div class="transmissionText">
-
-        The ending has not been determined.
-
-        <br><br>
-
-        Therefore...
-
-        <br><br>
-
-        the story continues.
-
-       </div>
-
-       <div class="transmissionTime">
-        RECORD STATUS: ACTIVE
-       </div>
-
-      </div>
-
-     </div>
-
-
-     <button class="receiveButton" onclick="receiveTransmission()">
-      【 RECEIVE NEXT TRANSMISSION 】
-     </button>
-
-    </section>
-
-
-    <section class="section">
-
-     <div class="warning">
-
-      <span class="blink">
-       【 WARNING 】
-      </span>
-
-      <br><br>
-
-      Not every transmission should be answered.
-
-      <br>
-
-      Not every story wants to be remembered.
-
-      <br><br>
-
-      Some stories remember you back.
-
-     </div>
-
-    </section>
-
-   </main>
-
-
-   <!-- =====================================================
-        EXTERNAL CHANNELS
-   ====================================================== -->
-
-   <section class="section">
-
-    <div class="sectionTitle">
-     [ EXTERNAL CHANNELS ]
-    </div>
-
-    <div class="links">
-
-     <a class="link" href="#" target="_blank">
-      AO3
-     </a>
-
-     <a class="link" href="#" target="_blank">
-      WATTPAD
-     </a>
-
-     <a class="link" href="#" target="_blank">
-      OTHER CHANNEL
-     </a>
-
-    </div>
-
-   </section>
-
-
-   <!-- FOOTER -->
-
-   <footer class="footer">
-
-    STAR STREAM DATABASE // RECORD #KFS-001
-
-    <br>
-
-    CONNECTION:
-    <span style="color:#38bdf8">
-     STABLE
-    </span>
-
-    <br>
-
-    STATUS:
-    OBSERVING THE SCENARIO
-
-    <br><br>
-
-    <span class="blink">
-     ✦ THE STORY HAS NOT ENDED ✦
-    </span>
-
-   </footer>
-
-
-  </div>
-
- </div>
-
+<div class="bootmain glitch">
+CONNECTING TO<br>
+STAR STREAM...
 </div>
 
+<div class="loading">
+<span></span>
+</div>
 
-<!-- =========================================================
-     STAR STREAM CONSOLE
-========================================================= -->
+<div class="bootstatus">
+<span id="status">
+SEARCHING FOR CONSTELLATION...
+</span>
+</div>
 
-<button id="consoleButton" onclick="toggleConsole()" title="Star Stream Console">
- ◈
+<button class="enter" id="enter">
+[ ENTER THE SCENARIO ]
 </button>
 
-<div id="console">
-
- <div class="consoleTitle">
-  【 STAR STREAM CONSOLE 】
- </div>
-
- <div class="consoleRow">
-  <span>CONNECTION</span>
-  <span>STABLE</span>
- </div>
-
- <div class="consoleRow">
-  <span>SCENARIO</span>
-  <span>ACTIVE</span>
- </div>
-
- <div class="consoleRow">
-  <span>OBSERVERS</span>
-  <span id="consoleObservers">01</span>
- </div>
-
- <div class="consoleRow">
-  <span>FABLES</span>
-  <span>04</span>
- </div>
-
- <div class="consoleRow">
-  <span>INTERACTIONS</span>
-  <span id="consoleInteractions">00</span>
- </div>
-
- <div class="consoleRow">
-  <span>THREAT LEVEL</span>
-  <span id="threatLevel">UNKNOWN</span>
- </div>
-
- <div class="consoleLog" id="consoleLog">
-
-  > system online<br>
-  > narrative link stable<br>
-  > observer accepted<br>
-  > monitoring scenario...
-
- </div>
+</div>
 
 </div>
 
 
-<!-- =========================================================
-     FABLE MODAL
-========================================================= -->
 
-<div id="modal">
+<!-- =====================================================
+     MAIN SITE
+===================================================== -->
 
- <div class="modalBox">
+<div id="main">
 
-  <div class="modalTop">
+<div class="container">
 
-   <span>
-    STAR STREAM // FABLE RECORD
-   </span>
+<div class="system">
 
-   <button class="closeModal" onclick="closeModal()">
-    ×
-   </button>
 
-  </div>
+<!-- =====================================================
+     HEADER
+===================================================== -->
 
-  <div class="modalContent" id="modalContent">
-  </div>
+<header>
 
- </div>
+<div class="signal signalPulse">
+【 TRANSMISSION CONNECTION ESTABLISHED 】
+</div>
+
+<h1 class="title glitch">
+KEEPER OF<br>
+FORGOTTEN STORIES
+</h1>
+
+<div class="subtitle">
+
+<span class="blink">●</span>
+
+CONSTELLATION RECORD // ACTIVE
+
+</div>
+
+</header>
+
+
+
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
+
+<nav>
+
+<button
+class="active"
+onclick="showPage('home',this)">
+HOME
+</button>
+
+<button
+onclick="showPage('fables',this)">
+FABLES
+</button>
+
+<button
+onclick="showPage('transmissions',this)">
+TRANSMISSIONS
+</button>
+
+<button
+onclick="showPage('channels',this)">
+CHANNELS
+</button>
+
+</nav>
+
+
+
+<!-- =====================================================
+     HOME
+===================================================== -->
+
+<main id="home" class="page active">
+
+
+<section>
+
+<div class="heading">
+【 ▶ TRANSMISSION RECEIVED: CONSTELLATION DATA... 】
+</div>
+
+<div class="line"></div>
+
+<div class="heading">
+【 CONSTELLATION STATUS SHEET 】
+</div>
+
+<br>
+
+<div class="info">
+
+■
+<span class="label">Modifier:</span>
+
+<span class="value">
+「Keeper of Forgotten Stories」
+</span>
+
+<br>
+
+■
+<span class="label">Grade:</span>
+
+<span class="value">
+Unknown.
+</span>
+
+<br>
+
+■
+<span class="label">Status:</span>
+
+<span class="value">
+Currently observing the Scenario.
+</span>
+
+<br>
+
+■
+<span class="label">Alignment:</span>
+
+<span class="value">
+Narrative Preservation.
+</span>
+
+<br>
+
+■
+<span class="label">Fables Registered:</span>
+
+<span class="value">
+1 and counting...
+</span>
+
+<br>
+
+■
+<span class="label">Incarnations Sponsored:</span>
+
+<span class="value">
+None. (Searching...)
+</span>
 
 </div>
 
 
-<!-- =========================================================
-     NOTIFICATIONS
-========================================================= -->
-
-<div id="notifications"></div>
+<div class="line"></div>
 
 
-<!-- =========================================================
-     SECRET MESSAGE
-========================================================= -->
+<div class="heading">
+【 STAR STREAM EVALUATION 】
+</div>
 
-<div id="secret">
+<br>
 
- <div class="secretBox">
+<div class="message">
 
-  <div class="secretCode">
-   【 RESTRICTED TRANSMISSION // 0xKFS 】
-  </div>
+"The Star Stream has recognized this
+constellation's obsession with unfinished stories.
 
-  <div class="secretText">
+<br><br>
 
-   You were not supposed<br>
-   to find this.
-
-   <br><br>
-
-   The Star Stream is watching.
-
-  </div>
-
-  <button class="secretClose" onclick="closeSecret()">
-   RETURN
-  </button>
-
- </div>
+Every forgotten tale entrusted to this
+constellation is preserved as another Fable."
 
 </div>
 
+</section>
+
+
+
+<!-- ACQUIRED FABLES -->
+
+<section>
+
+<div class="heading">
+【 ACQUIRED FABLES 】
+</div>
+
+<div class="line"></div>
+
+
+<div class="fableList">
+<i>The One Who Stayed Until The End</i>
+</div>
+
+<div class="fableList">
+<i>The Author Who Loved Her Characters Too Much</i>
+</div>
+
+<div class="fableList">
+<i>The Witness Beyond The Ending</i>
+</div>
+
+<div class="fableList">
+<i>The Keeper of Unfinished Stories</i>
+</div>
+
+
+<details>
+
+<summary>
+【 ▶ REVEAL REMAINING FABLES... 】
+</summary>
+
+<div class="hidden">
+
+[RESTRICTED INFORMATION]
+
+<br><br>
+
+The remaining records have been sealed.
+
+<br><br>
+
+Permission level insufficient.
+
+<br><br>
+
+The Star Stream does not believe
+you are ready to read them.
+
+<br><br>
+
+<span class="blink">
+ACCESS DENIED.
+</span>
+
+</div>
+
+</details>
+
+</section>
+
+
+
+<!-- ATTRIBUTES -->
+
+<section>
+
+<div class="heading">
+【 CONSTELLATION ATTRIBUTES 】
+</div>
+
+<div class="line"></div>
+
+
+<div class="fableList">
+<i>「Witness to Unfinished Stories」</i>
+</div>
+
+<div class="fableList">
+<i>「The Hand That Writes Their Second Chances」</i>
+</div>
+
+
+<details>
+
+<summary>
+【 ▶ REVEAL HIDDEN ATTRIBUTES... 】
+</summary>
+
+<div class="hidden">
+
+[RESTRICTED INFORMATION]
+
+<br><br>
+
+Some attributes are not meant
+to be observed by incarnations.
+
+<br><br>
+
+Observation itself may constitute
+an unauthorized interaction.
+
+</div>
+
+</details>
+
+</section>
+
+
+
+<!-- ORIGIN -->
+
+<section>
+
+<div class="heading">
+【 ORIGIN RECORD 】
+</div>
+
+<div class="line"></div>
+
+<div class="message">
+
+"Born from countless unfinished stories
+and the readers who refused to let them disappear."
+
+</div>
+
+<div class="line"></div>
+
+<div class="heading">
+【 CONSTELLATION REPUTATION 】
+</div>
+
+<br>
+
+<div class="message">
+
+"A quiet presence known for preserving
+stories that should have been forgotten."
+
+</div>
+
+</section>
+
+
+
+<!-- WARNING -->
+
+<section>
+
+<div class="warning">
+
+━━━━━━━━━━━━━━━━━━━━
+
+<br>
+
+[ STAR STREAM WARNING ]
+
+<br><br>
+
+Interaction with this constellation may
+alter your perception of the Scenario.
+
+<br><br>
+
+<span class="blink">
+The consequences cannot be reversed.
+</span>
+
+<br><br>
+
+━━━━━━━━━━━━━━━━━━━━
+
+</div>
+
+</section>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     FABLE ARCHIVE
+===================================================== -->
+
+<main id="fables" class="page">
+
+
+<section>
+
+<div class="heading">
+【 FABLE ARCHIVE 】
+</div>
+
+<div class="line"></div>
+
+<div class="message">
+
+The Star Stream has opened a restricted archive.
+
+<br><br>
+
+All stories recorded here have been
+classified as Fables.
+
+</div>
+
+<br>
+
+
+<!-- FABLE 001 -->
+
+<div class="fable">
+
+<div class="fableid">
+FABLE RECORD // #001
+</div>
+
+<div class="fabletitle">
+FRESH START
+</div>
+
+
+<div class="meta">
+
+<strong>KakaObi</strong>
+· Naruto (Anime & Manga)
+
+<br>
+
+STATUS: ONGOING · CHAPTERS: 13/?
+
+<br>
+
+WORD COUNT: 56,950
+
+<br>
+
+RATING: TEEN AND UP AUDIENCES
+
+<br>
+
+WARNINGS:
+CREATOR CHOSE NOT TO USE ARCHIVE WARNINGS
+· GRAPHIC DEPICTIONS OF VIOLENCE
+
+</div>
+
+
+<div class="line"></div>
+
+
+<div class="summary">
+
+"I knew that helping in the end would never be
+enough to make up for everything I had done."
+
+<br><br>
+
+I allowed myself to be consumed by hatred and
+the desire for revenge. I even killed people who
+were important to me and caused pain to countless
+others...
+
+<br><br>
+
+No... it wasn't only me who caused them suffering.
+I was just another name on that endless list.
+
+<br><br>
+
+If I could start over from the beginning...
+
+<br><br>
+
+I would do everything in my power to prevent
+all the tragedies of those years.
+
+<br><br>
+
+Maybe only then I could finally be at peace.
+
+<br><br>
+
+This story does not strictly follow the events
+of the anime or manga.
+
+<br><br>
+
+<i>
+
+Note: This is a translated version of my original
+story. English is not my first language, so please
+forgive any grammar mistakes or awkward wording.
+
+</i>
+
+</div>
+
+
+<div class="tags">
+
+<strong>RELATIONSHIP:</strong>
+
+<br>
+
+Hatake Kakashi / Uchiha Obito
+
+<br><br>
+
+
+<strong>CHARACTERS:</strong>
+
+<br>
+
+Uchiha Obito · Hatake Kakashi · Nohara Rin ·
+Maito Gai · Namikaze Minato · Uzumaki Kushina ·
+Uchiha Itachi · Uchiha Fugaku · Uchiha Mikoto ·
+Uchiha Sasuke · Uzumaki Naruto · Uchiha Madara ·
+Akatsuki Characters · Haruno Sakura · Hyuuga Hinata
+
+<br><br>
+
+
+<strong>ADDITIONAL TAGS:</strong>
+
+<br>
+
+Boys in Love · Time Travel · Bottom Uchiha Obito ·
+Uchiha Obito Needs a Hug · Protective Uchiha Obito ·
+Other Additional Tags to Be Added
+
+</div>
+
+
+<a
+class="access"
+href="https://archiveofourown.org/works/84746576"
+target="_blank"
+rel="noopener">
+
+[ ACCESS FABLE // AO3 ]
+
+</a>
+
+</div>
+
+
+
+<br>
+
+
+
+<!-- SEARCH ADDITIONAL -->
+
+<details>
+
+<summary>
+【 ▶ SEARCH FOR ADDITIONAL FABLES... 】
+</summary>
+
+<div class="hidden">
+
+[ STAR STREAM NOTICE ]
+
+<br><br>
+
+Additional Fable records have not yet
+been registered in the archive.
+
+<br><br>
+
+The constellation appears to be writing
+another story.
+
+<br><br>
+
+<span class="blink">
+■ NARRATIVE DETECTION IN PROGRESS...
+</span>
+
+</div>
+
+</details>
+
+
+</section>
+
+
+<!-- ARCHIVE WARNING -->
+
+<section>
+
+<div class="warning">
+
+[ ARCHIVE NOTICE ]
+
+<br><br>
+
+The records displayed above represent
+only a fraction of the constellation's
+known narrative activity.
+
+<br><br>
+
+Additional records may appear
+without prior warning.
+
+</div>
+
+</section>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     TRANSMISSIONS
+===================================================== -->
+
+<main id="transmissions" class="page">
+
+
+<section>
+
+<div class="heading">
+【 STAR STREAM TRANSMISSION LOG 】
+</div>
+
+<div class="line"></div>
+
+<div class="message">
+
+Incoming messages detected.
+
+<br><br>
+
+Some transmissions may not have been
+intended for human observation.
+
+</div>
+
+
+
+<div class="transmission">
+
+<strong>
+TRANSMISSION #001
+</strong>
+
+<p>
+
+A new Fable has been registered.
+
+<br><br>
+
+「Fresh Start」
+
+<br><br>
+
+Origin: Naruto Scenario
+
+<br>
+
+Classification: KakaObi
+
+<br>
+
+Status: Ongoing
+
+</p>
+
+</div>
+
+
+
+<div class="transmission">
+
+<strong>
+TRANSMISSION #002
+</strong>
+
+<p>
+
+The story has not reached its ending.
+
+<br><br>
+
+The Star Stream is waiting.
+
+</p>
+
+</div>
+
+
+
+<div class="transmission">
+
+<strong>
+TRANSMISSION #003
+</strong>
+
+<p>
+
+Someone is reading.
+
+<br><br>
+
+Someone is always reading.
+
+</p>
+
+</div>
+
+
+
+<div class="transmission">
+
+<strong>
+TRANSMISSION #004
+</strong>
+
+<p>
+
+[ SYSTEM NOTICE ]
+
+<br><br>
+
+The author has once again become
+emotionally attached to a fictional character.
+
+<br><br>
+
+This behavior has been recorded
+as recurring.
+
+</p>
+
+</div>
+
+
+
+<div class="transmission">
+
+<strong>
+TRANSMISSION #005
+</strong>
+
+<p>
+
+The ending has not been determined.
+
+<br><br>
+
+Therefore...
+
+<br><br>
+
+the story continues.
+
+</p>
+
+</div>
+
+
+
+<details>
+
+<summary>
+【 ▶ RECEIVE UNKNOWN TRANSMISSION... 】
+</summary>
+
+<div class="hidden">
+
+<em>
+
+...
+
+<br><br>
+
+You were not supposed to find this.
+
+<br><br>
+
+The Star Stream is watching.
+
+<br><br>
+
+Something is watching from beyond
+the archive.
+
+</em>
+
+</div>
+
+</details>
+
+
+</section>
+
+
+
+<section>
+
+<div class="warning">
+
+<span class="blink">
+【 WARNING 】
+</span>
+
+<br><br>
+
+Not every transmission should be answered.
+
+<br><br>
+
+Not every story wants to be remembered.
+
+<br><br>
+
+Some stories remember you back.
+
+</div>
+
+</section>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     EXTERNAL CHANNELS
+===================================================== -->
+
+<main id="channels" class="page">
+
+
+<section>
+
+<div class="heading">
+【 EXTERNAL CHANNELS 】
+</div>
+
+<div class="line"></div>
+
+
+<div class="message">
+
+The constellation maintains several
+external communication channels.
+
+<br><br>
+
+Two channels have been successfully
+identified.
+
+</div>
+
+<br>
+
+
+<div class="channels">
+
+
+<a
+class="channel"
+href="https://archiveofourown.org/users/Keeper_of_Forgotten_Stories"
+target="_blank"
+rel="noopener">
+
+AO3
+
+</a>
+
+
+<a
+class="channel"
+href="https://www.wattpad.com/user/Louca_por_yaoi011"
+target="_blank"
+rel="noopener">
+
+WATTPAD
+
+</a>
+
+
+</div>
+
+</section>
+
+
+
+<section>
+
+<div class="heading">
+【 CHANNEL STATUS 】
+</div>
+
+<div class="line"></div>
+
+
+<div class="info">
+
+■
+<span class="label">
+AO3:
+</span>
+
+<span class="value">
+ONLINE // CONNECTED
+</span>
+
+<br>
+
+
+■
+<span class="label">
+WATTPAD:
+</span>
+
+<span class="value">
+ONLINE // CONNECTED
+</span>
+
+<br>
+
+
+■
+<span class="label">
+OTHER CHANNELS:
+</span>
+
+<span class="value">
+NONE DETECTED
+</span>
+
+</div>
+
+</section>
+
+
+
+<section>
+
+<div class="heading">
+【 AUTHOR IDENTIFICATION DETECTED 】
+</div>
+
+<div class="line"></div>
+
+
+<div class="message">
+
+The Star Stream has identified
+the creator operating these channels.
+
+<br><br>
+
+「Keeper_of_Forgotten_Stories」
+
+<br><br>
+
+Cross-platform narrative signature:
+
+<strong>
+CONFIRMED.
+</strong>
+
+</div>
+
+</section>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     FINAL WARNING
+===================================================== -->
+
+<section>
+
+<div class="warning">
+
+━━━━━━━━━━━━━━━━━━━━
+
+<br>
+
+[ STAR STREAM WARNING ]
+
+<br><br>
+
+Interaction with this constellation may
+alter your perception of the Scenario.
+
+<br><br>
+
+<span class="blink">
+The consequences cannot be reversed.
+</span>
+
+<br><br>
+
+━━━━━━━━━━━━━━━━━━━━
+
+</div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+STAR STREAM DATABASE // RECORD #KFS-001
+
+<br>
+
+STATUS: OBSERVING THE SCENARIO
+
+<br><br>
+
+「Some stories survive because someone
+refused to forget them.」
+
+<br><br>
+
+<span class="blink">
+✦ THE STORY HAS NOT ENDED ✦
+</span>
+
+</footer>
+
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
 
 <script>
 
-/* =========================================================
-   GLOBAL STATE
-========================================================= */
+/* =========================
+   STAR STREAM BOOT
+========================= */
 
-let interactions = 0;
-let observers = 1;
-let titleClicks = 0;
-let transmissionNumber = 4;
+const status =
+document.getElementById("status");
 
-const fables = {
+const enter =
+document.getElementById("enter");
 
- 1:{
-  title:"The One Who Stayed Until The End",
-  meta:"COMPLETE // NARRATIVE // EMOTIONAL RISK: HIGH",
-  description:
-  "A story about the person who remained when everyone else had already decided that the ending had arrived.",
-  status:"COMPLETE",
-  danger:"★★★☆☆",
-  emotion:"★★★★★",
-  type:"Narrative"
- },
+const connect =
+document.getElementById("connect");
 
- 2:{
-  title:"The Author Who Loved Her Characters Too Much",
-  meta:"CLASSIFIED // CREATOR // EMOTIONAL RISK: EXTREME",
-  description:
-  "The boundary between creator and creation appears to have become unstable. Further observation is recommended.",
-  status:"CLASSIFIED",
-  danger:"★★★★☆",
-  emotion:"★★★★★",
-  type:"Creator / Creation"
- },
-
- 3:{
-  title:"The Witness Beyond The Ending",
-  meta:"UNKNOWN // OBSERVER // RISK LEVEL: UNKNOWN",
-  description:
-  "Someone remained after the final page. The Star Stream has not determined why.",
-  status:"UNKNOWN",
-  danger:"?????",
-  emotion:"★★★★☆",
-  type:"Observation"
- },
-
- 4:{
-  title:"The Keeper of Unfinished Stories",
-  meta:"ONGOING // PRESERVATION // RISK LEVEL: UNKNOWN",
-  description:
-  "Some stories were never meant to end. Someone decided to keep them alive.",
-  status:"ONGOING",
-  danger:"UNKNOWN",
-  emotion:"★★★★★",
-  type:"Preservation"
- }
-
-};
+const main =
+document.getElementById("main");
 
 
-/* =========================================================
-   INTRO STARS
-========================================================= */
+const messages = [
 
-const introStars=document.getElementById("introStars");
+"SEARCHING FOR CONSTELLATION...",
 
-for(let i=0;i<80;i++){
+"LOCATING NARRATIVE SIGNATURE...",
 
- const star=document.createElement("div");
+"SCANNING STAR STREAM...",
 
- star.className="introStar";
+"IDENTITY CONFIRMED.",
 
- star.style.left=Math.random()*100+"%";
- star.style.top=Math.random()*100+"%";
- star.style.setProperty(
-  "--duration",
-  (1.5+Math.random()*4)+"s"
- );
+"「KEEPER OF FORGOTTEN STORIES」",
 
- star.style.animationDelay=
-  Math.random()*4+"s";
+"TRANSMISSION READY."
 
- introStars.appendChild(star);
+];
+
+
+let i = 0;
+
+
+function updateStatus(){
+
+if(i < messages.length){
+
+status.textContent =
+messages[i];
+
+i++;
+
+setTimeout(
+updateStatus,
+650
+);
+
+}
 
 }
 
 
-/* =========================================================
-   TERMINAL ANIMATION
-========================================================= */
+updateStatus();
 
-const terminalLines=
-document.querySelectorAll(".terminalLine");
 
-terminalLines.forEach((line,index)=>{
+/* =========================
+   SHOW ENTER BUTTON
+========================= */
 
- setTimeout(()=>{
-  line.classList.add("show");
- },700+index*550);
+setTimeout(function(){
 
+enter.style.display =
+"inline-block";
+
+},4300);
+
+
+/* =========================
+   ENTER SITE
+========================= */
+
+enter.addEventListener(
+"click",
+function(){
+
+connect.classList.add("hide");
+
+main.classList.add("show");
+
+document.body.style.overflowY =
+"auto";
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
 });
 
-
-/* =========================================================
-   LOADING PERCENTAGE
-========================================================= */
-
-let percent=0;
-
-const percentTimer=setInterval(()=>{
-
- percent+=Math.floor(Math.random()*5)+1;
-
- if(percent>=100){
-  percent=100;
-  clearInterval(percentTimer);
-
-  setTimeout(()=>{
-   document.getElementById("transmissionReveal").style.display="block";
-  },500);
- }
-
- document.getElementById("loadingPercent").textContent=
-  String(percent).padStart(2,"0")+"%";
-
-},130);
-
-
-/* =========================================================
-   ENTER SITE
-========================================================= */
-
-function enterSite(){
-
- document.body.classList.remove("no-scroll");
-
- const intro=document.getElementById("intro");
- const site=document.getElementById("site");
-
- intro.classList.add("hidden");
-
- setTimeout(()=>{
-  site.classList.add("visible");
- },500);
-
- showNotification(
-  "TRANSMISSION ACCEPTED",
-  "Observer connection established."
- );
-
- startLiveMessages();
-
 }
+);
 
 
-/* =========================================================
-   NAVIGATION
-========================================================= */
+/* =========================
+   PAGE NAVIGATION
+========================= */
 
 function showPage(page,button){
 
- document.querySelectorAll(".page")
- .forEach(p=>p.classList.remove("active"));
-
- const target=document.getElementById(page);
-
- if(target){
-  target.classList.add("active");
- }
-
- document.querySelectorAll(".nav button")
- .forEach(b=>b.classList.remove("active"));
-
- if(button){
-  button.classList.add("active");
- }
-
- registerInteraction();
-
- window.scrollTo({
-  top:0,
-  behavior:"smooth"
- });
-
-}
-
-
-/* =========================================================
-   INTERACTIONS
-========================================================= */
-
-function registerInteraction(){
-
- interactions++;
-
- document.getElementById("interactionCount").textContent=
-  String(interactions).padStart(2,"0");
-
- document.getElementById("consoleInteractions").textContent=
-  String(interactions).padStart(2,"0");
-
- if(interactions===5){
-
-  observers=2;
-
-  document.getElementById("observerCount").textContent="02";
-  document.getElementById("consoleObservers").textContent="02";
-
-  showNotification(
-   "OBSERVER DETECTED",
-   "An additional presence has entered the scenario."
-  );
-
- }
-
- if(interactions===10){
-
-  document.getElementById("threatLevel").textContent=
-   "UNSTABLE";
-
-  showNotification(
-   "SYSTEM WARNING",
-   "Narrative instability detected."
-  );
-
- }
-
-}
-
-
-/* =========================================================
-   FABLE MODAL
-========================================================= */
-
-function openFable(id){
-
- registerInteraction();
-
- const f=fables[id];
-
- if(!f)return;
-
- const modal=document.getElementById("modal");
-
- document.getElementById("modalContent").innerHTML=`
-
-  <div class="modalTitle">
-   ${f.title}
-  </div>
-
-  <div class="modalMeta">
-   ${f.meta}
-  </div>
-
-  <div class="modalStats">
-
-   <div class="modalStat">
-    <strong>${f.status}</strong>
-    <small>STATUS</small>
-   </div>
-
-   <div class="modalStat">
-    <strong>${f.danger}</strong>
-    <small>DANGER</small>
-   </div>
-
-   <div class="modalStat">
-    <strong>${f.emotion}</strong>
-    <small>EMOTIONAL RISK</small>
-   </div>
-
-  </div>
-
-  <div class="modalText">
-
-   <strong style="color:#38bdf8">
-    [ STAR STREAM DESCRIPTION ]
-   </strong>
-
-   <br><br>
-
-   ${f.description}
-
-   <br><br>
-
-   <strong style="color:#38bdf8">
-    [ CLASSIFICATION ]
-   </strong>
-
-   <br><br>
-
-   TYPE:
-   ${f.type}
-
-   <br><br>
-
-   <strong style="color:#38bdf8">
-    [ SYSTEM OBSERVATION ]
-   </strong>
-
-   <br><br>
-
-   This Fable has been preserved within
-   the constellation's archive.
-
-   <br><br>
-
-   <span style="color:#64748b">
-   The Star Stream recommends continued observation.
-   </span>
-
-  </div>
-
- `;
-
- modal.classList.add("open");
-
-}
-
-
-/* =========================================================
-   CLOSE MODAL
-========================================================= */
-
-function closeModal(){
-
- document.getElementById("modal")
- .classList.remove("open");
-
-}
-
-
-/* =========================================================
-   CLICK OUTSIDE MODAL
-========================================================= */
-
-document.getElementById("modal")
-.addEventListener("click",function(e){
-
- if(e.target===this){
-  closeModal();
- }
+document
+.querySelectorAll(".page")
+.forEach(function(p){
+
+p.classList.remove("active");
 
 });
 
 
-/* =========================================================
-   CONSOLE
-========================================================= */
+const selected =
+document.getElementById(page);
 
-function toggleConsole(){
+if(selected){
 
- registerInteraction();
-
- document.getElementById("console")
- .classList.toggle("open");
+selected.classList.add("active");
 
 }
 
 
-/* =========================================================
-   LIVE MESSAGES
-========================================================= */
+document
+.querySelectorAll("nav button")
+.forEach(function(b){
 
-const liveMessages=[
+b.classList.remove("active");
 
- "The constellation is currently observing the scenario.",
+});
 
- "A new narrative possibility has been detected.",
 
- "Someone is reading. The Star Stream approves.",
+if(button){
 
- "The ending remains undetermined.",
-
- "A forgotten story has moved within the archive.",
-
- "The constellation has noticed your presence.",
-
- "Narrative stability: acceptable.",
-
- "There are stories that refuse to disappear.",
-
- "The Star Stream is waiting for the next chapter."
-
-];
-
-let liveIndex=0;
-
-function startLiveMessages(){
-
- setInterval(()=>{
-
-  liveIndex=(liveIndex+1)%liveMessages.length;
-
-  const element=document.getElementById("liveMessage");
-
-  element.style.opacity="0";
-
-  setTimeout(()=>{
-
-   element.textContent=
-    liveMessages[liveIndex];
-
-   element.style.opacity="1";
-
-  },400);
-
- },7000);
+button.classList.add("active");
 
 }
 
 
-/* =========================================================
-   NEW TRANSMISSIONS
-========================================================= */
+window.scrollTo({
 
-const unknownMessages=[
+top:0,
 
- "A new reader has entered the scenario.",
+behavior:"smooth"
 
- "The constellation has become curious.",
-
- "Something moved inside the archive.",
-
- "The Star Stream has registered your continued presence.",
-
- "You have been observing for longer than expected.",
-
- "A story somewhere has remembered you.",
-
- "[SYSTEM ERROR] Narrative boundary temporarily unstable.",
-
- "The ending has changed.",
-
- "Someone is waiting for the next chapter.",
-
- "The constellation refuses to look away."
-
-];
-
-function receiveTransmission(){
-
- registerInteraction();
-
- transmissionNumber++;
-
- const message=
-  unknownMessages[
-   Math.floor(Math.random()*unknownMessages.length)
-  ];
-
- const list=document.getElementById("transmissionList");
-
- const card=document.createElement("div");
-
- card.className="transmissionCard";
-
- card.innerHTML=`
-
-  <div class="transmissionID">
-   TRANSMISSION #${String(transmissionNumber).padStart(3,"0")}
-  </div>
-
-  <div class="transmissionText">
-   ${message}
-  </div>
-
-  <div class="transmissionTime">
-   RECORD STATUS: NEW
-  </div>
-
- `;
-
- list.prepend(card);
-
- showNotification(
-  "TRANSMISSION RECEIVED",
-  message
- );
+});
 
 }
 
 
-/* =========================================================
-   NOTIFICATIONS
-========================================================= */
+/* =========================
+   PREVENT HASH JUMP
+========================= */
 
-function showNotification(title,text){
+document
+.querySelectorAll("nav button")
+.forEach(function(button){
 
- const container=
-  document.getElementById("notifications");
+button.addEventListener(
+"mouseenter",
+function(){
 
- const notification=
-  document.createElement("div");
+button.style.textShadow =
+"0 0 10px #38bdf8";
 
- notification.className="notification";
+});
 
- notification.innerHTML=`
+button.addEventListener(
+"mouseleave",
+function(){
 
-  <div class="notificationTitle">
-   【 ${title} 】
-  </div>
+if(!button.classList.contains("active")){
 
-  <div class="notificationText">
-   ${text}
-  </div>
-
- `;
-
- container.appendChild(notification);
-
- setTimeout(()=>{
-
-  notification.classList.add("remove");
-
-  setTimeout(()=>{
-   notification.remove();
-  },450);
-
- },4200);
+button.style.textShadow =
+"none";
 
 }
 
-
-/* =========================================================
-   RANDOM BACKGROUND TRANSMISSIONS
-========================================================= */
-
-setInterval(()=>{
-
- if(
-  document.visibilityState==="visible" &&
-  Math.random()>.55
- ){
-
-  const messages=[
-
-   "The Star Stream is watching.",
-
-   "A forgotten Fable has been remembered.",
-
-   "Someone is still reading.",
-
-   "The scenario continues.",
-
-   "Narrative connection stable."
-
-  ];
-
-  const message=
-   messages[Math.floor(Math.random()*messages.length)];
-
-  showNotification(
-   "BACKGROUND TRANSMISSION",
-   message
-  );
-
- }
-
-},18000);
-
-
-/* =========================================================
-   SCROLL REVEALS
-========================================================= */
-
-const revealObserver=
- new IntersectionObserver(
-  entries=>{
-
-   entries.forEach(entry=>{
-
-    if(entry.isIntersecting){
-     entry.target.classList.add("revealed");
-    }
-
-   });
-
-  },
-  {threshold:.12}
- );
-
-document.querySelectorAll(".revealOnScroll")
-.forEach(el=>revealObserver.observe(el));
-
-
-/* =========================================================
-   MOUSE PARALLAX
-========================================================= */
-
-let mouseX=0;
-let mouseY=0;
-
-document.addEventListener("mousemove",e=>{
-
- mouseX=
-  (e.clientX/window.innerWidth-.5);
-
- mouseY=
-  (e.clientY/window.innerHeight-.5);
-
- const title=document.getElementById("mainTitle");
-
- if(title){
-
-  title.style.textShadow=
-   `${mouseX*8}px ${mouseY*8}px 12px rgba(56,189,248,.6),
-    0 0 35px rgba(14,165,233,.18)`;
-
- }
+});
 
 });
 
 
-/* =========================================================
-   CURSOR GLOW
-========================================================= */
+/* =========================
+   KONAMI-LIKE SECRET
+========================= */
 
-const cursorGlow=
- document.getElementById("cursorGlow");
+let secret = "";
 
-const cursorDot=
- document.getElementById("cursorDot");
+const secretCode =
+"starstream";
 
-document.addEventListener("mousemove",e=>{
+document.addEventListener(
+"keydown",
+function(event){
 
- cursorGlow.style.left=e.clientX+"px";
- cursorGlow.style.top=e.clientY+"px";
- cursorGlow.style.opacity="1";
+secret +=
+event.key.toLowerCase();
 
- cursorDot.style.left=e.clientX+"px";
- cursorDot.style.top=e.clientY+"px";
+if(secret.length >
+secretCode.length){
 
-});
-
-
-/* =========================================================
-   TITLE SECRET EASTER EGG
-========================================================= */
-
-document.getElementById("mainTitle")
-.addEventListener("click",()=>{
-
- titleClicks++;
-
- registerInteraction();
-
- if(titleClicks===3){
-
-  showNotification(
-   "SYSTEM NOTICE",
-   "Why are you looking for hidden records?"
-  );
-
- }
-
- if(titleClicks===5){
-
-  document.getElementById("secret")
-   .classList.add("open");
-
-  titleClicks=0;
-
- }
-
-});
-
-
-/* =========================================================
-   SECRET CLOSE
-========================================================= */
-
-function closeSecret(){
-
- document.getElementById("secret")
- .classList.remove("open");
+secret =
+secret.slice(
+-secretCode.length
+);
 
 }
 
+if(secret === secretCode){
 
-/* =========================================================
-   KEYBOARD SECRET
-========================================================= */
+document.body.style.textShadow =
+"0 0 4px #38bdf8";
 
-let secretSequence="";
+setTimeout(function(){
 
-document.addEventListener("keydown",e=>{
+document.body.style.textShadow =
+"none";
 
- secretSequence+=e.key.toLowerCase();
+},2000);
 
- if(secretSequence.length>12){
-  secretSequence=
-   secretSequence.slice(-12);
- }
+console.log(
+"[STAR STREAM] SECRET TRANSMISSION ACCEPTED."
+);
 
- if(secretSequence.includes("observer")){
-
-  showNotification(
-   "ACCESS GRANTED",
-   "You have been recognized as an observer."
-  );
-
-  secretSequence="";
-
- }
-
- if(e.key==="Escape"){
-
-  closeModal();
-
-  closeSecret();
-
-  document.getElementById("console")
-   .classList.remove("open");
-
- }
+}
 
 });
 
-
-/* =========================================================
-   RANDOM OBSERVER CHANGE
-========================================================= */
-
-setTimeout(()=>{
-
- if(document.getElementById("site").classList.contains("visible")){
-
-  showNotification(
-   "UNKNOWN PRESENCE",
-   "Something has entered the observation range."
-  );
-
- }
-
-},35000);
-
-
-/* =========================================================
-   PREVENT BROKEN PLACEHOLDER LINKS
-========================================================= */
-
-document.querySelectorAll('a[href="#"]')
-.forEach(link=>{
-
- link.addEventListener("click",e=>{
-
-  e.preventDefault();
-
-  showNotification(
-   "CHANNEL UNAVAILABLE",
-   "This external channel has not yet been registered."
-  );
-
- });
-
-});
-
-
-/* =========================================================
-   INITIAL STATE
-========================================================= */
-
-document.body.classList.add("no-scroll");
 
 </script>
 
 </body>
 </html>
-```
