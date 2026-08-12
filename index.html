@@ -4,114 +4,105 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#020611">
+<meta name="description" content="Star Stream Constellation Archive — Keeper of Forgotten Stories">
 <title>Keeper of Forgotten Stories // Star Stream</title>
 
 <style>
-*{
-box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 html{
 scroll-behavior:smooth;
+scrollbar-color:#155e75 #020611;
+scrollbar-width:thin;
+}
+
+:root{
+--bg:#020611;
+--bg2:#030b18;
+--panel:#061326;
+--panel2:#081a30;
+--line:#164e63;
+--cyan:#38bdf8;
+--cyan2:#67e8f9;
+--blue:#0ea5e9;
+--text:#dbeafe;
+--soft:#bae6fd;
+--muted:#64748b;
+--dim:#334155;
+--danger:#ef4444;
+--warning:#f59e0b;
+--glow:0 0 25px rgba(56,189,248,.18);
 }
 
 body{
 margin:0;
-background:#020611;
-color:#dbeafe;
+background:
+radial-gradient(circle at 50% -10%,#08264a 0%,#020611 42%,#01040a 100%);
+color:var(--text);
 font-family:Arial,Helvetica,sans-serif;
-overflow:hidden;
-}
-
-body.loaded{
 overflow-x:hidden;
-overflow-y:auto;
+min-height:100vh;
+cursor:default;
 }
 
-body:before{
-content:"";
-position:fixed;
-inset:0;
-pointer-events:none;
-background-image:
-radial-gradient(circle,#fff 0 1px,transparent 1px),
-radial-gradient(circle,#7dd3fc 0 1px,transparent 1px),
-radial-gradient(circle,#fff 0 1px,transparent 1px),
-radial-gradient(circle,#38bdf8 0 1px,transparent 1px);
-background-size:180px 180px,270px 240px,340px 300px,420px 370px;
-opacity:.28;
-z-index:-5;
-animation:stars 35s linear infinite;
-}
-
-body:after{
+body::before{
 content:"";
 position:fixed;
 inset:0;
 pointer-events:none;
 background:
-linear-gradient(180deg,#06152d55,#020611,#03152a);
+linear-gradient(rgba(56,189,248,.018) 1px,transparent 1px),
+linear-gradient(90deg,rgba(56,189,248,.018) 1px,transparent 1px);
+background-size:42px 42px;
+mask-image:linear-gradient(to bottom,black,transparent 90%);
 z-index:-4;
 }
 
-@keyframes stars{
-from{
-background-position:0 0,0 0,0 0,0 0;
-}
-to{
-background-position:180px 180px,270px 240px,340px 300px,420px 370px;
-}
-}
-
-/* =========================================================
-   GLOBAL
-========================================================= */
-
-::selection{
-background:#38bdf8;
-color:#020611;
-}
-
-button,
-a{
--webkit-tap-highlight-color:transparent;
-}
-
-button{
-font-family:inherit;
-}
-
-.scanline{
-position:fixed;
-left:0;
-right:0;
-height:1px;
-background:#38bdf833;
-box-shadow:0 0 8px #38bdf8;
-pointer-events:none;
-z-index:9997;
-animation:scanline 6s linear infinite;
-}
-
-@keyframes scanline{
-0%{top:-2px}
-100%{top:100vh}
-}
-
-.noise{
+body::after{
+content:"";
 position:fixed;
 inset:0;
 pointer-events:none;
-z-index:9996;
-opacity:.025;
 background:
-repeating-linear-gradient(
-0deg,
-transparent 0,
-transparent 3px,
-#fff 4px
-);
+linear-gradient(180deg,transparent 0%,rgba(2,6,17,.15) 50%,rgba(2,6,17,.7) 100%);
+z-index:50;
+mix-blend-mode:normal;
 }
+
+#starCanvas{
+position:fixed;
+inset:0;
+width:100%;
+height:100%;
+z-index:-5;
+pointer-events:none;
+}
+
+#cursorGlow{
+position:fixed;
+width:180px;
+height:180px;
+border-radius:50%;
+pointer-events:none;
+z-index:100;
+transform:translate(-50%,-50%);
+background:radial-gradient(circle,rgba(56,189,248,.10),transparent 68%);
+mix-blend-mode:screen;
+transition:opacity .3s;
+}
+
+::selection{
+background:#0ea5e955;
+color:#fff;
+}
+
+::-webkit-scrollbar{width:7px}
+::-webkit-scrollbar-track{background:#020611}
+::-webkit-scrollbar-thumb{
+background:#164e63;
+border:1px solid #38bdf844;
+}
+::-webkit-scrollbar-thumb:hover{background:#0e7490}
 
 /* =========================================================
    BOOT SCREEN
@@ -120,13 +111,28 @@ transparent 3px,
 #connect{
 position:fixed;
 inset:0;
-background:#020611;
+background:
+radial-gradient(circle at center,#061a32 0%,#020611 58%,#010308 100%);
 display:flex;
 align-items:center;
 justify-content:center;
-z-index:10000;
-transition:opacity 1.2s,visibility 1.2s;
+z-index:9999;
+transition:opacity 1.1s ease,visibility 1.1s ease;
 overflow:hidden;
+}
+
+#connect::before{
+content:"";
+position:absolute;
+inset:0;
+background:
+repeating-linear-gradient(
+0deg,
+transparent 0,
+transparent 3px,
+rgba(56,189,248,.018) 4px
+);
+pointer-events:none;
 }
 
 #connect.hide{
@@ -136,33 +142,28 @@ pointer-events:none;
 }
 
 .boot{
-width:min(760px,91%);
-font-family:monospace;
+width:min(820px,92%);
+font-family:"Courier New",monospace;
+position:relative;
 }
 
 .bootbox{
 position:relative;
-border:1px solid #38bdf8;
-padding:32px 28px;
+padding:34px 30px;
+border:1px solid #0e7490;
 background:
-linear-gradient(180deg,#06152dee,#030914f5);
+linear-gradient(180deg,rgba(4,22,43,.96),rgba(1,7,17,.98));
 box-shadow:
-0 0 35px #0284c733,
-inset 0 0 35px #0ea5e90a;
+0 0 60px rgba(14,165,233,.08),
+inset 0 0 50px rgba(14,165,233,.035);
 overflow:hidden;
 }
 
-.bootbox:before{
+.bootbox::after{
 content:"";
 position:absolute;
-inset:0;
-background:
-repeating-linear-gradient(
-0deg,
-transparent 0,
-transparent 3px,
-rgba(56,189,248,.025) 4px
-);
+inset:8px;
+border:1px solid rgba(56,189,248,.06);
 pointer-events:none;
 }
 
@@ -170,6 +171,7 @@ pointer-events:none;
 position:absolute;
 color:#155e75;
 font-size:18px;
+z-index:3;
 }
 
 .c1{top:8px;left:10px}
@@ -177,130 +179,161 @@ font-size:18px;
 .c3{bottom:8px;left:10px}
 .c4{bottom:8px;right:10px}
 
+.scan{
+position:absolute;
+left:0;
+right:0;
+height:1px;
+background:#38bdf866;
+box-shadow:0 0 12px #38bdf8;
+animation:scan 4s linear infinite;
+pointer-events:none;
+z-index:4;
+}
+
+@keyframes scan{
+0%{top:-2%}
+100%{top:102%}
+}
+
 .boottitle{
-font-size:12px;
-letter-spacing:5px;
-color:#67e8f9;
+font-size:11px;
+letter-spacing:4px;
 text-align:center;
+color:var(--cyan2);
+text-shadow:0 0 10px rgba(56,189,248,.5);
 }
 
 .bootmain{
-font-size:clamp(22px,6vw,38px);
-letter-spacing:3px;
-margin:24px 0 8px;
+font-size:clamp(24px,6vw,42px);
+letter-spacing:4px;
+line-height:1.15;
 text-align:center;
+margin:25px 0 10px;
 color:#e0f2fe;
-text-shadow:0 0 15px #38bdf8;
+text-shadow:
+0 0 10px rgba(56,189,248,.5),
+0 0 30px rgba(56,189,248,.18);
 }
 
 .bootsub{
-text-align:center;
 font-size:10px;
 letter-spacing:2px;
+text-align:center;
 color:#475569;
-margin-bottom:25px;
+margin-bottom:28px;
 }
 
 .bootgrid{
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:7px 25px;
+gap:6px 30px;
 font-size:10px;
-line-height:1.8;
-color:#64748b;
+line-height:1.9;
+color:#475569;
 margin-bottom:20px;
 }
 
 .bootgrid span{
-color:#38bdf8;
+color:var(--cyan);
+}
+
+.bootgrid .active{
+color:var(--cyan2);
+text-shadow:0 0 8px rgba(56,189,248,.5);
 }
 
 .loading{
-height:6px;
-background:#082f49;
+height:7px;
 border:1px solid #155e75;
+background:#031526;
 overflow:hidden;
+position:relative;
 }
 
 .loading span{
 display:block;
 height:100%;
 width:0;
-background:#38bdf8;
-box-shadow:0 0 15px #38bdf8;
-animation:load 6s cubic-bezier(.2,.7,.2,1) forwards;
+background:
+linear-gradient(90deg,#075985,#38bdf8,#a5f3fc);
+box-shadow:
+0 0 12px #38bdf8,
+0 0 25px rgba(56,189,248,.5);
+transition:width .12s linear;
 }
 
-@keyframes load{
-0%{width:0}
-15%{width:8%}
-30%{width:27%}
-48%{width:44%}
-62%{width:61%}
-78%{width:79%}
-91%{width:94%}
-100%{width:100%}
+.loading span::after{
+content:"";
+position:absolute;
+top:0;
+bottom:0;
+width:80px;
+background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);
+animation:loadshine 1.2s linear infinite;
+}
+
+@keyframes loadshine{
+from{left:-100px}
+to{left:100%}
 }
 
 .progressline{
 display:flex;
 justify-content:space-between;
+margin-top:8px;
 font-size:9px;
+letter-spacing:1px;
 color:#475569;
-margin-top:7px;
 }
 
 #percent{
-color:#67e8f9;
+color:var(--cyan2);
 }
 
 .bootstatus{
-font-size:10px;
-color:#7dd3fc;
-letter-spacing:1.5px;
-line-height:2;
-margin-top:22px;
 min-height:42px;
+margin-top:21px;
+font-size:10px;
+line-height:2;
+letter-spacing:1.5px;
+color:#7dd3fc;
+}
+
+.bootstatus::before{
+content:"> ";
+color:#155e75;
 }
 
 .bootlog{
-height:92px;
-margin-top:15px;
+height:105px;
+margin-top:13px;
 padding:10px;
 border:1px solid #0c3349;
-background:#010813aa;
+background:rgba(1,8,18,.72);
 overflow:hidden;
 font-size:9px;
 line-height:1.8;
 color:#475569;
+box-shadow:inset 0 0 20px rgba(14,165,233,.025);
 }
 
 .bootlog div{
-animation:login .3s ease;
+animation:logIn .3s ease;
 }
 
-.bootlog .ok{
-color:#38bdf8;
-}
+.bootlog .ok{color:#38bdf8}
+.bootlog .alert{color:#f59e0b}
+.bootlog .critical{color:#ef4444}
 
-.bootlog .alert{
-color:#f59e0b;
-}
-
-@keyframes login{
-from{
-opacity:0;
-transform:translateX(-5px);
-}
-to{
-opacity:1;
-transform:none;
-}
+@keyframes logIn{
+from{opacity:0;transform:translateX(-8px)}
+to{opacity:1;transform:none}
 }
 
 .bootsignal{
 text-align:center;
-font-size:10px;
+font-size:9px;
 letter-spacing:3px;
 color:#155e75;
 margin-top:17px;
@@ -308,23 +341,31 @@ margin-top:17px;
 
 .enter{
 display:none;
-margin:24px auto 0;
+margin:23px auto 0;
 padding:13px 30px;
-border:1px solid #38bdf8;
+border:1px solid var(--cyan);
 background:rgba(14,165,233,.06);
 color:#bae6fd;
 cursor:pointer;
 letter-spacing:3px;
 font-weight:bold;
-font-family:monospace;
+font-family:"Courier New",monospace;
 transition:.3s;
+position:relative;
+z-index:5;
 }
 
 .enter:hover{
-background:#0ea5e922;
-box-shadow:0 0 25px #38bdf855;
+background:rgba(14,165,233,.16);
+box-shadow:
+0 0 18px rgba(56,189,248,.35),
+inset 0 0 15px rgba(56,189,248,.08);
 color:white;
 transform:translateY(-2px);
+}
+
+.enter:active{
+transform:translateY(0) scale(.98);
 }
 
 /* =========================================================
@@ -333,111 +374,115 @@ transform:translateY(-2px);
 
 #main{
 opacity:0;
-transition:opacity 1.2s;
+visibility:hidden;
+transition:opacity 1s ease,visibility 1s ease;
 }
 
 #main.show{
 opacity:1;
+visibility:visible;
 }
 
 .container{
-width:min(1000px,94%);
-margin:35px auto;
+width:min(1050px,94%);
+margin:32px auto;
 }
 
 .system{
 position:relative;
 border:1px solid #075985;
-background:#020b18e8;
+background:rgba(2,11,24,.9);
 box-shadow:
-0 0 35px #0284c722,
-0 0 90px #0284c711;
+0 0 60px rgba(2,132,199,.08),
+0 0 0 1px rgba(56,189,248,.025);
 overflow:hidden;
 }
 
-header{
-position:relative;
-padding:42px 20px;
-text-align:center;
-border-bottom:1px solid #164e63;
-overflow:hidden;
-}
-
-header:before{
+.system::before{
 content:"";
 position:absolute;
 inset:0;
-background:
-radial-gradient(circle at center,#0ea5e912,transparent 60%);
 pointer-events:none;
+background:
+linear-gradient(
+90deg,
+transparent,
+rgba(56,189,248,.025),
+transparent
+);
+animation:systemSweep 8s linear infinite;
+z-index:0;
+}
+
+@keyframes systemSweep{
+0%{transform:translateX(-100%)}
+100%{transform:translateX(100%)}
+}
+
+.system>*{
+position:relative;
+z-index:1;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+header{
+padding:42px 20px 36px;
+text-align:center;
+border-bottom:1px solid #164e63;
+position:relative;
+overflow:hidden;
+}
+
+.headerStatus{
+font-family:"Courier New",monospace;
+font-size:9px;
+color:#475569;
+letter-spacing:2px;
+margin-bottom:14px;
 }
 
 .signal{
-position:relative;
-z-index:1;
+font-family:"Courier New",monospace;
 font-size:11px;
-color:#67e8f9;
+color:var(--cyan2);
 letter-spacing:3px;
 }
 
 .title{
-position:relative;
-z-index:1;
-font-size:clamp(27px,7vw,48px);
+font-size:clamp(28px,7vw,52px);
 letter-spacing:5px;
-margin:15px 0 8px;
+line-height:1.05;
+margin:16px 0 10px;
 color:#e0f2fe;
 text-shadow:
-0 0 20px #38bdf877,
-0 0 60px #0284c722;
+0 0 12px rgba(56,189,248,.45),
+0 0 35px rgba(56,189,248,.15);
 }
 
 .subtitle{
-position:relative;
-z-index:1;
-font-size:12px;
+font-family:"Courier New",monospace;
+font-size:10px;
 color:#7dd3fc;
 letter-spacing:2px;
 }
 
-/* =========================================================
-   CONTROL BAR
-========================================================= */
-
-.controlbar{
+.headerMeta{
 display:flex;
 justify-content:center;
-align-items:center;
-gap:7px;
+gap:25px;
 flex-wrap:wrap;
-padding:10px;
-background:#010a15;
-border-bottom:1px solid #164e63;
-}
-
-.control{
-border:1px solid #164e63;
-background:#020a16;
-color:#7dd3fc;
-padding:8px 12px;
-font-family:monospace;
-font-size:9px;
+margin-top:22px;
+font-family:"Courier New",monospace;
+font-size:8px;
+color:#475569;
 letter-spacing:1px;
-cursor:pointer;
-transition:.25s;
 }
 
-.control:hover,
-.control.active{
-border-color:#38bdf8;
-color:#fff;
-background:#0ea5e912;
-box-shadow:0 0 14px #0284c733;
-}
-
-#volumeIcon{
-display:inline-block;
-width:15px;
+.headerMeta span{
+color:#38bdf8;
 }
 
 /* =========================================================
@@ -448,32 +493,51 @@ nav{
 display:flex;
 justify-content:center;
 flex-wrap:wrap;
-gap:6px;
-padding:13px;
+gap:5px;
+padding:12px;
 border-bottom:1px solid #164e63;
-background:#031225;
+background:rgba(3,18,37,.92);
 position:sticky;
 top:0;
-z-index:20;
-backdrop-filter:blur(10px);
+z-index:100;
+backdrop-filter:blur(12px);
 }
 
 nav a{
+position:relative;
 color:#7dd3fc;
 text-decoration:none;
+font-family:"Courier New",monospace;
 font-size:10px;
 letter-spacing:2px;
-padding:9px 12px;
+padding:10px 15px;
 border:1px solid transparent;
+transition:.25s;
+}
+
+nav a::after{
+content:"";
+position:absolute;
+left:50%;
+right:50%;
+bottom:-1px;
+height:1px;
+background:#38bdf8;
+box-shadow:0 0 8px #38bdf8;
 transition:.25s;
 }
 
 nav a:hover,
 nav a.active{
-border-color:#0ea5e9;
-background:#0ea5e912;
-color:white;
+border-color:#0e7490;
+background:rgba(14,165,233,.07);
+color:#fff;
 text-shadow:0 0 8px #38bdf8;
+}
+
+nav a.active::after{
+left:12%;
+right:12%;
 }
 
 /* =========================================================
@@ -481,78 +545,167 @@ text-shadow:0 0 8px #38bdf8;
 ========================================================= */
 
 section{
-position:relative;
 margin:18px;
-padding:23px;
+padding:25px;
 border:1px solid #164e63;
-background:#07172bb5;
-scroll-margin-top:80px;
+background:rgba(7,23,43,.65);
+scroll-margin-top:75px;
+transition:border-color .3s,box-shadow .3s;
+}
+
+section:hover{
+border-color:#155e75;
 }
 
 .heading{
-color:#67e8f9;
+font-family:"Courier New",monospace;
+color:var(--cyan2);
 font-weight:bold;
 letter-spacing:2px;
-font-size:13px;
+font-size:12px;
 }
 
 .line{
 height:1px;
-background:#164e63;
+background:linear-gradient(90deg,#164e63,transparent);
 margin:18px 0;
 }
 
 .info{
 font-size:14px;
-line-height:1.9;
+line-height:1.95;
 }
 
-.label{
-color:#38bdf8;
-}
-
-.value{
-color:#e0f2fe;
-}
+.label{color:#38bdf8}
+.value{color:#e0f2fe}
 
 .message{
 border-left:2px solid #38bdf8;
-padding:15px 17px;
-background:#0ea5e908;
+padding:17px 18px;
+background:rgba(14,165,233,.035);
 color:#bae6fd;
 line-height:1.8;
 font-style:italic;
+box-shadow:inset 12px 0 25px rgba(14,165,233,.015);
 }
 
+/* =========================================================
+   CONSTELLATION CORE
+========================================================= */
+
+.constellationCore{
+display:grid;
+grid-template-columns:180px 1fr;
+gap:22px;
+align-items:center;
+}
+
+.constellationSymbol{
+width:150px;
+height:150px;
+margin:auto;
+border:1px solid #155e75;
+border-radius:50%;
+position:relative;
+display:grid;
+place-items:center;
+background:
+radial-gradient(circle,#0ea5e918 0 20%,transparent 21%),
+radial-gradient(circle,transparent 50%,#38bdf80a 51%,transparent 53%);
+box-shadow:
+0 0 25px rgba(14,165,233,.12),
+inset 0 0 25px rgba(14,165,233,.06);
+animation:corePulse 4s ease-in-out infinite;
+}
+
+.constellationSymbol::before,
+.constellationSymbol::after{
+content:"";
+position:absolute;
+inset:17px;
+border:1px dashed #155e75;
+border-radius:50%;
+animation:rotate 18s linear infinite;
+}
+
+.constellationSymbol::after{
+inset:35px;
+border-color:#38bdf844;
+animation-direction:reverse;
+animation-duration:11s;
+}
+
+.symbolStar{
+font-size:38px;
+color:#67e8f9;
+text-shadow:
+0 0 8px #38bdf8,
+0 0 25px #0ea5e9;
+}
+
+@keyframes corePulse{
+50%{box-shadow:0 0 45px rgba(14,165,233,.25),inset 0 0 35px rgba(14,165,233,.12)}
+}
+
+@keyframes rotate{
+to{transform:rotate(360deg)}
+}
+
+/* =========================================================
+   FABLES
+========================================================= */
+
 .fable{
+position:relative;
 border:1px solid #164e63;
-padding:20px;
-margin-bottom:10px;
-background:#030d1caa;
+padding:19px;
+margin:10px 0;
+background:rgba(3,13,28,.7);
+transition:.3s;
+overflow:hidden;
+}
+
+.fable::before{
+content:"";
+position:absolute;
+left:0;
+top:0;
+bottom:0;
+width:2px;
+background:#155e75;
 transition:.3s;
 }
 
 .fable:hover{
 border-color:#38bdf8;
-box-shadow:0 0 20px #0284c722;
+box-shadow:
+0 0 25px rgba(2,132,199,.1),
+inset 0 0 20px rgba(14,165,233,.025);
 transform:translateY(-2px);
+}
+
+.fable:hover::before{
+background:#38bdf8;
+box-shadow:0 0 12px #38bdf8;
 }
 
 .fableid{
 color:#64748b;
-font-family:monospace;
-font-size:11px;
+font-family:"Courier New",monospace;
+font-size:10px;
+letter-spacing:1px;
 }
 
 .fabletitle{
-font-size:21px;
+font-size:20px;
 color:#e0f2fe;
 letter-spacing:2px;
 margin:8px 0;
 }
 
 .meta{
-font-size:12px;
+font-family:"Courier New",monospace;
+font-size:11px;
 line-height:1.8;
 color:#7dd3fc;
 }
@@ -563,73 +716,124 @@ padding-left:15px;
 border-left:1px solid #155e75;
 color:#bae6fd;
 font-size:13px;
-line-height:1.8;
+line-height:1.85;
 }
 
 .tags{
-font-size:11px;
+font-family:"Courier New",monospace;
+font-size:10px;
 color:#64748b;
 line-height:1.8;
 }
 
 .access{
-display:inline-block;
+display:inline-flex;
+align-items:center;
+gap:8px;
 margin-top:15px;
 padding:10px 17px;
 border:1px solid #0ea5e9;
 color:#bae6fd;
 text-decoration:none;
-font-size:11px;
+font-family:"Courier New",monospace;
+font-size:10px;
 letter-spacing:2px;
 transition:.25s;
 }
 
 .access:hover{
 background:#0ea5e922;
-box-shadow:0 0 15px #38bdf855;
+box-shadow:0 0 18px #38bdf855;
 color:white;
+transform:translateX(3px);
 }
 
+/* =========================================================
+   ATTRIBUTES
+========================================================= */
+
+.attribute{
+margin:13px 0;
+}
+
+.attributeTop{
+display:flex;
+justify-content:space-between;
+font-family:"Courier New",monospace;
+font-size:10px;
+color:#7dd3fc;
+margin-bottom:6px;
+}
+
+.attributeBar{
+height:5px;
+border:1px solid #155e75;
+background:#031526;
+overflow:hidden;
+}
+
+.attributeBar span{
+display:block;
+height:100%;
+background:linear-gradient(90deg,#075985,#38bdf8);
+box-shadow:0 0 10px #38bdf8;
+transform-origin:left;
+animation:barLoad 1.8s ease both;
+}
+
+@keyframes barLoad{
+from{transform:scaleX(0)}
+to{transform:scaleX(1)}
+}
+
+/* =========================================================
+   TRANSMISSIONS
+========================================================= */
+
 .transmission{
-padding:16px;
+position:relative;
+padding:17px;
 margin:12px 0;
 border:1px dashed #155e75;
-background:#020a16aa;
+background:rgba(2,10,22,.68);
+transition:.3s;
+}
+
+.transmission:hover{
+border-color:#38bdf8;
+background:rgba(14,165,233,.035);
+}
+
+.transmission::before{
+content:"SIGNAL";
+position:absolute;
+top:-7px;
+right:12px;
+padding:0 6px;
+background:#07172b;
+font-family:"Courier New",monospace;
+font-size:8px;
+color:#155e75;
+letter-spacing:2px;
 }
 
 .transmission strong{
 color:#67e8f9;
-font-family:monospace;
-font-size:12px;
+font-family:"Courier New",monospace;
+font-size:11px;
 }
 
 .transmission p{
 font-size:13px;
-line-height:1.7;
+line-height:1.8;
 color:#bae6fd;
 }
 
-.channels{
-display:flex;
-justify-content:center;
-flex-wrap:wrap;
-gap:10px;
-}
-
-.channel{
-padding:11px 20px;
-border:1px solid #155e75;
-text-decoration:none;
-color:#bae6fd;
-font-size:11px;
-letter-spacing:2px;
-transition:.25s;
-}
-
-.channel:hover{
-border-color:#38bdf8;
-box-shadow:0 0 15px #38bdf844;
-color:white;
+.transmissionTime{
+font-family:"Courier New",monospace;
+font-size:8px;
+color:#475569;
+float:right;
 }
 
 /* =========================================================
@@ -646,20 +850,36 @@ summary{
 cursor:pointer;
 padding:12px;
 color:#67e8f9;
-font-size:12px;
+font-family:"Courier New",monospace;
+font-size:11px;
 letter-spacing:1px;
 transition:.3s;
+list-style:none;
+}
+
+summary::-webkit-details-marker{display:none}
+
+summary::before{
+content:"▶ ";
+color:#155e75;
+}
+
+details[open] summary::before{
+content:"▼ ";
+color:#38bdf8;
 }
 
 summary:hover{
 background:#0ea5e90a;
+color:white;
 }
 
 .hidden{
-padding:15px;
+padding:17px;
 color:#64748b;
-font-size:12px;
-line-height:1.8;
+font-family:"Courier New",monospace;
+font-size:11px;
+line-height:1.85;
 }
 
 .secret.revealed{
@@ -667,9 +887,8 @@ border-color:#ef4444;
 background:
 linear-gradient(90deg,#220307dd,#08030aee,#220307dd);
 box-shadow:
-0 0 20px #ef444422,
-inset 0 0 25px #ef444411;
-animation:secretGlitch .12s infinite alternate;
+0 0 25px rgba(239,68,68,.12),
+inset 0 0 30px rgba(239,68,68,.05);
 }
 
 .secret.revealed summary{
@@ -680,14 +899,12 @@ text-shadow:0 0 8px #ef4444;
 
 .secret.revealed .hidden{
 color:#fca5a5;
-text-shadow:0 0 6px #ef444433;
 }
 
-.secret.revealed .hidden:before{
+.secret.revealed .hidden::before{
 content:"[ SYSTEM BREACH DETECTED ]";
 display:block;
 color:#ef4444;
-font-family:monospace;
 letter-spacing:2px;
 margin-bottom:10px;
 }
@@ -708,19 +925,33 @@ margin-bottom:10px;
 position:relative;
 overflow:hidden;
 text-align:center;
-padding:20px;
+padding:22px;
 border:1px solid #1d4ed8;
 background:#17255433;
 color:#bae6fd;
-font-size:11px;
-line-height:1.8;
+font-family:"Courier New",monospace;
+font-size:10px;
+line-height:1.9;
 letter-spacing:1px;
 transition:.4s;
 cursor:pointer;
 }
 
+.warning::before{
+content:"";
+position:absolute;
+inset:0;
+background:repeating-linear-gradient(
+0deg,
+transparent,
+transparent 5px,
+rgba(56,189,248,.025) 6px
+);
+pointer-events:none;
+}
+
 .warning:hover{
-box-shadow:0 0 15px #1d4ed833;
+box-shadow:0 0 20px #1d4ed833;
 }
 
 .warning.triggered{
@@ -728,7 +959,7 @@ border-color:#ef4444;
 background:#250307aa;
 color:#fecaca;
 box-shadow:
-0 0 30px #ef444433,
+0 0 35px #ef444433,
 inset 0 0 25px #ef444411;
 animation:warningGlitch .12s infinite alternate;
 }
@@ -739,6 +970,7 @@ text-shadow:0 0 10px #ef4444;
 }
 
 .warningTitle{
+color:#67e8f9;
 transition:.3s;
 }
 
@@ -750,687 +982,100 @@ transition:.3s;
 }
 
 /* =========================================================
-   OBSERVATORY
+   CHANNELS
 ========================================================= */
 
-.observatory{
-overflow:hidden;
-background:
-radial-gradient(circle at 50% 0%,#0c4a6e22,transparent 55%),
-linear-gradient(180deg,#020b18f2,#010711f5);
-}
-
-.observatory:before{
-content:"";
-position:absolute;
-inset:0;
-pointer-events:none;
-background:
-linear-gradient(90deg,transparent 49.8%,#38bdf80a 50%,transparent 50.2%),
-linear-gradient(0deg,transparent 49.8%,#38bdf80a 50%,transparent 50.2%);
-background-size:90px 90px;
-opacity:.45;
-}
-
-.observatory:after{
-content:"";
-position:absolute;
-inset:0;
-pointer-events:none;
-background:
-repeating-linear-gradient(
-0deg,
-transparent 0,
-transparent 5px,
-#38bdf808 6px
-);
-}
-
-.obsHeader{
-position:relative;
-z-index:2;
+.channels{
 display:flex;
-justify-content:space-between;
-align-items:center;
-gap:15px;
+justify-content:center;
 flex-wrap:wrap;
+gap:10px;
 }
 
-.obsStatus{
-font-family:monospace;
-font-size:9px;
-letter-spacing:2px;
-color:#22d3ee;
-}
-
-.obsDot{
-display:inline-block;
-width:7px;
-height:7px;
-border-radius:50%;
-background:#22d3ee;
-box-shadow:0 0 10px #22d3ee;
-margin-right:6px;
-animation:obsPulse 1.4s infinite;
-}
-
-@keyframes obsPulse{
-0%,100%{opacity:1;transform:scale(1)}
-50%{opacity:.35;transform:scale(.7)}
-}
-
-.scenarioCore{
-position:relative;
-z-index:2;
-margin:25px auto;
-width:min(500px,90%);
-aspect-ratio:1/1;
+.channel{
+padding:11px 20px;
 border:1px solid #155e75;
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-background:
-radial-gradient(circle,#0ea5e91a 0 8%,transparent 9%),
-radial-gradient(circle,#082f4918 0 30%,transparent 31%),
-radial-gradient(circle,#0ea5e908 0 60%,transparent 61%);
-box-shadow:
-0 0 35px #0284c722,
-inset 0 0 45px #0284c711;
-}
-
-.scenarioCore:before,
-.scenarioCore:after{
-content:"";
-position:absolute;
-border:1px solid #0e7490;
-border-radius:50%;
-opacity:.55;
-}
-
-.scenarioCore:before{
-inset:13%;
-animation:orbit 12s linear infinite;
-}
-
-.scenarioCore:after{
-inset:28%;
-border-style:dashed;
-animation:orbitReverse 8s linear infinite;
-}
-
-@keyframes orbit{
-to{transform:rotate(360deg)}
-}
-
-@keyframes orbitReverse{
-to{transform:rotate(-360deg)}
-}
-
-.coreInner{
-width:28%;
-aspect-ratio:1;
-border-radius:50%;
-border:1px solid #67e8f9;
-background:#0ea5e91a;
-box-shadow:
-0 0 20px #38bdf8,
-0 0 60px #0284c744,
-inset 0 0 20px #38bdf822;
-display:flex;
-align-items:center;
-justify-content:center;
-text-align:center;
-font-family:monospace;
-font-size:9px;
-letter-spacing:1px;
-color:#e0f2fe;
-animation:corePulse 2.5s ease-in-out infinite;
-}
-
-@keyframes corePulse{
-0%,100%{
-box-shadow:0 0 20px #38bdf8,0 0 60px #0284c744;
-}
-50%{
-box-shadow:0 0 35px #67e8f9,0 0 100px #0284c766;
-}
-}
-
-.orbitLabel{
-position:absolute;
-font-family:monospace;
-font-size:8px;
-letter-spacing:1px;
-color:#38bdf8;
-white-space:nowrap;
-}
-
-.orbitA{
-top:8%;
-left:50%;
-transform:translateX(-50%);
-}
-
-.orbitB{
-right:5%;
-top:50%;
-transform:translateY(-50%);
-}
-
-.orbitC{
-bottom:8%;
-left:50%;
-transform:translateX(-50%);
-}
-
-.orbitD{
-left:5%;
-top:50%;
-transform:translateY(-50%);
-}
-
-.obsGrid{
-position:relative;
-z-index:2;
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:10px;
-margin-top:20px;
-}
-
-.obsCard{
-border:1px solid #164e63;
-background:#020a16cc;
-padding:15px;
-transition:.3s;
-position:relative;
-overflow:hidden;
-}
-
-.obsCard:hover{
-border-color:#38bdf8;
-background:#0ea5e908;
-box-shadow:0 0 18px #0284c722;
-transform:translateY(-2px);
-}
-
-.obsLabel{
-font-family:monospace;
-font-size:9px;
-letter-spacing:2px;
-color:#64748b;
-margin-bottom:7px;
-}
-
-.obsValue{
-font-size:18px;
-color:#e0f2fe;
-letter-spacing:1px;
-}
-
-.threat{
-color:#facc15;
-}
-
-.obsBar{
-height:4px;
-background:#082f49;
-margin-top:10px;
-overflow:hidden;
-}
-
-.obsBar span{
-display:block;
-height:100%;
-background:#38bdf8;
-box-shadow:0 0 10px #38bdf8;
-transition:width 1s ease;
-}
-
-.signalList{
-position:relative;
-z-index:2;
-border:1px solid #164e63;
-margin-top:15px;
-background:#010813bb;
-font-family:monospace;
-font-size:9px;
-line-height:1.9;
-color:#64748b;
-height:120px;
-overflow:hidden;
-padding:10px;
-}
-
-.signalLine{
-animation:signalAppear .35s ease;
-}
-
-.signalLine strong{
-color:#22d3ee;
-}
-
-.signalLine.warning{
-color:#f59e0b;
-}
-
-.signalLine.danger{
-color:#ef4444;
-}
-
-@keyframes signalAppear{
-from{
-opacity:0;
-transform:translateX(-8px);
-}
-to{
-opacity:1;
-transform:none;
-}
-}
-
-.scanButton{
-position:relative;
-z-index:3;
-display:block;
-margin:18px auto 0;
-padding:12px 25px;
-border:1px solid #38bdf8;
-background:#0ea5e908;
+text-decoration:none;
 color:#bae6fd;
-font-family:monospace;
+font-family:"Courier New",monospace;
 font-size:10px;
 letter-spacing:2px;
-cursor:pointer;
-transition:.3s;
+transition:.25s;
 }
 
-.scanButton:hover{
+.channel:hover{
+border-color:#38bdf8;
+box-shadow:0 0 18px #38bdf844;
 color:white;
-background:#0ea5e922;
-box-shadow:0 0 25px #38bdf855;
 transform:translateY(-2px);
-}
-
-.scanButton.scanning{
-color:#f87171;
-border-color:#ef4444;
-box-shadow:0 0 25px #ef444433;
-animation:scanButtonGlitch .12s infinite alternate;
-}
-
-@keyframes scanButtonGlitch{
-from{transform:translateX(-1px)}
-to{transform:translateX(1px)}
-}
-
-.scanResult{
-position:relative;
-z-index:2;
-text-align:center;
-margin-top:15px;
-min-height:20px;
-font-family:monospace;
-font-size:9px;
-letter-spacing:1px;
-color:#38bdf8;
-}
-
-.observatory.scanning{
-animation:observatoryGlitch .12s infinite alternate;
-}
-
-@keyframes observatoryGlitch{
-0%{transform:translateX(0)}
-25%{transform:translateX(1px)}
-50%{transform:translateX(-1px)}
-75%{transform:translateY(1px)}
-100%{transform:none}
-}
-
-.narrativeWarning{
-margin-top:18px;
-padding:13px;
-border:1px dashed #155e75;
-text-align:center;
-font-family:monospace;
-font-size:9px;
-line-height:1.8;
-color:#64748b;
-position:relative;
-z-index:2;
-}
-
-.narrativeWarning span{
-color:#67e8f9;
 }
 
 /* =========================================================
-   CONSTELLATION TERMINAL
+   SYSTEM NOTIFICATION
 ========================================================= */
 
-.terminal{
-position:relative;
-overflow:hidden;
-background:
-radial-gradient(circle at 50% 100%,#0c4a6e18,transparent 55%),
-linear-gradient(180deg,#020b18f5,#01050cf8);
-}
-
-.terminal:before{
-content:"";
-position:absolute;
-inset:0;
-pointer-events:none;
-background:
-linear-gradient(90deg,transparent 49.9%,#38bdf808 50%,transparent 50.1%);
-background-size:70px 100%;
-}
-
-.terminalScreen{
-position:relative;
-z-index:2;
-border:1px solid #164e63;
-background:#010711dd;
-padding:20px;
-min-height:180px;
-box-shadow:
-inset 0 0 30px #0284c711,
-0 0 20px #0284c711;
-}
-
-.terminalTop{
-display:flex;
-justify-content:space-between;
-gap:10px;
-flex-wrap:wrap;
-font-family:monospace;
-font-size:9px;
-color:#64748b;
-letter-spacing:1px;
-}
-
-.terminalOnline{
-color:#22d3ee;
-}
-
-.terminalMessage{
-margin:25px 0;
-font-family:monospace;
-font-size:13px;
-line-height:1.9;
-color:#bae6fd;
-min-height:72px;
-}
-
-.terminalMessage strong{
-color:#67e8f9;
-}
-
-.choiceArea{
-position:relative;
-z-index:2;
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:10px;
-margin-top:15px;
-}
-
-.choice{
-position:relative;
-border:1px solid #164e63;
-background:#020a16cc;
-padding:15px;
-color:#bae6fd;
-font-family:monospace;
-font-size:10px;
-line-height:1.6;
-text-align:left;
-cursor:pointer;
-transition:.3s;
-}
-
-.choice:hover{
-border-color:#38bdf8;
-background:#0ea5e912;
-color:white;
-box-shadow:
-0 0 18px #0284c733,
-inset 0 0 15px #0ea5e908;
-transform:translateY(-2px);
-}
-
-.choice:disabled{
-cursor:not-allowed;
-opacity:.35;
-transform:none;
-}
-
-.choiceNumber{
-display:block;
-color:#155e75;
-font-size:9px;
-margin-bottom:5px;
-}
-
-.choice:hover .choiceNumber{
-color:#38bdf8;
-}
-
-.terminalResponse{
-position:relative;
-z-index:2;
-margin-top:18px;
-padding:15px;
-border-left:2px solid #38bdf8;
-background:#0ea5e908;
-font-family:monospace;
-font-size:10px;
-line-height:1.8;
-color:#7dd3fc;
-min-height:48px;
-}
-
-.terminalResponse.alert{
-border-color:#f59e0b;
-color:#fcd34d;
-}
-
-.terminalResponse.danger{
-border-color:#ef4444;
-color:#fca5a5;
-background:#450a0a18;
-}
-
-.constellationStats{
-position:relative;
-z-index:2;
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:8px;
-margin-top:15px;
-}
-
-.cStat{
-border:1px solid #164e63;
-padding:12px;
-background:#020a16aa;
-text-align:center;
-}
-
-.cStatLabel{
-display:block;
-font-family:monospace;
-font-size:8px;
-letter-spacing:1px;
-color:#64748b;
-margin-bottom:5px;
-}
-
-.cStatValue{
-font-family:monospace;
-font-size:17px;
-color:#67e8f9;
-}
-
-.sponsorPanel{
-position:relative;
-z-index:2;
-margin-top:18px;
-padding:16px;
-border:1px dashed #155e75;
-background:#020a16aa;
-}
-
-.sponsorTitle{
-font-family:monospace;
-font-size:10px;
-letter-spacing:2px;
-color:#67e8f9;
-}
-
-.sponsorName{
-margin-top:10px;
-font-size:16px;
-color:#e0f2fe;
-letter-spacing:1px;
-}
-
-.sponsorStatus{
-margin-top:7px;
-font-family:monospace;
-font-size:9px;
-color:#64748b;
-}
-
-.sponsorBar{
-height:4px;
-background:#082f49;
-margin-top:12px;
-}
-
-.sponsorBar span{
-display:block;
-height:100%;
-width:0;
-background:#38bdf8;
-box-shadow:0 0 10px #38bdf8;
-transition:width 1s ease;
-}
-
-.terminalFooter{
-position:relative;
-z-index:2;
-margin-top:18px;
-text-align:center;
-font-family:monospace;
-font-size:8px;
-letter-spacing:1px;
-color:#334155;
-line-height:1.8;
-}
-
-.terminalCorrupted{
-animation:terminalCorruption .12s infinite alternate;
-}
-
-@keyframes terminalCorruption{
-0%{
-transform:translateX(0);
-filter:none;
-}
-30%{
-transform:translateX(2px);
-filter:brightness(1.5);
-}
-60%{
-transform:translateX(-2px);
-filter:hue-rotate(15deg);
-}
-100%{
-transform:none;
-filter:none;
-}
-}
-
-/* =========================================================
-   COMMAND PANEL
-========================================================= */
-
-#commandPanel{
+#notification{
 position:fixed;
-right:18px;
-bottom:18px;
-width:min(390px,calc(100% - 36px));
-max-height:70vh;
-overflow:auto;
-background:#010711f5;
-border:1px solid #38bdf8;
-box-shadow:
-0 0 35px #0284c744,
-inset 0 0 30px #0284c711;
-padding:18px;
-z-index:5000;
-opacity:0;
-visibility:hidden;
-transform:translateY(15px);
-transition:.3s;
-font-family:monospace;
-}
-
-#commandPanel.open{
-opacity:1;
-visibility:visible;
-transform:none;
-}
-
-.commandHeader{
-display:flex;
-justify-content:space-between;
-align-items:center;
-color:#67e8f9;
+right:22px;
+bottom:22px;
+width:min(360px,calc(100% - 44px));
+padding:14px 16px;
+border:1px solid #155e75;
+background:rgba(2,11,24,.96);
+box-shadow:0 0 30px rgba(14,165,233,.15);
+font-family:"Courier New",monospace;
 font-size:10px;
-letter-spacing:2px;
-padding-bottom:12px;
-border-bottom:1px solid #164e63;
-}
-
-.commandClose{
-border:0;
-background:none;
-color:#64748b;
-font-size:16px;
-cursor:pointer;
-}
-
-.commandClose:hover{
-color:#fff;
-}
-
-.commandBody{
-font-size:9px;
-line-height:1.9;
-color:#64748b;
-margin-top:12px;
-}
-
-.commandItem{
-padding:9px;
-margin-top:7px;
-border:1px solid #164e63;
-cursor:pointer;
-transition:.2s;
-}
-
-.commandItem:hover{
-border-color:#38bdf8;
+line-height:1.7;
 color:#bae6fd;
-background:#0ea5e90a;
+transform:translateY(140%);
+opacity:0;
+transition:.45s cubic-bezier(.2,.8,.2,1);
+z-index:500;
 }
 
-.commandItem span{
+#notification.show{
+transform:translateY(0);
+opacity:1;
+}
+
+#notification::before{
+content:"STAR STREAM";
+display:block;
+font-size:8px;
+letter-spacing:2px;
 color:#38bdf8;
+margin-bottom:5px;
+}
+
+/* =========================================================
+   TOP BUTTON
+========================================================= */
+
+#topButton{
+position:fixed;
+right:20px;
+bottom:20px;
+width:38px;
+height:38px;
+border:1px solid #155e75;
+background:rgba(2,11,24,.9);
+color:#67e8f9;
+cursor:pointer;
+opacity:0;
+pointer-events:none;
+transition:.3s;
+z-index:150;
+font-family:"Courier New",monospace;
+}
+
+#topButton.visible{
+opacity:1;
+pointer-events:auto;
+}
+
+#topButton:hover{
+border-color:#38bdf8;
+box-shadow:0 0 15px #38bdf844;
 }
 
 /* =========================================================
@@ -1444,7 +1089,7 @@ height:3px;
 background:#ef4444;
 box-shadow:0 0 8px #ef4444;
 pointer-events:none;
-z-index:9998;
+z-index:300;
 animation:redParticle 1.8s linear forwards;
 }
 
@@ -1453,59 +1098,18 @@ animation:redParticle 1.8s linear forwards;
 opacity:0;
 transform:translate(0,0) scale(.5);
 }
-15%{
-opacity:1;
-}
+15%{opacity:1}
 100%{
 opacity:0;
 transform:
-translate(
-calc(var(--x) * 1px),
-calc(var(--y) * 1px)
-)
-scale(0);
-}
-}
-
-.blueParticle{
-position:fixed;
-width:2px;
-height:2px;
-background:#38bdf8;
-box-shadow:0 0 8px #38bdf8;
-pointer-events:none;
-z-index:9997;
-animation:blueParticle 1.5s linear forwards;
-}
-
-@keyframes blueParticle{
-0%{
-opacity:1;
-transform:translate(0,0) scale(1);
-}
-100%{
-opacity:0;
-transform:
-translate(
-calc(var(--x) * 1px),
-calc(var(--y) * 1px)
-)
+translate(calc(var(--x) * 1px),calc(var(--y) * 1px))
 scale(0);
 }
 }
 
 /* =========================================================
-   FOOTER
+   GENERAL EFFECTS
 ========================================================= */
-
-footer{
-text-align:center;
-padding:30px 20px;
-font-size:10px;
-color:#475569;
-letter-spacing:2px;
-line-height:1.8;
-}
 
 .blink{
 animation:blink 1.4s infinite;
@@ -1517,7 +1121,7 @@ animation:blink 1.4s infinite;
 }
 
 .glitch{
-animation:glitch 4s infinite;
+animation:glitch 5s infinite;
 }
 
 @keyframes glitch{
@@ -1527,29 +1131,59 @@ animation:glitch 4s infinite;
 97%{transform:none}
 }
 
+#scenarioClock{
+font-variant-numeric:tabular-nums;
+}
+
+footer{
+text-align:center;
+padding:28px 20px 35px;
+font-family:"Courier New",monospace;
+font-size:9px;
+color:#475569;
+letter-spacing:2px;
+line-height:1.9;
+}
+
 /* =========================================================
-   RESPONSIVE
+   REDUCED MOTION
 ========================================================= */
 
-@media(max-width:600px){
+@media(prefers-reduced-motion:reduce){
+
+*,
+*::before,
+*::after{
+animation-duration:.01ms!important;
+animation-iteration-count:1!important;
+scroll-behavior:auto!important;
+transition-duration:.01ms!important;
+}
+
+#cursorGlow,
+#starCanvas{
+display:none;
+}
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:700px){
 
 .container{
-width:96%;
-margin:15px auto;
+width:97%;
+margin:12px auto;
 }
 
 section{
 margin:10px;
-padding:17px;
+padding:18px;
 }
 
-.title{
-letter-spacing:3px;
-}
-
-nav a{
-padding:8px 9px;
-font-size:9px;
+.bootbox{
+padding:27px 17px;
 }
 
 .bootgrid{
@@ -1557,40 +1191,82 @@ grid-template-columns:1fr;
 gap:3px;
 }
 
-.bootbox{
-padding:25px 17px;
+.bootmain{
+letter-spacing:2px;
 }
 
-.obsGrid{
+nav{
+justify-content:flex-start;
+overflow-x:auto;
+flex-wrap:nowrap;
+scrollbar-width:none;
+}
+
+nav::-webkit-scrollbar{
+display:none;
+}
+
+nav a{
+white-space:nowrap;
+padding:9px 11px;
+font-size:9px;
+}
+
+.title{
+letter-spacing:3px;
+}
+
+.constellationCore{
 grid-template-columns:1fr;
 }
 
-.scenarioCore{
-width:82vw;
+.constellationSymbol{
+width:125px;
+height:125px;
 }
 
-.orbitLabel{
-font-size:7px;
+.fabletitle{
+font-size:17px;
 }
 
-.obsValue{
-font-size:15px;
+.headerMeta{
+gap:10px;
 }
 
-.choiceArea{
-grid-template-columns:1fr;
+#cursorGlow{
+display:none;
 }
 
-.constellationStats{
-grid-template-columns:1fr;
+#notification{
+bottom:12px;
+right:12px;
+width:calc(100% - 24px);
 }
 
-.terminalScreen{
+#topButton{
+bottom:15px;
+right:15px;
+}
+
+}
+
+@media(max-width:420px){
+
+section{
 padding:15px;
 }
 
-.terminalMessage{
-font-size:11px;
+.info{
+font-size:13px;
+}
+
+.signal{
+font-size:9px;
+letter-spacing:2px;
+}
+
+.bootlog{
+height:90px;
 }
 
 }
@@ -1599,11 +1275,11 @@ font-size:11px;
 
 <body>
 
-<div class="scanline"></div>
-<div class="noise"></div>
+<canvas id="starCanvas"></canvas>
+<div id="cursorGlow"></div>
 
 <!-- =====================================================
-     BOOT SCREEN
+     STAR STREAM BOOT SCREEN
 ===================================================== -->
 
 <div id="connect">
@@ -1615,6 +1291,8 @@ font-size:11px;
 <div class="bootcorner c3">└</div>
 <div class="bootcorner c4">┘</div>
 
+<div class="scan"></div>
+
 <div class="boottitle">
 【 STAR STREAM CONNECTION PROTOCOL 】
 </div>
@@ -1625,45 +1303,22 @@ STAR STREAM...
 </div>
 
 <div class="bootsub">
-NARRATIVE OBSERVATION SYSTEM // BUILD KFS-005
+NARRATIVE OBSERVATION SYSTEM // BUILD KFS-∞
 </div>
 
 <div class="bootgrid">
 
-<div>
-[01] STAR STREAM:
-<span>SEARCHING</span>
-</div>
-
-<div>
-[02] CONSTELLATION:
-<span>UNKNOWN</span>
-</div>
-
-<div>
-[03] NARRATIVE:
-<span>SCANNING</span>
-</div>
-
-<div>
-[04] FABLE ARCHIVE:
-<span>LOCKED</span>
-</div>
-
-<div>
-[05] OBSERVER:
-<span>DETECTED</span>
-</div>
-
-<div>
-[06] SCENARIO:
-<span>STANDBY</span>
-</div>
+<div>[01] STAR STREAM: <span id="bootStar">SEARCHING</span></div>
+<div>[02] CONSTELLATION: <span id="bootConstellation">UNKNOWN</span></div>
+<div>[03] NARRATIVE: <span id="bootNarrative">SCANNING</span></div>
+<div>[04] FABLE ARCHIVE: <span id="bootFable">LOCKED</span></div>
+<div>[05] OBSERVER: <span id="bootObserver">DETECTED</span></div>
+<div>[06] SCENARIO: <span id="bootScenario">STANDBY</span></div>
 
 </div>
 
 <div class="loading">
-<span></span>
+<span id="loadingBar"></span>
 </div>
 
 <div class="progressline">
@@ -1672,16 +1327,12 @@ NARRATIVE OBSERVATION SYSTEM // BUILD KFS-005
 </div>
 
 <div class="bootstatus">
-<span id="status">
-INITIALIZING NARRATIVE ENGINE...
-</span>
+<span id="status">INITIALIZING NARRATIVE ENGINE...</span>
 </div>
 
 <div class="bootlog" id="bootlog">
-
 <div>> Initializing Star Stream interface...</div>
-<div>> Establishing connection...</div>
-
+<div>> Establishing observation route...</div>
 </div>
 
 <div class="bootsignal">
@@ -1699,7 +1350,7 @@ WAITING FOR CONSTELLATION RESPONSE
 
 
 <!-- =====================================================
-     MAIN
+     MAIN SITE
 ===================================================== -->
 
 <div id="main">
@@ -1709,6 +1360,10 @@ WAITING FOR CONSTELLATION RESPONSE
 <div class="system">
 
 <header>
+
+<div class="headerStatus">
+STAR STREAM DATABASE // CONNECTION #KFS-001
+</div>
 
 <div class="signal">
 【 TRANSMISSION CONNECTION ESTABLISHED 】
@@ -1724,44 +1379,21 @@ FORGOTTEN STORIES
 CONSTELLATION RECORD // ACTIVE
 </div>
 
+<div class="headerMeta">
+<span>STREAM: ONLINE</span>
+<span>OBSERVER: CONNECTED</span>
+<span>FABLES: <b id="fableCounter">04</b></span>
+<span>SCENARIO TIME: <b id="scenarioClock">00:00:00</b></span>
+</div>
+
 </header>
 
 
-<!-- =====================================================
-     CONTROLS
-===================================================== -->
-
-<div class="controlbar">
-
-<button class="control" id="volumeButton">
-<span id="volumeIcon">◒</span>
-VOLUME
-</button>
-
-<button class="control" id="commandButton">
-⌘ COMMAND
-</button>
-
-<button class="control" id="ambientButton">
-✦ AMBIENCE
-</button>
-
-</div>
-
-
-<!-- =====================================================
-     NAVIGATION
-===================================================== -->
-
-<nav>
-
+<nav id="mainNav">
 <a href="#home">HOME</a>
 <a href="#fables">FABLES</a>
 <a href="#transmissions">TRANSMISSIONS</a>
-<a href="#observatory">OBSERVATORY</a>
-<a href="#terminal">TERMINAL</a>
 <a href="#channels">CHANNELS</a>
-
 </nav>
 
 
@@ -1776,6 +1408,12 @@ VOLUME
 </div>
 
 <div class="line"></div>
+
+<div class="constellationCore">
+
+<div class="constellationSymbol">
+<div class="symbolStar">✦</div>
+</div>
 
 <div class="info">
 
@@ -1792,7 +1430,12 @@ VOLUME
 <span class="value">Narrative Preservation.</span><br>
 
 ■ <span class="label">Fables Registered:</span>
-<span class="value">1 and counting...</span>
+<span class="value">1 and counting...</span><br>
+
+■ <span class="label">Probability:</span>
+<span class="value">Stable.</span>
+
+</div>
 
 </div>
 
@@ -1814,6 +1457,11 @@ obsession with unfinished stories."
 "Every forgotten tale entrusted to this constellation
 is preserved as another Fable."
 
+<br><br>
+
+"Whether these stories deserve another ending
+is no longer considered relevant."
+
 </div>
 
 </section>
@@ -1823,7 +1471,7 @@ is preserved as another Fable."
      ACQUIRED FABLES
 ===================================================== -->
 
-<section id="fables">
+<section>
 
 <div class="heading">
 【 ACQUIRED FABLES 】
@@ -1850,7 +1498,7 @@ is preserved as another Fable."
 <details class="secret">
 
 <summary>
-【 ▶ REVEAL REMAINING FABLES... 】
+REVEAL REMAINING FABLES...
 </summary>
 
 <div class="hidden">
@@ -1899,10 +1547,62 @@ you are ready to read them.
 <i>「The Hand That Writes Their Second Chances」</i>
 </div>
 
+<div class="attribute">
+
+<div class="attributeTop">
+<span>NARRATIVE PRESERVATION</span>
+<span>█████████░ 92%</span>
+</div>
+
+<div class="attributeBar">
+<span style="width:92%"></span>
+</div>
+
+</div>
+
+<div class="attribute">
+
+<div class="attributeTop">
+<span>EMOTIONAL DAMAGE</span>
+<span>██████████ 100%</span>
+</div>
+
+<div class="attributeBar">
+<span style="width:100%"></span>
+</div>
+
+</div>
+
+<div class="attribute">
+
+<div class="attributeTop">
+<span>SECOND CHANCES</span>
+<span>█████████░ 96%</span>
+</div>
+
+<div class="attributeBar">
+<span style="width:96%"></span>
+</div>
+
+</div>
+
+<div class="attribute">
+
+<div class="attributeTop">
+<span>RESISTANCE TO ANGST</span>
+<span>██░░░░░░░░ 18%</span>
+</div>
+
+<div class="attributeBar">
+<span style="width:18%"></span>
+</div>
+
+</div>
+
 <details class="secret">
 
 <summary>
-【 ▶ REVEAL HIDDEN ATTRIBUTES... 】
+REVEAL HIDDEN ATTRIBUTES...
 </summary>
 
 <div class="hidden">
@@ -1961,373 +1661,15 @@ and the readers who refused to let them disappear."
 "A quiet presence known for preserving stories
 that should have been forgotten."
 
-</div>
+<br><br>
 
-</section>
-
-
-<!-- =====================================================
-     OBSERVATORY
-===================================================== -->
-
-<section id="observatory" class="observatory">
-
-<div class="obsHeader">
-
-<div class="heading">
-【 SCENARIO OBSERVATORY 】
-</div>
-
-<div class="obsStatus">
-<span class="obsDot"></span>
-LIVE STAR STREAM FEED
-</div>
-
-</div>
-
-<div class="line"></div>
-
-<div class="message">
-
-The Star Stream has temporarily authorized
-this constellation to observe the surrounding
-Scenario.
+"However..."
 
 <br><br>
 
-Observation does not imply safety.
-
-</div>
-
-<div class="scenarioCore">
-
-<div class="orbitLabel orbitA">
-NARRATIVE FIELD
-</div>
-
-<div class="orbitLabel orbitB">
-SCENARIO VECTOR
-</div>
-
-<div class="orbitLabel orbitC">
-FABLE DENSITY
-</div>
-
-<div class="orbitLabel orbitD">
-STAR STREAM
-</div>
-
-<div class="coreInner">
-SCENARIO<br>
-#001
-</div>
-
-</div>
-
-<div class="obsGrid">
-
-<div class="obsCard">
-
-<div class="obsLabel">
-NARRATIVE STABILITY
-</div>
-
-<div class="obsValue">
-<span id="stability">87</span>%
-</div>
-
-<div class="obsBar">
-<span id="stabilityBar" style="width:87%"></span>
-</div>
-
-</div>
-
-<div class="obsCard">
-
-<div class="obsLabel">
-FABLE DENSITY
-</div>
-
-<div class="obsValue">
-<span id="density">64</span>%
-</div>
-
-<div class="obsBar">
-<span id="densityBar" style="width:64%"></span>
-</div>
-
-</div>
-
-<div class="obsCard">
-
-<div class="obsLabel">
-CONSTELLATION ACTIVITY
-</div>
-
-<div class="obsValue">
-<span id="activity">LOW</span>
-</div>
-
-<div class="obsBar">
-<span id="activityBar" style="width:31%"></span>
-</div>
-
-</div>
-
-<div class="obsCard">
-
-<div class="obsLabel">
-THREAT LEVEL
-</div>
-
-<div class="obsValue threat">
-<span id="threat">UNKNOWN</span>
-</div>
-
-<div class="obsBar">
-<span id="threatBar" style="width:18%"></span>
-</div>
-
-</div>
-
-</div>
-
-<div class="signalList" id="signalList">
-
-<div class="signalLine">
-<strong>[SYSTEM]</strong>
-Observatory connection established.
-</div>
-
-<div class="signalLine">
-<strong>[STREAM]</strong>
-Narrative frequency detected.
-</div>
-
-<div class="signalLine">
-<strong>[FABLE]</strong>
-Archive synchronization complete.
-</div>
-
-</div>
-
-<button class="scanButton" id="scanButton">
-【 ▶ SCAN CURRENT SCENARIO 】
-</button>
-
-<div class="scanResult" id="scanResult">
-AWAITING OBSERVER INPUT...
-</div>
-
-<div class="narrativeWarning">
-
-[ STAR STREAM NOTICE ]
-
-<br>
-
-<span>
-The values displayed here are estimates.
-</span>
-
-<br>
-
-Narrative probability is subject to change
-without prior notification.
-
-<br><br>
-
-[ OBSERVATION MAY ALTER RESULTS ]
-
-</div>
-
-</section>
-
-
-<!-- =====================================================
-     INTERACTION TERMINAL
-===================================================== -->
-
-<section id="terminal" class="terminal">
-
-<div class="heading">
-【 CONSTELLATION INTERACTION TERMINAL 】
-</div>
-
-<div class="line"></div>
-
-<div class="message">
-
-The Star Stream has detected your presence.
-
-<br><br>
-
-A constellation is observing you.
-
-<br><br>
-
-It appears to be waiting for your response.
-
-</div>
-
-<div class="terminalScreen">
-
-<div class="terminalTop">
-
-<span>
-TERMINAL // KFS-001
-</span>
-
-<span class="terminalOnline">
-● CONNECTION STABLE
-</span>
-
-</div>
-
-<div class="terminalMessage" id="terminalMessage">
-
-<strong>[ STAR STREAM ]</strong>
-
-<br><br>
-
-An unidentified incarnation has entered
-the observation range.
-
-<br>
-
-The constellation 「Keeper of Forgotten Stories」
-is watching.
-
-<br><br>
-
-How will you proceed?
-
-</div>
-
-</div>
-
-<div class="choiceArea">
-
-<button class="choice" data-choice="observe">
-
-<span class="choiceNumber">
-[ OPTION 01 ]
-</span>
-
-Remain silent and observe the constellation.
-
-</button>
-
-<button class="choice" data-choice="speak">
-
-<span class="choiceNumber">
-[ OPTION 02 ]
-</span>
-
-Attempt to communicate with it.
-
-</button>
-
-<button class="choice" data-choice="story">
-
-<span class="choiceNumber">
-[ OPTION 03 ]
-</span>
-
-Offer one of your stories.
-
-</button>
-
-<button class="choice" data-choice="challenge">
-
-<span class="choiceNumber">
-[ OPTION 04 ]
-</span>
-
-Ask what it is hiding.
-
-</button>
-
-</div>
-
-<div class="terminalResponse" id="terminalResponse">
-
-AWAITING INCARNATION RESPONSE...
-
-</div>
-
-<div class="constellationStats">
-
-<div class="cStat">
-
-<span class="cStatLabel">
-FAVOR
-</span>
-
-<span class="cStatValue" id="favor">
-00
-</span>
-
-</div>
-
-<div class="cStat">
-
-<span class="cStatLabel">
-CURIOSITY
-</span>
-
-<span class="cStatValue" id="curiosity">
-00
-</span>
-
-</div>
-
-<div class="cStat">
-
-<span class="cStatLabel">
-NARRATIVE RISK
-</span>
-
-<span class="cStatValue" id="risk">
-00
-</span>
-
-</div>
-
-</div>
-
-<div class="sponsorPanel">
-
-<div class="sponsorTitle">
-【 SPONSORSHIP STATUS 】
-</div>
-
-<div class="sponsorName" id="sponsorName">
-NO SPONSOR DETECTED
-</div>
-
-<div class="sponsorStatus" id="sponsorStatus">
-The constellation has not yet decided
-whether you are worth observing.
-</div>
-
-<div class="sponsorBar">
-<span id="sponsorBar"></span>
-</div>
-
-</div>
-
-<div class="terminalFooter">
-
-[ WARNING ]
-
-<br>
-
-Your choices may alter the constellation's
-perception of you.
-
-<br>
-
-This interaction is being recorded.
+"The Star Stream has begun to suspect
+that this constellation is not merely
+preserving stories."
 
 </div>
 
@@ -2346,7 +1688,9 @@ This interaction is being recorded.
 
 ━━━━━━━━━━━━━━━━━━━━
 <br>
+
 [ STAR STREAM WARNING ]
+
 <br>
 ━━━━━━━━━━━━━━━━━━━━
 
@@ -2367,6 +1711,12 @@ The consequences cannot be reversed.
 
 ━━━━━━━━━━━━━━━━━━━━
 
+<br><br>
+
+<span id="warningHint">
+[ CLICK TO ACKNOWLEDGE ]
+</span>
+
 </div>
 
 </section>
@@ -2376,7 +1726,7 @@ The consequences cannot be reversed.
      FABLE ARCHIVE
 ===================================================== -->
 
-<section>
+<section id="fables">
 
 <div class="heading">
 【 FABLE ARCHIVE 】
@@ -2395,21 +1745,13 @@ FRESH START
 </div>
 
 <div class="meta">
-
 KakaObi · Naruto (Anime & Manga)
-
 <br>
-
 STATUS: ONGOING · CHAPTERS: 13/?
-
 <br>
-
 WORD COUNT: 56,950
-
 <br>
-
 RATING: TEEN AND UP AUDIENCES
-
 </div>
 
 <div class="line"></div>
@@ -2436,19 +1778,15 @@ Perhaps a different ending.
 </div>
 
 <div class="tags">
-
 TIME TRAVEL · BOTTOM UCHIHA OBITO ·
 PROTECTIVE UCHIHA OBITO · UCHIHA OBITO NEEDS A HUG
-
 </div>
 
 <a class="access"
 href="https://archiveofourown.org/works/84746576"
 target="_blank"
 rel="noopener noreferrer">
-
 [ ACCESS FABLE ]
-
 </a>
 
 </div>
@@ -2456,7 +1794,7 @@ rel="noopener noreferrer">
 <details class="secret">
 
 <summary>
-【 ▶ SEARCH FOR ADDITIONAL FABLES... 】
+SEARCH FOR ADDITIONAL FABLES...
 </summary>
 
 <div class="hidden">
@@ -2504,6 +1842,10 @@ another story.
 TRANSMISSION #001
 </strong>
 
+<span class="transmissionTime">
+SIGNAL STABLE
+</span>
+
 <p>
 
 A new Fable has been registered.
@@ -2524,10 +1866,10 @@ Status: Ongoing
 
 </div>
 
-<details class="secret">
+<details class="secret" id="unknownTransmission">
 
 <summary>
-【 ▶ RECEIVE UNKNOWN TRANSMISSION... 】
+RECEIVE UNKNOWN TRANSMISSION...
 </summary>
 
 <div class="hidden">
@@ -2599,6 +1941,8 @@ WATTPAD
 STAR STREAM DATABASE // RECORD #KFS-001
 <br>
 STATUS: OBSERVING THE SCENARIO
+<br>
+SCENARIO SESSION: <span id="sessionID">KFS-001</span>
 <br><br>
 
 「Some stories survive because someone
@@ -2607,7 +1951,7 @@ refused to forget them.」
 <br><br>
 
 <span class="blink">●</span>
-CONNECTION REMAINS ACTIVE
+END OF TRANSMISSION
 <span class="blink">●</span>
 
 </footer>
@@ -2617,1355 +1961,3736 @@ CONNECTION REMAINS ACTIVE
 </div>
 
 
-<!-- =====================================================
-     COMMAND PANEL
-===================================================== -->
-
-<div id="commandPanel">
-
-<div class="commandHeader">
-
-<span>
-【 STAR STREAM COMMAND TERMINAL 】
-</span>
-
-<button class="commandClose" id="commandClose">
-×
-</button>
-
+<div id="notification">
+<span id="notificationText"></span>
 </div>
 
-<div class="commandBody">
+<button id="topButton" aria-label="Return to top">↑</button>
 
-<div class="commandItem" data-command="home">
-<span>[01]</span> RETURN TO HOME
-</div>
-
-<div class="commandItem" data-command="scan">
-<span>[02]</span> SCAN SCENARIO
-</div>
-
-<div class="commandItem" data-command="terminal">
-<span>[03]</span> OPEN INTERACTION TERMINAL
-</div>
-
-<div class="commandItem" data-command="secret">
-<span>[04]</span> SEARCH RESTRICTED DATA
-</div>
-
-<div class="commandItem" data-command="ambient">
-<span>[05]</span> TOGGLE AMBIENT SYSTEM
-</div>
-
-<div class="commandItem" data-command="clear">
-<span>[06]</span> RESET OBSERVER DATA
-</div>
-
-<br>
-
-<div>
-SYSTEM STATUS:
-<span style="color:#22d3ee">
-ONLINE
-</span>
-</div>
-
-<div>
-OBSERVER:
-<span style="color:#22d3ee">
-DETECTED
-</span>
-</div>
-
-<div>
-CONSTELLATION:
-<span style="color:#22d3ee">
-ACTIVE
-</span>
-</div>
-
-</div>
-</div>
-
-
+```html
 <script>
+
+/* =========================================================
+   STAR STREAM // CORE SYSTEM
+========================================================= */
+
 "use strict";
 
-/* =========================================================
-   ELEMENTS
-========================================================= */
+const $ = selector => document.querySelector(selector);
+const $$ = selector => document.querySelectorAll(selector);
 
-const statusEl=document.getElementById("status");
-const enter=document.getElementById("enter");
-const connect=document.getElementById("connect");
-const main=document.getElementById("main");
-const percent=document.getElementById("percent");
-const bootlog=document.getElementById("bootlog");
+const connect = $("#connect");
+const main = $("#main");
+const enter = $("#enter");
+const status = $("#status");
+const percent = $("#percent");
+const loadingBar = $("#loadingBar");
+const bootlog = $("#bootlog");
+const notification = $("#notification");
+const notificationText = $("#notificationText");
+const topButton = $("#topButton");
+const cursorGlow = $("#cursorGlow");
 
-const volumeButton=document.getElementById("volumeButton");
-const volumeIcon=document.getElementById("volumeIcon");
-const commandButton=document.getElementById("commandButton");
-const ambientButton=document.getElementById("ambientButton");
-
-const commandPanel=document.getElementById("commandPanel");
-const commandClose=document.getElementById("commandClose");
-
-const warning=document.getElementById("warning");
-
-const observatory=document.querySelector(".observatory");
-const scanButton=document.getElementById("scanButton");
-const scanResult=document.getElementById("scanResult");
-const signalList=document.getElementById("signalList");
-
-const stability=document.getElementById("stability");
-const density=document.getElementById("density");
-const activity=document.getElementById("activity");
-const threat=document.getElementById("threat");
-
-const stabilityBar=document.getElementById("stabilityBar");
-const densityBar=document.getElementById("densityBar");
-const activityBar=document.getElementById("activityBar");
-const threatBar=document.getElementById("threatBar");
-
-const terminal=document.querySelector(".terminal");
-const terminalMessage=document.getElementById("terminalMessage");
-const terminalResponse=document.getElementById("terminalResponse");
-
-const favor=document.getElementById("favor");
-const curiosity=document.getElementById("curiosity");
-const risk=document.getElementById("risk");
-
-const sponsorName=document.getElementById("sponsorName");
-const sponsorStatus=document.getElementById("sponsorStatus");
-const sponsorBar=document.getElementById("sponsorBar");
-
-const choices=document.querySelectorAll(".choice");
+let scenarioSeconds = 0;
+let notificationTimer = null;
+let bootFinished = false;
 
 
 /* =========================================================
-   BOOT SYSTEM
+   STAR STREAM // CANVAS STARFIELD
 ========================================================= */
 
-const messages=[
-"INITIALIZING NARRATIVE ENGINE...",
-"SEARCHING FOR CONSTELLATION...",
-"LOCATING NARRATIVE SIGNATURE...",
-"SCANNING FABLE ARCHIVE...",
-"ANALYZING OBSERVER...",
-"IDENTITY CONFIRMED.",
-"「KEEPER OF FORGOTTEN STORIES」",
-"ESTABLISHING TRANSMISSION...",
-"TRANSMISSION READY."
+const canvas = $("#starCanvas");
+const ctx = canvas.getContext("2d");
+
+let stars = [];
+let width = 0;
+let height = 0;
+let animationFrame = null;
+
+function resizeCanvas(){
+
+    width = canvas.width = window.innerWidth * devicePixelRatio;
+    height = canvas.height = window.innerHeight * devicePixelRatio;
+
+    canvas.style.width = window.innerWidth + "px";
+    canvas.style.height = window.innerHeight + "px";
+
+    ctx.setTransform(
+        devicePixelRatio,
+        0,
+        0,
+        devicePixelRatio,
+        0,
+        0
+    );
+
+    createStars();
+}
+
+
+function createStars(){
+
+    stars = [];
+
+    const amount = Math.min(
+        170,
+        Math.floor(window.innerWidth / 7)
+    );
+
+    for(let i = 0; i < amount; i++){
+
+        stars.push({
+            x:Math.random() * window.innerWidth,
+            y:Math.random() * window.innerHeight,
+            size:Math.random() * 1.5 + .2,
+            speed:Math.random() * .18 + .025,
+            alpha:Math.random() * .7 + .15,
+            pulse:Math.random() * Math.PI * 2,
+            depth:Math.random()
+        });
+
+    }
+}
+
+
+function drawStars(){
+
+    ctx.clearRect(
+        0,
+        0,
+        window.innerWidth,
+        window.innerHeight
+    );
+
+    for(const star of stars){
+
+        star.y += star.speed;
+
+        if(star.y > window.innerHeight + 5){
+            star.y = -5;
+            star.x = Math.random() * window.innerWidth;
+        }
+
+        star.pulse += .015;
+
+        const alpha =
+            star.alpha +
+            Math.sin(star.pulse) * .15;
+
+        ctx.beginPath();
+
+        ctx.fillStyle =
+            `rgba(125,211,252,${Math.max(.05,alpha)})`;
+
+        ctx.arc(
+            star.x,
+            star.y,
+            star.size,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fill();
+
+    }
+
+    animationFrame = requestAnimationFrame(drawStars);
+}
+
+
+resizeCanvas();
+drawStars();
+
+window.addEventListener("resize",resizeCanvas);
+
+
+/* =========================================================
+   CURSOR // NARRATIVE ENERGY
+========================================================= */
+
+window.addEventListener("pointermove",event=>{
+
+    if(!cursorGlow) return;
+
+    cursorGlow.style.left = event.clientX + "px";
+    cursorGlow.style.top = event.clientY + "px";
+
+});
+
+
+/* =========================================================
+   BOOT SEQUENCE
+========================================================= */
+
+const bootMessages = [
+
+    "INITIALIZING NARRATIVE ENGINE...",
+
+    "SEARCHING FOR CONSTELLATION...",
+
+    "LOCATING NARRATIVE SIGNATURE...",
+
+    "SCANNING FABLE ARCHIVE...",
+
+    "ANALYZING OBSERVER...",
+
+    "CHECKING SCENARIO PERMISSIONS...",
+
+    "IDENTITY CONFIRMED.",
+
+    "「KEEPER OF FORGOTTEN STORIES」",
+
+    "ESTABLISHING TRANSMISSION...",
+
+    "TRANSMISSION READY."
+
 ];
 
-const logs=[
-"Searching the Star Stream...",
-"Connection route established.",
-"Scanning narrative frequency...",
-"Fable archive detected.",
-"Checking constellation signature...",
-"Unknown grade detected.",
-"Observer presence confirmed.",
-"Loading preserved stories...",
-"Checking restricted records...",
-"Warning: restricted data detected.",
-"Constellation identification complete.",
-"Transmission channel stabilized."
+
+const bootLogs = [
+
+    {
+        text:"Searching the Star Stream...",
+        type:"ok"
+    },
+
+    {
+        text:"Connection route established.",
+        type:"ok"
+    },
+
+    {
+        text:"Scanning narrative frequency...",
+        type:"ok"
+    },
+
+    {
+        text:"Fable archive detected.",
+        type:"ok"
+    },
+
+    {
+        text:"Checking constellation signature...",
+        type:"ok"
+    },
+
+    {
+        text:"Unknown grade detected.",
+        type:"alert"
+    },
+
+    {
+        text:"Observer presence confirmed.",
+        type:"ok"
+    },
+
+    {
+        text:"Loading preserved stories...",
+        type:"ok"
+    },
+
+    {
+        text:"Checking restricted records...",
+        type:"alert"
+    },
+
+    {
+        text:"Warning: restricted data detected.",
+        type:"alert"
+    },
+
+    {
+        text:"Narrative integrity: stable.",
+        type:"ok"
+    },
+
+    {
+        text:"Constellation identification complete.",
+        type:"ok"
+    },
+
+    {
+        text:"Transmission channel stabilized.",
+        type:"ok"
+    },
+
+    {
+        text:"Probability interference detected.",
+        type:"critical"
+    }
+
 ];
 
-let messageIndex=0;
-let logIndex=2;
-let progress=0;
 
-function updateStatus(){
+function addBootLog(text,type="ok"){
 
-if(messageIndex<messages.length){
+    const line = document.createElement("div");
 
-statusEl.textContent=messages[messageIndex];
+    line.className = type;
 
-messageIndex++;
+    line.textContent = "> " + text;
 
-setTimeout(updateStatus,650);
+    bootlog.appendChild(line);
+
+    while(bootlog.children.length > 7){
+        bootlog.removeChild(
+            bootlog.firstElementChild
+        );
+    }
+
+    bootlog.scrollTop = bootlog.scrollHeight;
+}
+
+
+function updateBootStatus(index){
+
+    if(index >= bootMessages.length) return;
+
+    status.textContent = bootMessages[index];
 
 }
 
-}
 
-updateStatus();
+function updateBootLabels(progress){
 
+    if(progress >= 10){
+        $("#bootStar").textContent = "CONNECTED";
+        $("#bootStar").classList.add("active");
+    }
 
-const progressTimer=setInterval(()=>{
+    if(progress >= 25){
+        $("#bootConstellation").textContent = "LOCATED";
+        $("#bootConstellation").classList.add("active");
+    }
 
-if(progress<100){
+    if(progress >= 40){
+        $("#bootNarrative").textContent = "IDENTIFIED";
+        $("#bootNarrative").classList.add("active");
+    }
 
-progress+=1;
+    if(progress >= 55){
+        $("#bootFable").textContent = "4 RECORDS";
+        $("#bootFable").classList.add("active");
+    }
 
-percent.textContent=progress+"%";
+    if(progress >= 70){
+        $("#bootObserver").textContent = "CONFIRMED";
+        $("#bootObserver").classList.add("active");
+    }
 
-}else{
-
-clearInterval(progressTimer);
-
-}
-
-},60);
-
-
-const logTimer=setInterval(()=>{
-
-if(logIndex<logs.length){
-
-const line=document.createElement("div");
-
-line.className=
-logs[logIndex].toLowerCase().includes("warning")
-?"alert"
-:"ok";
-
-line.textContent="> "+logs[logIndex];
-
-bootlog.appendChild(line);
-
-bootlog.scrollTop=bootlog.scrollHeight;
-
-logIndex++;
-
-}else{
-
-clearInterval(logTimer);
+    if(progress >= 88){
+        $("#bootScenario").textContent = "READY";
+        $("#bootScenario").classList.add("active");
+    }
 
 }
 
-},500);
+
+function runBoot(){
+
+    let progress = 0;
+    let messageIndex = 0;
+    let logIndex = 0;
+
+    const progressTimer = setInterval(()=>{
+
+        progress += Math.random() * 2.2 + .35;
+
+        if(progress > 100){
+            progress = 100;
+        }
+
+        const rounded = Math.floor(progress);
+
+        percent.textContent = rounded + "%";
+
+        loadingBar.style.width =
+            rounded + "%";
+
+        updateBootLabels(rounded);
+
+        if(
+            messageIndex < bootMessages.length &&
+            rounded >=
+            (messageIndex / bootMessages.length) * 100
+        ){
+
+            updateBootStatus(messageIndex);
+
+            messageIndex++;
+
+        }
+
+        if(
+            logIndex < bootLogs.length &&
+            rounded >=
+            (logIndex / bootLogs.length) * 100
+        ){
+
+            const log = bootLogs[logIndex];
+
+            addBootLog(
+                log.text,
+                log.type
+            );
+
+            logIndex++;
+
+        }
+
+        if(progress >= 100){
+
+            clearInterval(progressTimer);
+
+            finishBoot();
+
+        }
+
+    },90);
+
+}
 
 
-setTimeout(()=>{
+function finishBoot(){
 
-statusEl.innerHTML=
-"CONSTELLATION DETECTED // TRANSMISSION RECEIVED";
+    if(bootFinished) return;
 
-enter.style.display="block";
+    bootFinished = true;
 
-},6500);
+    status.textContent =
+        "CONSTELLATION DETECTED // TRANSMISSION RECEIVED";
 
+    addBootLog(
+        "「KEEPER OF FORGOTTEN STORIES」 has entered the Star Stream.",
+        "ok"
+    );
+
+    addBootLog(
+        "Observer permissions granted.",
+        "ok"
+    );
+
+    addBootLog(
+        "WARNING: narrative probability is unstable.",
+        "critical"
+    );
+
+    setTimeout(()=>{
+
+        enter.style.display = "block";
+
+    },700);
+
+}
+
+
+runBoot();
+
+
+/* =========================================================
+   ENTER SCENARIO
+========================================================= */
 
 enter.addEventListener("click",()=>{
 
-connect.classList.add("hide");
+    connect.classList.add("hide");
 
-document.body.classList.add("loaded");
+    setTimeout(()=>{
 
-main.classList.add("show");
+        main.classList.add("show");
 
-startAmbient();
+        document.body.style.overflowY = "auto";
 
-setTimeout(()=>{
+        startScenarioClock();
 
-connect.remove();
+        showNotification(
+            "Transmission established. Welcome, Observer."
+        );
 
-},1400);
+        setTimeout(()=>{
+            showNotification(
+                "The Star Stream is currently observing you."
+            );
+        },4500);
+
+    },350);
 
 });
 
 
 /* =========================================================
-   AUDIO SYSTEM
-   PROCEDURAL AMBIENT STAR STREAM
+   SCENARIO CLOCK
 ========================================================= */
 
-let audioContext=null;
-let masterGain=null;
-let ambientGain=null;
-let audioStarted=false;
-let audioMuted=
-localStorage.getItem("kfsMuted")==="true";
+function startScenarioClock(){
 
-function createAudio(){
+    setInterval(()=>{
 
-if(audioContext)
-return;
+        scenarioSeconds++;
 
-const AudioCtx=
-window.AudioContext||
-window.webkitAudioContext;
+        const hours =
+            Math.floor(scenarioSeconds / 3600)
+            .toString()
+            .padStart(2,"0");
 
-if(!AudioCtx)
-return;
+        const minutes =
+            Math.floor(
+                (scenarioSeconds % 3600) / 60
+            )
+            .toString()
+            .padStart(2,"0");
 
-audioContext=new AudioCtx();
+        const seconds =
+            (scenarioSeconds % 60)
+            .toString()
+            .padStart(2,"0");
 
-masterGain=
-audioContext.createGain();
+        $("#scenarioClock").textContent =
+            `${hours}:${minutes}:${seconds}`;
 
-ambientGain=
-audioContext.createGain();
-
-masterGain.gain.value=.22;
-ambientGain.gain.value=
-audioMuted?0:.35;
-
-ambientGain.connect(masterGain);
-masterGain.connect(audioContext.destination);
-
-
-/* LOW DRONE */
-
-const drone=
-audioContext.createOscillator();
-
-const droneGain=
-audioContext.createGain();
-
-drone.type="sine";
-drone.frequency.value=55;
-
-droneGain.gain.value=.055;
-
-drone.connect(droneGain);
-droneGain.connect(ambientGain);
-
-drone.start();
-
-
-/* SECOND HARMONIC */
-
-const harmonic=
-audioContext.createOscillator();
-
-const harmonicGain=
-audioContext.createGain();
-
-harmonic.type="triangle";
-harmonic.frequency.value=82.41;
-
-harmonicGain.gain.value=.018;
-
-harmonic.connect(harmonicGain);
-harmonicGain.connect(ambientGain);
-
-harmonic.start();
-
-
-/* FILTERED NOISE */
-
-const buffer=
-audioContext.createBuffer(
-1,
-audioContext.sampleRate*2,
-audioContext.sampleRate
-);
-
-const data=buffer.getChannelData(0);
-
-for(let i=0;i<data.length;i++){
-
-data[i]=
-(Math.random()*2-1)*.12;
+    },1000);
 
 }
 
-const noise=
-audioContext.createBufferSource();
 
-noise.buffer=buffer;
-noise.loop=true;
+/* =========================================================
+   NOTIFICATION SYSTEM
+========================================================= */
 
-const filter=
-audioContext.createBiquadFilter();
+function showNotification(message,duration=4200){
 
-filter.type="lowpass";
-filter.frequency.value=900;
+    if(!notification) return;
 
-const noiseGain=
-audioContext.createGain();
+    notificationText.textContent = message;
 
-noiseGain.gain.value=.018;
+    notification.classList.add("show");
 
-noise.connect(filter);
-filter.connect(noiseGain);
-noiseGain.connect(ambientGain);
+    clearTimeout(notificationTimer);
 
-noise.start();
+    notificationTimer = setTimeout(()=>{
+
+        notification.classList.remove("show");
+
+    },duration);
+
+}
 
 
-/* SLOW PULSE */
+/* =========================================================
+   RANDOM STAR STREAM MESSAGES
+========================================================= */
+
+const randomMessages = [
+
+    "A constellation somewhere has noticed your presence.",
+
+    "The Star Stream has recorded your observation.",
+
+    "A forgotten Fable has gained another reader.",
+
+    "Probability is behaving unusually quietly.",
+
+    "Someone has opened a restricted narrative channel.",
+
+    "The archive remembers what you attempted to forget.",
+
+    "A distant constellation is watching the archive.",
+
+    "The Scenario continues without waiting for you.",
+
+    "Narrative density has increased.",
+
+    "A Fable somewhere has reached its turning point."
+
+];
+
+
+let randomMessageIndex = 0;
+
+function cycleStarMessages(){
+
+    if(!main.classList.contains("show")) return;
+
+    const message =
+        randomMessages[randomMessageIndex];
+
+    randomMessageIndex++;
+
+    if(randomMessageIndex >= randomMessages.length){
+        randomMessageIndex = 0;
+    }
+
+    showNotification(message,3600);
+
+}
+
+
+/* =========================================================
+   PERIODIC STAR STREAM EVENTS
+========================================================= */
 
 setInterval(()=>{
 
-if(!audioContext)
-return;
+    if(
+        main.classList.contains("show") &&
+        Math.random() > .35
+    ){
 
-const now=audioContext.currentTime;
+        cycleStarMessages();
 
-ambientGain.gain.cancelScheduledValues(now);
+    }
 
-ambientGain.gain.setValueAtTime(
-audioMuted?0:.28,
-now
-);
-
-ambientGain.gain.linearRampToValueAtTime(
-audioMuted?0:.40,
-now+3
-);
-
-ambientGain.gain.linearRampToValueAtTime(
-audioMuted?0:.28,
-now+7
-);
-
-},7000);
-
-}
-
-function startAmbient(){
-
-createAudio();
-
-if(audioContext &&
-audioContext.state==="suspended"){
-
-audioContext.resume();
-
-}
-
-audioStarted=true;
-
-updateVolumeUI();
-
-}
+},22000);
 
 
-function setMuted(state){
+/* =========================================================
+   SECRET DETAILS
+========================================================= */
 
-audioMuted=state;
+function createRedParticles(amount=35){
 
-localStorage.setItem(
-"kfsMuted",
-String(audioMuted)
-);
+    for(let i=0;i<amount;i++){
 
-if(ambientGain){
+        const particle =
+            document.createElement("div");
 
-ambientGain.gain.value=
-audioMuted?0:.35;
+        particle.className =
+            "redParticle";
 
-}
+        particle.style.left =
+            Math.random() *
+            window.innerWidth +
+            "px";
 
-updateVolumeUI();
+        particle.style.top =
+            Math.random() *
+            window.innerHeight +
+            "px";
+
+        particle.style.setProperty(
+            "--x",
+            (Math.random()*260-130).toFixed(0)
+        );
+
+        particle.style.setProperty(
+            "--y",
+            (Math.random()*260-130).toFixed(0)
+        );
+
+        particle.style.animationDelay =
+            (Math.random()*.6).toFixed(2) +
+            "s";
+
+        document.body.appendChild(particle);
+
+        setTimeout(()=>{
+            particle.remove();
+        },2600);
+
+    }
 
 }
 
 
-function updateVolumeUI(){
+$$("details.secret").forEach(detail=>{
 
-volumeIcon.textContent=
-audioMuted?"×":"◒";
+    detail.addEventListener("toggle",()=>{
 
-volumeButton.classList.toggle(
-"active",
-!audioMuted
-);
+        if(!detail.open) return;
 
-volumeButton.title=
-audioMuted
-?"Enable Star Stream ambience"
-:"Disable Star Stream ambience";
+        detail.classList.add("revealed");
 
-}
+        createRedParticles(28);
 
-volumeButton.addEventListener("click",()=>{
+        showNotification(
+            "WARNING: Restricted narrative data accessed."
+        );
 
-if(!audioStarted)
-startAmbient();
+        setTimeout(()=>{
 
-setMuted(!audioMuted);
+            detail.classList.remove("revealed");
 
-});
+        },1800);
 
-ambientButton.addEventListener("click",()=>{
-
-if(!audioStarted)
-startAmbient();
-
-setMuted(!audioMuted);
+    });
 
 });
 
 
 /* =========================================================
-   PARTICLES
+   UNKNOWN TRANSMISSION
 ========================================================= */
 
-function createRedParticles(count=35){
+const unknownTransmission =
+    $("#unknownTransmission");
 
-for(let i=0;i<count;i++){
+if(unknownTransmission){
 
-const particle=document.createElement("div");
+    unknownTransmission.addEventListener(
+        "toggle",
+        ()=>{
 
-particle.className="redParticle";
+            if(!unknownTransmission.open)
+                return;
 
-particle.style.left=
-Math.random()*window.innerWidth+"px";
+            setTimeout(()=>{
 
-particle.style.top=
-Math.random()*window.innerHeight+"px";
+                showNotification(
+                    "UNKNOWN TRANSMISSION: Someone is watching from beyond the archive."
+                );
 
-particle.style.setProperty(
-"--x",
-(Math.random()*240-120).toFixed(0)
-);
+            },500);
 
-particle.style.setProperty(
-"--y",
-(Math.random()*240-120).toFixed(0)
-);
-
-particle.style.animationDelay=
-(Math.random()*.6).toFixed(2)+"s";
-
-document.body.appendChild(particle);
-
-setTimeout(()=>{
-particle.remove();
-},2500);
-
-}
-
-}
-
-
-function createBlueParticles(count=18){
-
-for(let i=0;i<count;i++){
-
-const particle=document.createElement("div");
-
-particle.className="blueParticle";
-
-particle.style.left=
-window.innerWidth/2+"px";
-
-particle.style.top=
-window.innerHeight/2+"px";
-
-particle.style.setProperty(
-"--x",
-(Math.random()*500-250).toFixed(0)
-);
-
-particle.style.setProperty(
-"--y",
-(Math.random()*500-250).toFixed(0)
-);
-
-document.body.appendChild(particle);
-
-setTimeout(()=>{
-particle.remove();
-},1700);
-
-}
+        }
+    );
 
 }
 
 
 /* =========================================================
-   SECRET RECORDS
+   WARNING EVENT
 ========================================================= */
 
-document.querySelectorAll("details.secret")
-.forEach(detail=>{
+const warning = $("#warning");
 
-detail.addEventListener("toggle",()=>{
+if(warning){
 
-if(detail.open){
+    warning.addEventListener("click",()=>{
 
-detail.classList.add("revealed");
+        warning.classList.add("triggered");
 
-createRedParticles();
+        $("#warningHint").textContent =
+            "[ ACKNOWLEDGEMENT REGISTERED ]";
+
+        createRedParticles(50);
+
+        showNotification(
+            "STAR STREAM WARNING ACKNOWLEDGED."
+        );
+
+        setTimeout(()=>{
+
+            warning.classList.remove("triggered");
+
+            $("#warningHint").textContent =
+                "[ CLICK TO ACKNOWLEDGE ]";
+
+        },3000);
+
+    });
 
 }
 
-});
 
+/* =========================================================
+   NAVIGATION // ACTIVE SECTION
+========================================================= */
+
+const navLinks = [...$$("#mainNav a")];
+
+const observedSections = navLinks
+    .map(link => $(link.getAttribute("href")))
+    .filter(Boolean);
+
+
+const observer = new IntersectionObserver(
+
+    entries=>{
+
+        entries.forEach(entry=>{
+
+            if(!entry.isIntersecting) return;
+
+            navLinks.forEach(link=>{
+                link.classList.remove("active");
+            });
+
+            const active =
+                navLinks.find(
+                    link =>
+                    link.getAttribute("href") ===
+                    "#" + entry.target.id
+                );
+
+            if(active){
+                active.classList.add("active");
+            }
+
+        });
+
+    },
+
+    {
+        root:null,
+        rootMargin:"-25% 0px -60% 0px",
+        threshold:0
+    }
+
+);
+
+
+observedSections.forEach(section=>{
+    observer.observe(section);
 });
 
 
 /* =========================================================
-   WARNING
+   SMOOTH NAVIGATION FEEDBACK
 ========================================================= */
-
-warning.addEventListener("click",()=>{
-
-warning.classList.add("triggered");
-
-createRedParticles(45);
-
-setTimeout(()=>{
-
-warning.classList.remove("triggered");
-
-},2200);
-
-});
-
-
-/* =========================================================
-   OBSERVATORY
-========================================================= */
-
-const scanMessages=[
-"SCANNING NARRATIVE FREQUENCY...",
-"LOCATING ACTIVE SCENARIO...",
-"ANALYZING FABLE INTERFERENCE...",
-"SEARCHING FOR CONSTELLATION ACTIVITY...",
-"MEASURING NARRATIVE STABILITY...",
-"COMPARING OBSERVED TIMELINES...",
-"CALCULATING SURVIVAL PROBABILITY...",
-"SCAN COMPLETE."
-];
-
-const streamSignals=[
-"[STREAM] Minor narrative fluctuation detected.",
-"[FABLE] An archived memory has resurfaced.",
-"[SYSTEM] Observer presence confirmed.",
-"[STREAM] Unknown constellation signal detected.",
-"[FABLE] Narrative density increasing.",
-"[SYSTEM] Scenario remains structurally stable.",
-"[WARNING] Probability deviation detected.",
-"[STREAM] Someone is observing the observer.",
-"[SYSTEM] No further anomalies detected.",
-"[UNKNOWN] ...you should not be here."
-];
-
-
-function addSignal(text,type=""){
-
-const line=document.createElement("div");
-
-line.className="signalLine "+type;
-
-if(text.startsWith("[WARNING]")){
-
-line.innerHTML=
-"<strong>[WARNING]</strong>"+
-text.substring(9);
-
-}else if(text.startsWith("[UNKNOWN]")){
-
-line.innerHTML=
-"<strong>[UNKNOWN]</strong>"+
-text.substring(9);
-
-}else if(text.startsWith("[STREAM]")){
-
-line.innerHTML=
-"<strong>[STREAM]</strong>"+
-text.substring(8);
-
-}else if(text.startsWith("[FABLE]")){
-
-line.innerHTML=
-"<strong>[FABLE]</strong>"+
-text.substring(7);
-
-}else{
-
-line.innerHTML=
-"<strong>[SYSTEM]</strong>"+
-text.substring(8);
-
-}
-
-signalList.appendChild(line);
-
-while(signalList.children.length>7){
-
-signalList.removeChild(
-signalList.firstChild
-);
-
-}
-
-signalList.scrollTop=
-signalList.scrollHeight;
-
-}
-
-
-function randomizeScenario(){
-
-const s=
-Math.floor(Math.random()*21)+72;
-
-const d=
-Math.floor(Math.random()*25)+55;
-
-const a=
-Math.floor(Math.random()*55)+20;
-
-const t=
-Math.floor(Math.random()*38)+8;
-
-stability.textContent=s;
-density.textContent=d;
-
-stabilityBar.style.width=s+"%";
-densityBar.style.width=d+"%";
-activityBar.style.width=a+"%";
-threatBar.style.width=t+"%";
-
-if(a<35){
-
-activity.textContent="LOW";
-
-}else if(a<65){
-
-activity.textContent="MODERATE";
-
-}else{
-
-activity.textContent="HIGH";
-
-}
-
-if(t<20){
-
-threat.textContent="LOW";
-
-}else if(t<40){
-
-threat.textContent="ELEVATED";
-
-}else{
-
-threat.textContent="CRITICAL";
-
-}
-
-}
-
-
-scanButton.addEventListener("click",()=>{
-
-if(scanButton.classList.contains("scanning"))
-return;
-
-scanButton.classList.add("scanning");
-observatory.classList.add("scanning");
-
-let step=0;
-
-scanResult.textContent=
-scanMessages[0];
-
-const scanTimer=setInterval(()=>{
-
-step++;
-
-if(step<scanMessages.length){
-
-scanResult.textContent=
-scanMessages[step];
-
-}else{
-
-clearInterval(scanTimer);
-
-scanButton.classList.remove("scanning");
-observatory.classList.remove("scanning");
-
-randomizeScenario();
-createBlueParticles();
-
-scanResult.textContent=
-"SCAN COMPLETE // SCENARIO DATA UPDATED";
-
-const signal=
-streamSignals[
-Math.floor(
-Math.random()*streamSignals.length
-)
-];
-
-const type=
-signal.includes("[WARNING]")
-?"warning"
-:
-signal.includes("[UNKNOWN]")
-?"danger"
-:"";
-
-addSignal(signal,type);
-
-}
-
-},520);
-
-});
-
-
-setInterval(()=>{
-
-if(
-Math.random()>.45 &&
-document.visibilityState==="visible"
-){
-
-const signal=
-streamSignals[
-Math.floor(
-Math.random()*streamSignals.length
-)
-];
-
-const type=
-signal.includes("[WARNING]")
-?"warning"
-:
-signal.includes("[UNKNOWN]")
-?"danger"
-:"";
-
-addSignal(signal,type);
-
-}
-
-},6500);
-
-
-/* =========================================================
-   CONSTELLATION TERMINAL
-========================================================= */
-
-const responses={
-
-observe:{
-message:
-`<strong>[ STAR STREAM ]</strong><br><br>
-The incarnation chooses silence.<br><br>
-Interesting.<br><br>
-The constellation does not seem disappointed.
-If anything... it appears relieved.`,
-
-response:
-"[CONSTELLATION] 「Silence can preserve stories words would destroy.」",
-
-type:""
-},
-
-speak:{
-message:
-`<strong>[ TRANSMISSION RECEIVED ]</strong><br><br>
-Your voice reaches the constellation.<br><br>
-For several seconds, there is no response.<br><br>
-Then, a message appears.`,
-
-response:
-"[KEEPER] 「I remember those who were forgotten. Why have you come?」",
-
-type:""
-},
-
-story:{
-message:
-`<strong>[ FABLE EXCHANGE DETECTED ]</strong><br><br>
-You offer a story.<br><br>
-The Star Stream pauses.<br><br>
-A new Fable has been temporarily registered.`,
-
-response:
-"[SYSTEM] Fable accepted. Constellation interest increased.",
-
-type:""
-},
-
-challenge:{
-message:
-`<strong>[ WARNING ]</strong><br><br>
-You ask what the constellation is hiding.<br><br>
-The transmission suddenly becomes unstable.<br><br>
-Something on the other side noticed you.`,
-
-response:
-"[UNKNOWN] 「You should be careful about asking questions you want answered.」",
-
-type:"danger"
-}
-
-};
-
-
-let constellationFavor=
-Number(localStorage.getItem("kfsFavor"))||0;
-
-let constellationCuriosity=
-Number(localStorage.getItem("kfsCuriosity"))||0;
-
-let narrativeRisk=
-Number(localStorage.getItem("kfsRisk"))||0;
-
-let interactionCount=
-Number(localStorage.getItem("kfsInteractions"))||0;
-
-
-function updateTerminalStats(){
-
-favor.textContent=
-String(constellationFavor).padStart(2,"0");
-
-curiosity.textContent=
-String(constellationCuriosity).padStart(2,"0");
-
-risk.textContent=
-String(narrativeRisk).padStart(2,"0");
-
-const sponsorLevel=
-Math.min(
-100,
-constellationFavor*4+
-constellationCuriosity*2
-);
-
-sponsorBar.style.width=
-sponsorLevel+"%";
-
-if(sponsorLevel<20){
-
-sponsorName.textContent=
-"NO SPONSOR DETECTED";
-
-sponsorStatus.textContent=
-"The constellation is observing from a distance.";
-
-}else if(sponsorLevel<45){
-
-sponsorName.textContent=
-"「UNKNOWN OBSERVER」";
-
-sponsorStatus.textContent=
-"Your actions have attracted mild constellation interest.";
-
-}else if(sponsorLevel<70){
-
-sponsorName.textContent=
-"「KEEPER OF FORGOTTEN STORIES」";
-
-sponsorStatus.textContent=
-"The constellation has begun paying closer attention.";
-
-}else{
-
-sponsorName.textContent=
-"「KEEPER OF FORGOTTEN STORIES」";
-
-sponsorStatus.textContent=
-"★ The constellation has recognized your narrative value.";
-
-}
-
-}
-
-
-function terminalGlitch(){
-
-terminal.classList.add(
-"terminalCorrupted"
-);
-
-setTimeout(()=>{
-
-terminal.classList.remove(
-"terminalCorrupted"
-);
-
-},700);
-
-}
-
-
-function processChoice(choice){
-
-const data=responses[choice];
-
-if(!data)
-return;
-
-interactionCount++;
-
-choices.forEach(button=>{
-button.disabled=true;
-});
-
-terminalGlitch();
-
-terminalMessage.innerHTML=
-data.message;
-
-terminalResponse.textContent=
-data.response;
-
-terminalResponse.className=
-"terminalResponse "+(data.type||"");
-
-
-switch(choice){
-
-case"observe":
-
-constellationFavor+=2;
-constellationCuriosity+=1;
-
-break;
-
-case"speak":
-
-constellationFavor+=4;
-constellationCuriosity+=3;
-
-break;
-
-case"story":
-
-constellationFavor+=7;
-constellationCuriosity+=4;
-narrativeRisk+=2;
-
-break;
-
-case"challenge":
-
-constellationCuriosity+=8;
-narrativeRisk+=10;
-
-break;
-
-}
-
-localStorage.setItem(
-"kfsFavor",
-constellationFavor
-);
-
-localStorage.setItem(
-"kfsCuriosity",
-constellationCuriosity
-);
-
-localStorage.setItem(
-"kfsRisk",
-narrativeRisk
-);
-
-localStorage.setItem(
-"kfsInteractions",
-interactionCount
-);
-
-updateTerminalStats();
-
-setTimeout(()=>{
-
-choices.forEach(button=>{
-button.disabled=false;
-});
-
-},1800);
-
-if(interactionCount>=3){
-
-setTimeout(()=>{
-
-terminalResponse.className=
-"terminalResponse alert";
-
-terminalResponse.innerHTML=
-"[STAR STREAM] The constellation has begun to recognize you.<br><br>"+
-"Further interaction may produce an unexpected Fable.";
-
-},1200);
-
-}
-
-}
-
-
-choices.forEach(button=>{
-
-button.addEventListener(
-"click",
-()=>{
-
-if(!audioStarted)
-startAmbient();
-
-processChoice(
-button.dataset.choice
-);
-
-});
-
-});
-
-updateTerminalStats();
-
-
-/* =========================================================
-   COMMAND PANEL
-========================================================= */
-
-commandButton.addEventListener("click",()=>{
-
-commandPanel.classList.toggle("open");
-
-commandButton.classList.toggle(
-"active",
-commandPanel.classList.contains("open")
-);
-
-});
-
-
-commandClose.addEventListener("click",()=>{
-
-commandPanel.classList.remove("open");
-
-commandButton.classList.remove("active");
-
-});
-
-
-document.querySelectorAll(".commandItem")
-.forEach(item=>{
-
-item.addEventListener("click",()=>{
-
-const command=item.dataset.command;
-
-if(command==="home"){
-
-document.getElementById("home")
-.scrollIntoView({
-behavior:"smooth"
-});
-
-}
-
-if(command==="scan"){
-
-document.getElementById("observatory")
-.scrollIntoView({
-behavior:"smooth"
-});
-
-setTimeout(()=>{
-scanButton.click();
-},700);
-
-}
-
-if(command==="terminal"){
-
-document.getElementById("terminal")
-.scrollIntoView({
-behavior:"smooth"
-});
-
-}
-
-if(command==="secret"){
-
-const secrets=
-document.querySelectorAll(
-"details.secret"
-);
-
-const randomSecret=
-secrets[
-Math.floor(Math.random()*secrets.length)
-];
-
-randomSecret.open=true;
-
-randomSecret.scrollIntoView({
-behavior:"smooth",
-block:"center"
-});
-
-}
-
-if(command==="ambient"){
-
-if(!audioStarted)
-startAmbient();
-
-setMuted(!audioMuted);
-
-}
-
-if(command==="clear"){
-
-localStorage.removeItem("kfsFavor");
-localStorage.removeItem("kfsCuriosity");
-localStorage.removeItem("kfsRisk");
-localStorage.removeItem("kfsInteractions");
-
-constellationFavor=0;
-constellationCuriosity=0;
-narrativeRisk=0;
-interactionCount=0;
-
-updateTerminalStats();
-
-terminalResponse.textContent=
-"OBSERVER DATA RESET.";
-
-}
-
-commandPanel.classList.remove("open");
-commandButton.classList.remove("active");
-
-});
-
-});
-
-
-/* =========================================================
-   NAV ACTIVE STATE
-========================================================= */
-
-const sections=
-document.querySelectorAll("section[id]");
-
-const navLinks=
-document.querySelectorAll("nav a");
-
-const observer=
-new IntersectionObserver(
-entries=>{
-
-entries.forEach(entry=>{
-
-if(entry.isIntersecting){
 
 navLinks.forEach(link=>{
 
-link.classList.toggle(
-"active",
-link.getAttribute("href")==="#"+
-entry.target.id
-);
+    link.addEventListener("click",()=>{
 
-});
+        const target =
+            $(link.getAttribute("href"));
 
-}
+        if(!target) return;
 
-});
+        showNotification(
+            "Navigating to " +
+            link.textContent.trim() +
+            " record..."
+        );
 
-},
-{
-rootMargin:"-25% 0px -65% 0px"
-}
-);
+    });
 
-sections.forEach(section=>{
-observer.observe(section);
 });
 
 
 /* =========================================================
-   CLOSE COMMAND PANEL WITH ESC
+   TOP BUTTON
+========================================================= */
+
+window.addEventListener("scroll",()=>{
+
+    if(window.scrollY > 500){
+
+        topButton.classList.add("visible");
+
+    }else{
+
+        topButton.classList.remove("visible");
+
+    }
+
+});
+
+
+topButton.addEventListener("click",()=>{
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+    showNotification(
+        "Returning to primary archive..."
+    );
+
+});
+
+
+/* =========================================================
+   SCROLL NARRATIVE GLITCH
+========================================================= */
+
+let lastScroll = 0;
+let scrollGlitchTimer = null;
+
+window.addEventListener("scroll",()=>{
+
+    const current =
+        window.scrollY;
+
+    if(
+        Math.abs(current-lastScroll) > 350 &&
+        main.classList.contains("show")
+    ){
+
+        clearTimeout(scrollGlitchTimer);
+
+        const system =
+            $(".system");
+
+        system.style.transform =
+            "translateX(1px)";
+
+        scrollGlitchTimer =
+            setTimeout(()=>{
+
+                system.style.transform =
+                    "translateX(0)";
+
+            },90);
+
+    }
+
+    lastScroll = current;
+
+});
+
+
+/* =========================================================
+   FABLE HOVER // OBSERVATION
+========================================================= */
+
+$$(".fable").forEach(fable=>{
+
+    fable.addEventListener("mouseenter",()=>{
+
+        const title =
+            fable.querySelector(".fabletitle");
+
+        if(title){
+
+            showNotification(
+                "Observing Fable: " +
+                title.textContent.trim(),
+                2200
+            );
+
+        }
+
+    });
+
+});
+
+
+/* =========================================================
+   EXTERNAL CHANNEL INTERACTION
+========================================================= */
+
+$$(".channel").forEach(channel=>{
+
+    channel.addEventListener("click",()=>{
+
+        showNotification(
+            "Opening external transmission channel..."
+        );
+
+    });
+
+});
+
+
+/* =========================================================
+   FABLE ACCESS
+========================================================= */
+
+$$(".access").forEach(button=>{
+
+    button.addEventListener("click",()=>{
+
+        showNotification(
+            "Fable access granted. Redirecting..."
+        );
+
+    });
+
+});
+
+
+/* =========================================================
+   KEYBOARD COMMANDS
 ========================================================= */
 
 document.addEventListener("keydown",event=>{
 
-if(event.key==="Escape"){
+    if(event.key === "Escape"){
 
-commandPanel.classList.remove("open");
+        notification.classList.remove("show");
 
-commandButton.classList.remove("active");
+    }
 
-}
+
+    if(event.key.toLowerCase() === "h"){
+
+        if(main.classList.contains("show")){
+
+            window.scrollTo({
+                top:0,
+                behavior:"smooth"
+            });
+
+        }
+
+    }
+
+
+    if(event.key.toLowerCase() === "s"){
+
+        if(main.classList.contains("show")){
+
+            showNotification(
+                "STAR STREAM STATUS: ONLINE"
+            );
+
+        }
+
+    }
 
 });
 
 
 /* =========================================================
-   KEYBOARD SHORTCUT
+   SECRET COMMAND
 ========================================================= */
+
+let secretSequence = "";
+
+const secretCode = "reader";
 
 document.addEventListener("keydown",event=>{
 
-if(
-event.key.toLowerCase()==="m" &&
-!event.ctrlKey &&
-!event.altKey
-){
+    if(!event.key || event.key.length !== 1)
+        return;
 
-if(!audioStarted)
-startAmbient();
+    secretSequence +=
+        event.key.toLowerCase();
 
-setMuted(!audioMuted);
+    if(secretSequence.length > secretCode.length){
+
+        secretSequence =
+            secretSequence.slice(
+                -secretCode.length
+            );
+
+    }
+
+    if(secretSequence === secretCode){
+
+        activateReaderProtocol();
+
+        secretSequence = "";
+
+    }
+
+});
+
+
+function activateReaderProtocol(){
+
+    createRedParticles(75);
+
+    showNotification(
+        "[ HIDDEN PROTOCOL ] Observer classification elevated.",
+        6000
+    );
+
+    document.body.dataset.reader = "true";
+
+    const system = $(".system");
+
+    system.style.boxShadow =
+        "0 0 80px rgba(56,189,248,.18)";
+
+    setTimeout(()=>{
+
+        system.style.boxShadow = "";
+
+    },6000);
 
 }
 
-if(
-event.key==="/" &&
-!event.ctrlKey &&
-!event.altKey
-){
 
-event.preventDefault();
+/* =========================================================
+   DOUBLE CLICK // NARRATIVE INTERFERENCE
+========================================================= */
 
-commandPanel.classList.toggle("open");
+let lastClick = 0;
 
-}
+document.addEventListener("click",event=>{
+
+    const now = Date.now();
+
+    if(now-lastClick < 300){
+
+        if(
+            main.classList.contains("show") &&
+            !event.target.closest("a") &&
+            !event.target.closest("button")
+        ){
+
+            createRedParticles(20);
+
+            showNotification(
+                "Narrative interference detected."
+            );
+
+        }
+
+    }
+
+    lastClick = now;
 
 });
 
 
 /* =========================================================
-   INITIAL UI
+   PAGE VISIBILITY
 ========================================================= */
 
-updateVolumeUI();
+document.addEventListener(
+    "visibilitychange",
+    ()=>{
+
+        if(document.hidden){
+
+            document.title =
+                "【 SIGNAL LOST 】";
+
+        }else{
+
+            document.title =
+                "Keeper of Forgotten Stories // Star Stream";
+
+            if(main.classList.contains("show")){
+
+                showNotification(
+                    "Observer connection restored."
+                );
+
+            }
+
+        }
+
+    }
+);
 
 
 /* =========================================================
-   PERIODIC STAR STREAM INTERFERENCE
+   SESSION IDENTIFIER
+========================================================= */
+
+function generateSessionID(){
+
+    const random =
+        Math.random()
+        .toString(36)
+        .substring(2,7)
+        .toUpperCase();
+
+    const session =
+        "KFS-" + random;
+
+    $("#sessionID").textContent =
+        session;
+
+}
+
+
+generateSessionID();
+
+
+/* =========================================================
+   INITIAL PAGE STATE
+========================================================= */
+
+document.body.style.overflow =
+    "hidden";
+
+
+/* =========================================================
+   SAFETY // PREVENT BROKEN EXTERNAL LINKS
+========================================================= */
+
+window.addEventListener(
+    "error",
+    event=>{
+
+        if(
+            event.target &&
+            event.target.tagName === "IMG"
+        ){
+
+            event.target.style.display =
+                "none";
+
+        }
+
+    },
+    true
+);
+
+
+/* =========================================================
+   STAR STREAM HEARTBEAT
 ========================================================= */
 
 setInterval(()=>{
 
-if(
-document.visibilityState!=="visible" ||
-!main.classList.contains("show")
-)
-return;
+    if(
+        main.classList.contains("show")
+    ){
 
-if(Math.random()>.72){
+        const signal =
+            document.querySelector(".signal");
 
-const system=
-document.querySelector(".system");
+        if(signal){
 
-system.classList.add(
-"terminalCorrupted"
+            signal.style.opacity = ".45";
+
+            setTimeout(()=>{
+
+                signal.style.opacity = "1";
+
+            },120);
+
+        }
+
+    }
+
+},7000);
+
+
+/* =========================================================
+   FINAL INITIALIZATION
+========================================================= */
+
+console.log(
+    "%c[ STAR STREAM ]%c Connection initialized.",
+    "color:#38bdf8;font-weight:bold;",
+    "color:#bae6fd;"
 );
 
-setTimeout(()=>{
-
-system.classList.remove(
-"terminalCorrupted"
+console.log(
+    "%c[ CONSTELLATION ]%c Keeper of Forgotten Stories",
+    "color:#67e8f9;font-weight:bold;",
+    "color:#dbeafe;"
 );
 
-},180);
+console.log(
+    "%c[ WARNING ]%c Unauthorized observation may alter the Scenario.",
+    "color:#ef4444;font-weight:bold;",
+    "color:#fca5a5;"
+);
 
-}
+</script>
 
-},9000);
+```html id="3xj7kd"
+<script>
+
+/* =========================================================
+   STAR STREAM // AMBIENT SIGNAL ENGINE
+========================================================= */
+
+(function(){
+
+    const system = document.querySelector(".system");
+
+    if(!system) return;
+
+    let signalTimer = null;
+
+    function createBlueSignal(){
+
+        const signal = document.createElement("div");
+
+        signal.style.position = "fixed";
+        signal.style.left =
+            Math.random() * window.innerWidth + "px";
+
+        signal.style.top =
+            Math.random() * window.innerHeight + "px";
+
+        signal.style.width =
+            (Math.random() * 2 + 1) + "px";
+
+        signal.style.height =
+            (Math.random() * 2 + 1) + "px";
+
+        signal.style.background = "#38bdf8";
+
+        signal.style.boxShadow =
+            "0 0 12px #38bdf8";
+
+        signal.style.pointerEvents = "none";
+
+        signal.style.zIndex = "60";
+
+        signal.style.opacity = "0";
+
+        signal.style.transition =
+            "opacity .5s, transform 1.8s";
+
+        document.body.appendChild(signal);
+
+        requestAnimationFrame(()=>{
+
+            signal.style.opacity =
+                String(Math.random() * .7 + .3);
+
+            signal.style.transform =
+                `translate(
+                    ${(Math.random()*100-50).toFixed(0)}px,
+                    ${(Math.random()*100-50).toFixed(0)}px
+                )`;
+
+        });
+
+        setTimeout(()=>{
+
+            signal.style.opacity = "0";
+
+            setTimeout(()=>{
+                signal.remove();
+            },600);
+
+        },700);
+
+    }
+
+
+    function ambientSignal(){
+
+        if(
+            !document.hidden &&
+            document.querySelector("#main.show")
+        ){
+
+            const amount =
+                Math.floor(Math.random()*4)+2;
+
+            for(let i=0;i<amount;i++){
+
+                setTimeout(
+                    createBlueSignal,
+                    i*80
+                );
+
+            }
+
+        }
+
+    }
+
+
+    signalTimer =
+        setInterval(
+            ambientSignal,
+            6500
+        );
+
+
+})();
+
+
+/* =========================================================
+   STAR STREAM // NARRATIVE PULSE
+========================================================= */
+
+(function(){
+
+    const title =
+        document.querySelector(".title");
+
+    if(!title) return;
+
+    let pulse = false;
+
+    setInterval(()=>{
+
+        if(
+            !document.querySelector("#main.show")
+        ) return;
+
+        pulse = !pulse;
+
+        title.style.textShadow =
+            pulse
+            ?
+            "0 0 12px rgba(56,189,248,.55),0 0 42px rgba(56,189,248,.20)"
+            :
+            "0 0 12px rgba(56,189,248,.35),0 0 25px rgba(56,189,248,.10)";
+
+    },3200);
+
+})();
+
+
+/* =========================================================
+   STAR STREAM // TRANSMISSION DISTORTION
+========================================================= */
+
+(function(){
+
+    const signal =
+        document.querySelector(".signal");
+
+    if(!signal) return;
+
+    function distortion(){
+
+        if(
+            !document.querySelector("#main.show")
+        ) return;
+
+        const original =
+            signal.textContent;
+
+        signal.textContent =
+            "【 SIGNAL INTERFERENCE DETECTED 】";
+
+        signal.style.color =
+            "#ef4444";
+
+        signal.style.textShadow =
+            "0 0 12px #ef4444";
+
+        setTimeout(()=>{
+
+            signal.textContent =
+                original;
+
+            signal.style.color =
+                "";
+
+            signal.style.textShadow =
+                "";
+
+        },180);
+
+    }
+
+
+    setInterval(()=>{
+
+        if(Math.random() > .55){
+
+            distortion();
+
+        }
+
+    },11000);
+
+})();
+
+
+/* =========================================================
+   HIDDEN FABLE EVENT
+========================================================= */
+
+(function(){
+
+    const archive =
+        document.querySelector("#fables");
+
+    if(!archive) return;
+
+    let triggered = false;
+
+    window.addEventListener("scroll",()=>{
+
+        if(triggered) return;
+
+        const rect =
+            archive.getBoundingClientRect();
+
+        if(
+            rect.top <
+            window.innerHeight * .45
+        ){
+
+            triggered = true;
+
+            setTimeout(()=>{
+
+                if(
+                    typeof showNotification ===
+                    "function"
+                ){
+
+                    showNotification(
+                        "A distant constellation has noticed the Fable Archive."
+                    );
+
+                }
+
+            },1200);
+
+        }
+
+    });
+
+})();
+
+
+/* =========================================================
+   STAR STREAM // RANDOM OBSERVER SIGNAL
+========================================================= */
+
+(function(){
+
+    const messages = [
+
+        "「The Reader has entered the Scenario.」",
+
+        "「A constellation is quietly observing the archive.」",
+
+        "「Probability fluctuates around the unfinished stories.」",
+
+        "「Someone has remembered a story that was supposed to disappear.」",
+
+        "「The Star Stream finds your persistence interesting.」",
+
+        "「A Fable has resisted narrative decay.」"
+
+    ];
+
+    function sendSignal(){
+
+        if(
+            document.hidden ||
+            !document.querySelector("#main.show")
+        ) return;
+
+        if(
+            Math.random() < .5
+        ) return;
+
+        const message =
+            messages[
+                Math.floor(
+                    Math.random() * messages.length
+                )
+            ];
+
+        if(
+            typeof showNotification ===
+            "function"
+        ){
+
+            showNotification(
+                message,
+                4000
+            );
+
+        }
+
+    }
+
+    setInterval(
+        sendSignal,
+        30000
+    );
+
+})();
+
+
+/* =========================================================
+   EMERGENCY SCENARIO MODE
+========================================================= */
+
+(function(){
+
+    let emergency = false;
+
+    window.activateScenarioAlert = function(){
+
+        if(emergency) return;
+
+        emergency = true;
+
+        document.body.classList.add(
+            "scenario-alert"
+        );
+
+        const system =
+            document.querySelector(".system");
+
+        if(system){
+
+            system.style.borderColor =
+                "#7f1d1d";
+
+            system.style.boxShadow =
+                "0 0 70px rgba(239,68,68,.15)";
+
+        }
+
+        if(
+            typeof createRedParticles ===
+            "function"
+        ){
+
+            createRedParticles(90);
+
+        }
+
+        if(
+            typeof showNotification ===
+            "function"
+        ){
+
+            showNotification(
+                "[ CRITICAL ] Scenario probability has collapsed.",
+                6000
+            );
+
+        }
+
+        setTimeout(()=>{
+
+            emergency = false;
+
+            document.body.classList.remove(
+                "scenario-alert"
+            );
+
+            if(system){
+
+                system.style.borderColor = "";
+
+                system.style.boxShadow = "";
+
+            }
+
+        },7000);
+
+    };
+
+})();
+
+
+/* =========================================================
+   SECRET KEY // EMERGENCY
+========================================================= */
+
+(function(){
+
+    let sequence = "";
+
+    const code =
+        "starstream";
+
+    document.addEventListener(
+        "keydown",
+        event=>{
+
+            if(
+                !event.key ||
+                event.key.length !== 1
+            ) return;
+
+            sequence +=
+                event.key.toLowerCase();
+
+            if(
+                sequence.length >
+                code.length
+            ){
+
+                sequence =
+                    sequence.slice(
+                        -code.length
+                    );
+
+            }
+
+            if(sequence === code){
+
+                if(
+                    typeof activateScenarioAlert ===
+                    "function"
+                ){
+
+                    activateScenarioAlert();
+
+                }
+
+                sequence = "";
+
+            }
+
+        }
+    );
+
+})();
+
+
+/* =========================================================
+   SECRET CLICK // CONSTELLATION CORE
+========================================================= */
+
+(function(){
+
+    const core =
+        document.querySelector(
+            ".constellationSymbol"
+        );
+
+    if(!core) return;
+
+    let clicks = 0;
+
+    core.addEventListener(
+        "click",
+        ()=>{
+
+            clicks++;
+
+            if(clicks < 3){
+
+                if(
+                    typeof showNotification ===
+                    "function"
+                ){
+
+                    showNotification(
+                        "Constellation core accessed. Permission level insufficient."
+                    );
+
+                }
+
+                return;
+
+            }
+
+            clicks = 0;
+
+            if(
+                typeof createRedParticles ===
+                "function"
+            ){
+
+                createRedParticles(45);
+
+            }
+
+            if(
+                typeof showNotification ===
+                "function"
+            ){
+
+                showNotification(
+                    "「The constellation has noticed you.」",
+                    5000
+                );
+
+            }
+
+        }
+    );
+
+})();
+
+
+/* =========================================================
+   FABLE COUNTER // DYNAMIC RECORD
+========================================================= */
+
+(function(){
+
+    const counter =
+        document.querySelector(
+            "#fableCounter"
+        );
+
+    if(!counter) return;
+
+    const fables =
+        document.querySelectorAll(
+            ".fable"
+        );
+
+    const number =
+        String(fables.length)
+        .padStart(2,"0");
+
+    counter.textContent =
+        number;
+
+})();
+
+
+/* =========================================================
+   DOCUMENT TITLE // LIVE SIGNAL
+========================================================= */
+
+(function(){
+
+    const originalTitle =
+        document.title;
+
+    let visible = true;
+
+    setInterval(()=>{
+
+        if(
+            document.hidden
+        ){
+
+            visible = !visible;
+
+            document.title =
+                visible
+                ? "【 SIGNAL LOST 】"
+                : "Keeper of Forgotten Stories";
+
+        }else{
+
+            if(
+                document.title !==
+                originalTitle
+            ){
+
+                document.title =
+                    originalTitle;
+
+            }
+
+        }
+
+    },1200);
+
+})();
+
+
+/* =========================================================
+   SYSTEM TIME
+========================================================= */
+
+(function(){
+
+    const timeElement =
+        document.querySelector(
+            ".headerStatus"
+        );
+
+    if(!timeElement) return;
+
+    function updateSystemTime(){
+
+        const now =
+            new Date();
+
+        const hours =
+            String(
+                now.getHours()
+            ).padStart(2,"0");
+
+        const minutes =
+            String(
+                now.getMinutes()
+            ).padStart(2,"0");
+
+        const seconds =
+            String(
+                now.getSeconds()
+            ).padStart(2,"0");
+
+        timeElement.dataset.time =
+            `${hours}:${minutes}:${seconds}`;
+
+    }
+
+    updateSystemTime();
+
+    setInterval(
+        updateSystemTime,
+        1000
+    );
+
+})();
+
+
+/* =========================================================
+   FAKE STAR STREAM PROBABILITY
+========================================================= */
+
+(function(){
+
+    const probability =
+        document.createElement(
+            "div"
+        );
+
+    probability.style.position =
+        "absolute";
+
+    probability.style.left =
+        "18px";
+
+    probability.style.top =
+        "18px";
+
+    probability.style.fontFamily =
+        '"Courier New",monospace';
+
+    probability.style.fontSize =
+        "8px";
+
+    probability.style.color =
+        "#334155";
+
+    probability.style.letterSpacing =
+        "1px";
+
+    probability.style.pointerEvents =
+        "none";
+
+    probability.textContent =
+        "PROBABILITY: STABLE";
+
+    const header =
+        document.querySelector(
+            "header"
+        );
+
+    if(header){
+
+        header.appendChild(
+            probability
+        );
+
+    }
+
+    setInterval(()=>{
+
+        if(
+            Math.random() < .13
+        ){
+
+            probability.textContent =
+                "PROBABILITY: FLUCTUATING";
+
+            probability.style.color =
+                "#f59e0b";
+
+            setTimeout(()=>{
+
+                probability.textContent =
+                    "PROBABILITY: STABLE";
+
+                probability.style.color =
+                    "#334155";
+
+            },1800);
+
+        }
+
+    },9000);
+
+})();
+
+
+/* =========================================================
+   FINAL STAR STREAM MESSAGE
+========================================================= */
+
+window.addEventListener(
+    "load",
+    ()=>{
+
+        setTimeout(()=>{
+
+            if(
+                typeof showNotification ===
+                "function"
+            ){
+
+                showNotification(
+                    "Star Stream interface initialized successfully.",
+                    3500
+                );
+
+            }
+
+        },1000);
+
+    }
+);
 
 </script>
 
 </body>
 </html>
+
+<!-- =========================================================
+     PART 4 // STAR STREAM OBSERVER PROTOCOL
+     CORRECTED VERSION
+========================================================= -->
+
+<style>
+
+/* =========================================================
+   GLOBAL STAR STREAM SCAN
+========================================================= */
+
+#globalScan{
+position:fixed;
+inset:0;
+z-index:200;
+pointer-events:none;
+opacity:.16;
+background:
+repeating-linear-gradient(
+0deg,
+transparent 0px,
+transparent 5px,
+rgba(56,189,248,.025) 6px
+);
+}
+
+
+/* =========================================================
+   OBSERVER HUD
+========================================================= */
+
+#observerHUD{
+position:fixed;
+left:18px;
+bottom:18px;
+z-index:400;
+pointer-events:none;
+font-family:"Courier New",monospace;
+font-size:8px;
+letter-spacing:1px;
+color:#475569;
+line-height:1.7;
+opacity:.78;
+}
+
+#observerHUD:before{
+content:"OBSERVER PROTOCOL";
+display:block;
+font-size:7px;
+letter-spacing:2px;
+color:#155e75;
+margin-bottom:3px;
+}
+
+.hudValue{
+color:#38bdf8;
+}
+
+.hudDanger{
+color:#ef4444;
+}
+
+.hudWarning{
+color:#f59e0b;
+}
+
+@media(max-width:700px){
+
+#observerHUD{
+left:10px;
+bottom:10px;
+font-size:7px;
+}
+
+}
+
+
+/* =========================================================
+   COMMAND BUTTON
+========================================================= */
+
+#consoleButton{
+position:fixed;
+right:20px;
+bottom:20px;
+z-index:9998;
+width:40px;
+height:40px;
+padding:0;
+border:1px solid #155e75;
+outline:none;
+background:rgba(2,11,24,.94);
+color:#38bdf8;
+font-family:"Courier New",monospace;
+font-size:18px;
+line-height:38px;
+text-align:center;
+cursor:pointer;
+transition:
+background .25s,
+border-color .25s,
+box-shadow .25s,
+transform .25s;
+}
+
+#consoleButton:hover{
+border-color:#67e8f9;
+background:#062038;
+color:#e0f2fe;
+box-shadow:
+0 0 10px #38bdf855,
+0 0 30px #38bdf822;
+transform:translateY(-2px);
+}
+
+#consoleButton:active{
+transform:translateY(0) scale(.94);
+}
+
+@media(max-width:700px){
+
+#consoleButton{
+right:14px;
+bottom:14px;
+}
+
+}
+
+
+/* =========================================================
+   COMMAND CONSOLE
+========================================================= */
+
+#starConsole{
+position:fixed;
+inset:0;
+z-index:9999;
+display:flex;
+align-items:flex-end;
+justify-content:center;
+padding:25px;
+background:rgba(0,3,9,.76);
+backdrop-filter:blur(8px);
+-webkit-backdrop-filter:blur(8px);
+opacity:0;
+visibility:hidden;
+pointer-events:none;
+transition:
+opacity .3s ease,
+visibility .3s ease;
+}
+
+#starConsole.open{
+opacity:1;
+visibility:visible;
+pointer-events:auto;
+}
+
+.consoleWindow{
+position:relative;
+width:min(850px,100%);
+max-height:70vh;
+border:1px solid #0e7490;
+background:
+linear-gradient(
+180deg,
+rgba(3,20,39,.99),
+rgba(1,7,17,.99)
+);
+box-shadow:
+0 0 70px rgba(14,165,233,.18),
+inset 0 0 35px rgba(14,165,233,.04);
+font-family:"Courier New",monospace;
+overflow:hidden;
+transform:translateY(35px);
+transition:transform .35s ease;
+}
+
+#starConsole.open .consoleWindow{
+transform:translateY(0);
+}
+
+.consoleWindow:before{
+content:"";
+position:absolute;
+inset:0;
+pointer-events:none;
+background:
+repeating-linear-gradient(
+0deg,
+transparent,
+transparent 3px,
+rgba(56,189,248,.018) 4px
+);
+}
+
+.consoleHeader{
+position:relative;
+z-index:1;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:11px 15px;
+border-bottom:1px solid #164e63;
+background:#031225;
+color:#67e8f9;
+font-size:9px;
+letter-spacing:2px;
+}
+
+.consoleClose{
+border:0;
+outline:none;
+background:none;
+color:#64748b;
+font-family:"Courier New",monospace;
+font-size:18px;
+line-height:1;
+cursor:pointer;
+transition:.2s;
+}
+
+.consoleClose:hover{
+color:#ef4444;
+text-shadow:0 0 8px #ef4444;
+}
+
+#consoleOutput{
+position:relative;
+height:270px;
+overflow-y:auto;
+padding:15px;
+font-size:10px;
+line-height:1.8;
+color:#7dd3fc;
+scrollbar-width:thin;
+scrollbar-color:#155e75 transparent;
+}
+
+#consoleOutput::-webkit-scrollbar{
+width:5px;
+}
+
+#consoleOutput::-webkit-scrollbar-thumb{
+background:#155e75;
+}
+
+.consoleLine{
+margin-bottom:3px;
+word-break:break-word;
+}
+
+.consoleLine.system{
+color:#38bdf8;
+}
+
+.consoleLine.success{
+color:#67e8f9;
+}
+
+.consoleLine.warning{
+color:#f59e0b;
+}
+
+.consoleLine.danger{
+color:#ef4444;
+}
+
+.consoleInput{
+position:relative;
+z-index:1;
+display:flex;
+align-items:center;
+padding:10px 13px;
+border-top:1px solid #164e63;
+background:#010813;
+}
+
+.consolePrompt{
+color:#38bdf8;
+margin-right:8px;
+}
+
+#consoleInput{
+width:100%;
+flex:1;
+border:0;
+outline:0;
+background:transparent;
+color:#e0f2fe;
+font-family:"Courier New",monospace;
+font-size:11px;
+}
+
+#consoleInput::placeholder{
+color:#334155;
+}
+
+
+/* =========================================================
+   OBSERVER PANEL
+========================================================= */
+
+.observerPanel{
+margin-top:20px;
+padding:15px;
+border:1px solid #164e63;
+background:rgba(2,11,24,.65);
+font-family:"Courier New",monospace;
+}
+
+.observerPanelTitle{
+font-size:9px;
+letter-spacing:2px;
+color:#67e8f9;
+margin-bottom:12px;
+}
+
+.observerStats{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+}
+
+.observerStat{
+padding:10px;
+border:1px solid #0c3349;
+background:#01081388;
+text-align:center;
+}
+
+.observerStat strong{
+display:block;
+font-size:16px;
+color:#e0f2fe;
+margin-bottom:4px;
+}
+
+.observerStat span{
+font-size:7px;
+letter-spacing:1px;
+color:#475569;
+}
+
+.affinityBox{
+margin-top:14px;
+}
+
+.affinityTop{
+display:flex;
+justify-content:space-between;
+margin-bottom:5px;
+font-size:8px;
+color:#64748b;
+}
+
+#affinityValue{
+color:#67e8f9;
+}
+
+.affinityTrack{
+height:5px;
+border:1px solid #155e75;
+background:#020b18;
+overflow:hidden;
+}
+
+#affinityBar{
+width:0%;
+height:100%;
+background:
+linear-gradient(
+90deg,
+#075985,
+#0ea5e9,
+#67e8f9
+);
+box-shadow:0 0 12px #38bdf8;
+transition:width .7s cubic-bezier(.2,.8,.2,1);
+}
+
+@media(max-width:600px){
+
+.observerStats{
+grid-template-columns:1fr;
+}
+
+}
+
+
+/* =========================================================
+   NARRATIVE INTERRUPTION
+========================================================= */
+
+#narrativeInterruption{
+position:fixed;
+inset:0;
+z-index:9997;
+display:flex;
+align-items:center;
+justify-content:center;
+background:#010308;
+opacity:0;
+visibility:hidden;
+pointer-events:none;
+transition:.35s;
+font-family:"Courier New",monospace;
+}
+
+#narrativeInterruption.active{
+opacity:1;
+visibility:visible;
+}
+
+.interruptionText{
+width:min(700px,90%);
+text-align:center;
+color:#67e8f9;
+font-size:11px;
+line-height:2;
+letter-spacing:2px;
+}
+
+
+/* =========================================================
+   SCENARIO ALERT
+========================================================= */
+
+body.scenario-alert .system{
+animation:
+scenarioPulse .18s infinite alternate;
+}
+
+@keyframes scenarioPulse{
+
+from{
+box-shadow:
+0 0 35px rgba(239,68,68,.08);
+}
+
+to{
+box-shadow:
+0 0 75px rgba(239,68,68,.22);
+}
+
+}
+
+
+/* =========================================================
+   READER MODE
+========================================================= */
+
+body.reader-mode .system{
+border-color:#67e8f9;
+box-shadow:
+0 0 80px rgba(56,189,248,.2),
+inset 0 0 45px rgba(56,189,248,.035);
+}
+
+body.reader-mode .title{
+text-shadow:
+0 0 15px #38bdf8,
+0 0 45px rgba(56,189,248,.3);
+}
+
+</style>
+
+
+<!-- =========================================================
+     GLOBAL SCAN
+========================================================= -->
+
+<div id="globalScan"></div>
+
+
+<!-- =========================================================
+     OBSERVER HUD
+========================================================= -->
+
+<div id="observerHUD">
+
+<div>
+CONNECTION:
+<span id="hudConnection" class="hudValue">
+STABLE
+</span>
+</div>
+
+<div>
+AFFINITY:
+<span id="hudAffinity" class="hudValue">
+00%
+</span>
+</div>
+
+<div>
+OBSERVATIONS:
+<span id="hudObservations" class="hudValue">
+000
+</span>
+</div>
+
+<div>
+PROBABILITY:
+<span id="hudProbability" class="hudValue">
+100%
+</span>
+</div>
+
+</div>
+
+
+<!-- =========================================================
+     STAR STREAM COMMAND BUTTON
+========================================================= -->
+
+<button
+id="consoleButton"
+type="button"
+title="Open Star Stream Command Terminal"
+aria-label="Open Star Stream Command Terminal">
+⌘
+</button>
+
+
+<!-- =========================================================
+     STAR STREAM COMMAND CONSOLE
+========================================================= -->
+
+<div
+id="starConsole"
+aria-hidden="true">
+
+<div
+class="consoleWindow"
+role="dialog"
+aria-modal="true"
+aria-label="Star Stream Command Terminal">
+
+<div class="consoleHeader">
+
+<span>
+【 STAR STREAM COMMAND TERMINAL 】
+</span>
+
+<button
+type="button"
+class="consoleClose"
+id="consoleClose"
+aria-label="Close terminal">
+×
+</button>
+
+</div>
+
+
+<div id="consoleOutput">
+
+<div class="consoleLine system">
+&gt; STAR STREAM COMMAND TERMINAL INITIALIZED.
+</div>
+
+<div class="consoleLine">
+&gt; TYPE HELP TO DISPLAY AVAILABLE COMMANDS.
+</div>
+
+</div>
+
+
+<div class="consoleInput">
+
+<span class="consolePrompt">
+&gt;
+</span>
+
+<input
+id="consoleInput"
+type="text"
+autocomplete="off"
+spellcheck="false"
+placeholder="ENTER COMMAND..."
+aria-label="Star Stream command input">
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =========================================================
+     NARRATIVE INTERRUPTION
+========================================================= -->
+
+<div id="narrativeInterruption">
+
+<div
+class="interruptionText"
+id="interruptionText">
+</div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   STAR STREAM OBSERVER PROTOCOL
+========================================================= */
+
+(function(){
+
+"use strict";
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+const state={
+
+observations:0,
+affinity:0,
+probability:100,
+commands:0,
+secrets:0
+
+};
+
+window.starStreamState=state;
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const consoleButton=
+document.getElementById(
+"consoleButton"
+);
+
+const starConsole=
+document.getElementById(
+"starConsole"
+);
+
+const consoleClose=
+document.getElementById(
+"consoleClose"
+);
+
+const consoleInput=
+document.getElementById(
+"consoleInput"
+);
+
+const consoleOutput=
+document.getElementById(
+"consoleOutput"
+);
+
+const hudAffinity=
+document.getElementById(
+"hudAffinity"
+);
+
+const hudObservations=
+document.getElementById(
+"hudObservations"
+);
+
+const hudProbability=
+document.getElementById(
+"hudProbability"
+);
+
+const hudConnection=
+document.getElementById(
+"hudConnection"
+);
+
+const affinityBar=
+document.getElementById(
+"affinityBar"
+);
+
+
+/* =========================================================
+   SAFETY CHECK
+========================================================= */
+
+if(
+!consoleButton ||
+!starConsole ||
+!consoleClose ||
+!consoleInput ||
+!consoleOutput
+){
+
+console.warn(
+"[STAR STREAM] Command terminal failed to initialize."
+);
+
+return;
+
+}
+
+
+/* =========================================================
+   SAVE / LOAD
+========================================================= */
+
+function loadState(){
+
+try{
+
+const saved=
+localStorage.getItem(
+"KFS_STAR_STREAM_STATE"
+);
+
+if(!saved)
+return;
+
+const data=
+JSON.parse(saved);
+
+if(
+typeof data.observations==="number"
+)
+state.observations=data.observations;
+
+if(
+typeof data.affinity==="number"
+)
+state.affinity=data.affinity;
+
+if(
+typeof data.probability==="number"
+)
+state.probability=data.probability;
+
+if(
+typeof data.commands==="number"
+)
+state.commands=data.commands;
+
+if(
+typeof data.secrets==="number"
+)
+state.secrets=data.secrets;
+
+}catch(error){
+
+console.warn(
+"[STAR STREAM] Saved state unavailable."
+);
+
+}
+
+}
+
+
+function saveState(){
+
+try{
+
+localStorage.setItem(
+"KFS_STAR_STREAM_STATE",
+JSON.stringify(state)
+);
+
+}catch(error){}
+
+}
+
+
+loadState();
+
+
+/* =========================================================
+   HUD
+========================================================= */
+
+function updateHUD(){
+
+hudAffinity.textContent=
+Math.floor(
+state.affinity
+)
+.toString()
+.padStart(2,"0")+"%";
+
+hudObservations.textContent=
+state.observations
+.toString()
+.padStart(3,"0");
+
+hudProbability.textContent=
+Math.floor(
+state.probability
+)+"%";
+
+affinityBar.style.width=
+Math.min(
+100,
+state.affinity
+)+"%";
+
+
+if(
+state.probability<=25
+){
+
+hudProbability.className=
+"hudDanger";
+
+}else if(
+state.probability<=55
+){
+
+hudProbability.className=
+"hudWarning";
+
+}else{
+
+hudProbability.className=
+"hudValue";
+
+}
+
+}
+
+
+updateHUD();
+
+
+/* =========================================================
+   OBSERVATION
+========================================================= */
+
+function observe(amount){
+
+amount=amount||1;
+
+state.observations+=amount;
+
+state.affinity=
+Math.min(
+100,
+state.affinity+
+amount*.5
+);
+
+state.probability=
+Math.max(
+1,
+state.probability-
+amount*.03
+);
+
+updateHUD();
+
+saveState();
+
+}
+
+
+/* =========================================================
+   CONSOLE OPEN
+========================================================= */
+
+function openConsole(){
+
+starConsole.classList.add(
+"open"
+);
+
+starConsole.setAttribute(
+"aria-hidden",
+"false"
+);
+
+document.body.style.overflow=
+"hidden";
+
+setTimeout(
+function(){
+
+consoleInput.focus();
+
+},
+120
+);
+
+}
+
+
+/* =========================================================
+   CONSOLE CLOSE
+========================================================= */
+
+function closeConsole(){
+
+starConsole.classList.remove(
+"open"
+);
+
+starConsole.setAttribute(
+"aria-hidden",
+"true"
+);
+
+document.body.style.overflow="";
+
+}
+
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+consoleButton.addEventListener(
+"click",
+function(event){
+
+event.preventDefault();
+event.stopPropagation();
+
+openConsole();
+
+}
+);
+
+
+/* =========================================================
+   CLOSE BUTTON
+========================================================= */
+
+consoleClose.addEventListener(
+"click",
+function(event){
+
+event.preventDefault();
+event.stopPropagation();
+
+closeConsole();
+
+}
+);
+
+
+/* =========================================================
+   CLICK OUTSIDE
+========================================================= */
+
+starConsole.addEventListener(
+"click",
+function(event){
+
+if(
+event.target===starConsole
+){
+
+closeConsole();
+
+}
+
+}
+);
+
+
+/* =========================================================
+   ESCAPE
+========================================================= */
+
+document.addEventListener(
+"keydown",
+function(event){
+
+if(
+event.key==="Escape" &&
+starConsole.classList.contains("open")
+){
+
+closeConsole();
+
+}
+
+}
+);
+
+
+/* =========================================================
+   CONSOLE OUTPUT
+========================================================= */
+
+function printConsole(
+text,
+type
+){
+
+const line=
+document.createElement(
+"div"
+);
+
+line.className=
+"consoleLine "+
+(type||"");
+
+line.textContent=
+"> "+text;
+
+consoleOutput.appendChild(
+line
+);
+
+consoleOutput.scrollTop=
+consoleOutput.scrollHeight;
+
+}
+
+
+/* =========================================================
+   SCENARIO ALERT
+========================================================= */
+
+function activateScenarioAlert(){
+
+document.body.classList.add(
+"scenario-alert"
+);
+
+hudConnection.textContent=
+"UNSTABLE";
+
+hudConnection.className=
+"hudDanger";
+
+
+setTimeout(
+function(){
+
+document.body.classList.remove(
+"scenario-alert"
+);
+
+hudConnection.textContent=
+"STABLE";
+
+hudConnection.className=
+"hudValue";
+
+},
+2500
+);
+
+}
+
+window.activateScenarioAlert=
+activateScenarioAlert;
+
+
+/* =========================================================
+   NARRATIVE INTERRUPTION
+========================================================= */
+
+function narrativeInterruption(lines){
+
+const overlay=
+document.getElementById(
+"narrativeInterruption"
+);
+
+const text=
+document.getElementById(
+"interruptionText"
+);
+
+if(!overlay||!text)
+return;
+
+overlay.classList.add(
+"active"
+);
+
+text.innerHTML="";
+
+let index=0;
+
+function nextLine(){
+
+if(
+index>=lines.length
+){
+
+setTimeout(
+function(){
+
+overlay.classList.remove(
+"active"
+);
+
+},
+1000
+);
+
+return;
+
+}
+
+const line=
+document.createElement(
+"div"
+);
+
+text.appendChild(
+line
+);
+
+let character=0;
+
+const timer=
+setInterval(
+function(){
+
+line.textContent=
+lines[index].substring(
+0,
+character
+);
+
+character++;
+
+if(
+character>
+lines[index].length
+){
+
+clearInterval(timer);
+
+index++;
+
+setTimeout(
+nextLine,
+350
+);
+
+}
+
+},
+20
+);
+
+}
+
+nextLine();
+
+}
+
+
+/* =========================================================
+   COMMAND SYSTEM
+========================================================= */
+
+function executeCommand(raw){
+
+const command=
+raw.trim().toLowerCase();
+
+if(!command)
+return;
+
+state.commands++;
+
+printConsole(
+"OBSERVER > "+raw
+);
+
+
+switch(command){
+
+
+case "help":
+
+printConsole(
+"AVAILABLE COMMANDS:",
+"system"
+);
+
+printConsole(
+"STATUS — current Star Stream status."
+);
+
+printConsole(
+"FABLES — inspect acquired Fables."
+);
+
+printConsole(
+"TRANSMISSIONS — inspect signal records."
+);
+
+printConsole(
+"CONSTELLATION — inspect identity."
+);
+
+printConsole(
+"PROBABILITY — inspect Scenario probability."
+);
+
+printConsole(
+"OBSERVER — inspect Observer record."
+);
+
+printConsole(
+"AWAKEN — access restricted protocol."
+);
+
+printConsole(
+"CLEAR — clear terminal."
+);
+
+break;
+
+
+case "status":
+
+printConsole(
+"STAR STREAM: ONLINE",
+"success"
+);
+
+printConsole(
+"CONNECTION: STABLE"
+);
+
+printConsole(
+"NARRATIVE ENGINE: ACTIVE"
+);
+
+printConsole(
+"OBSERVER: CONFIRMED"
+);
+
+printConsole(
+"SCENARIO: ONGOING"
+);
+
+break;
+
+
+case "fables":
+
+printConsole(
+"FABLE ARCHIVE ACCESSED.",
+"success"
+);
+
+printConsole(
+"REGISTERED RECORDS: 04"
+);
+
+printConsole(
+"PRIMARY FABLE: FRESH START"
+);
+
+printConsole(
+"ARCHIVE STATUS: ONGOING"
+);
+
+break;
+
+
+case "transmissions":
+
+printConsole(
+"TRANSMISSION CHANNEL ACCESSED.",
+"success"
+);
+
+printConsole(
+"TRANSMISSION #001: RECEIVED"
+);
+
+printConsole(
+"UNKNOWN SIGNAL: DETECTED",
+"warning"
+);
+
+break;
+
+
+case "constellation":
+
+printConsole(
+"IDENTITY: KEEPER OF FORGOTTEN STORIES",
+"success"
+);
+
+printConsole(
+"GRADE: UNKNOWN"
+);
+
+printConsole(
+"ALIGNMENT: NARRATIVE PRESERVATION"
+);
+
+printConsole(
+"PRIMARY ATTRIBUTE: WITNESS"
+);
+
+break;
+
+
+case "probability":
+
+printConsole(
+"CURRENT PROBABILITY: "+
+Math.floor(
+state.probability
+)+"%",
+state.probability<=30
+?"danger"
+:"warning"
+);
+
+if(
+state.probability<=50
+){
+
+printConsole(
+"WARNING: SCENARIO STABILITY COMPROMISED.",
+"danger"
+);
+
+}else{
+
+printConsole(
+"SCENARIO REMAINS WITHIN ACCEPTABLE PARAMETERS."
+);
+
+}
+
+break;
+
+
+case "observer":
+
+printConsole(
+"OBSERVER RECORD",
+"system"
+);
+
+printConsole(
+"OBSERVATIONS: "+
+state.observations
+);
+
+printConsole(
+"CONSTELLATION AFFINITY: "+
+Math.floor(
+state.affinity
+)+"%"
+);
+
+printConsole(
+"COMMANDS EXECUTED: "+
+state.commands
+);
+
+printConsole(
+"SECRETS DISCOVERED: "+
+state.secrets
+);
+
+break;
+
+
+case "awaken":
+
+state.secrets++;
+
+printConsole(
+"RESTRICTED PROTOCOL REQUESTED.",
+"warning"
+);
+
+setTimeout(
+function(){
+
+printConsole(
+"ACCESSING DEEP ARCHIVE..."
+);
+
+},
+300
+);
+
+setTimeout(
+function(){
+
+printConsole(
+"ACCESS DENIED.",
+"danger"
+);
+
+},
+750
+);
+
+setTimeout(
+function(){
+
+printConsole(
+"WHY ARE YOU STILL READING?",
+"danger"
+);
+
+activateScenarioAlert();
+
+},
+1200
+);
+
+break;
+
+
+case "clear":
+
+consoleOutput.innerHTML="";
+
+printConsole(
+"TERMINAL CLEARED.",
+"success"
+);
+
+break;
+
+
+default:
+
+printConsole(
+"UNKNOWN COMMAND.",
+"danger"
+);
+
+printConsole(
+"TYPE HELP FOR AVAILABLE COMMANDS."
+);
+
+}
+
+
+observe(2);
+
+}
+
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+consoleInput.addEventListener(
+"keydown",
+function(event){
+
+if(
+event.key==="Enter"
+){
+
+event.preventDefault();
+
+executeCommand(
+consoleInput.value
+);
+
+consoleInput.value="";
+
+}
+
+});
+
+
+/* =========================================================
+   CTRL + SHIFT + K
+========================================================= */
+
+document.addEventListener(
+"keydown",
+function(event){
+
+if(
+event.ctrlKey &&
+event.shiftKey &&
+event.key.toLowerCase()==="k"
+){
+
+event.preventDefault();
+
+if(
+starConsole.classList.contains("open")
+){
+
+closeConsole();
+
+}else{
+
+openConsole();
+
+}
+
+}
+
+}
+);
+
+
+/* =========================================================
+   GENERAL OBSERVATION TRACKING
+========================================================= */
+
+document.addEventListener(
+"click",
+function(event){
+
+if(
+event.target.closest("#consoleButton") ||
+event.target.closest("#starConsole")
+){
+
+return;
+
+}
+
+if(
+event.target.closest(
+"a,button,summary"
+)
+){
+
+observe(1);
+
+}
+
+}
+);
+
+
+/* =========================================================
+   SCROLL OBSERVATION
+========================================================= */
+
+let scrollTimeout;
+
+window.addEventListener(
+"scroll",
+function(){
+
+clearTimeout(
+scrollTimeout
+);
+
+scrollTimeout=
+setTimeout(
+function(){
+
+observe(1);
+
+},
+250
+);
+
+},
+{
+passive:true
+}
+);
+
+
+/* =========================================================
+   READER EASTER EGG
+   TYPE "reader"
+========================================================= */
+
+let secretInput="";
+
+document.addEventListener(
+"keydown",
+function(event){
+
+if(
+event.target.tagName==="INPUT" ||
+event.target.tagName==="TEXTAREA"
+){
+
+return;
+
+}
+
+if(
+event.key.length!==1
+){
+
+return;
+
+}
+
+secretInput+=
+event.key.toLowerCase();
+
+if(
+secretInput.length>6
+){
+
+secretInput=
+secretInput.slice(-6);
+
+}
+
+if(
+secretInput==="reader"
+){
+
+document.body.classList.add(
+"reader-mode"
+);
+
+state.secrets++;
+
+saveState();
+
+narrativeInterruption([
+
+"【 READER PROTOCOL 】",
+
+"IDENTITY CONFIRMED.",
+
+"YOU ARE NOT MERELY OBSERVING THE STORY.",
+
+"THE STORY HAS BEGUN OBSERVING YOU."
+
+]);
+
+secretInput="";
+
+}
+
+}
+);
+
+
+/* =========================================================
+   RARE STAR STREAM EVENT
+========================================================= */
+
+setInterval(
+function(){
+
+if(
+Math.random()>.035
+)
+return;
+
+const main=
+document.getElementById(
+"main"
+);
+
+if(
+!main ||
+!main.classList.contains("show")
+)
+return;
+
+narrativeInterruption([
+
+"【 STAR STREAM NOTICE 】",
+
+"A forgotten story has been remembered.",
+
+"The archive has acknowledged your presence.",
+
+"Please continue."
+
+]);
+
+},
+25000
+);
+
+
+/* =========================================================
+   AFFINITY MILESTONES
+========================================================= */
+
+let milestone25=false;
+let milestone50=false;
+let milestone75=false;
+let milestone100=false;
+
+setInterval(
+function(){
+
+if(
+state.affinity>=25 &&
+!milestone25
+){
+
+milestone25=true;
+
+printConsole(
+"CONSTELLATION AFFINITY: 25%",
+"success"
+);
+
+}
+
+if(
+state.affinity>=50 &&
+!milestone50
+){
+
+milestone50=true;
+
+milestone50=true;
+
+narrativeInterruption([
+
+"【 CONSTELLATION NOTICE 】",
+
+"Your presence has become recognizable.",
+
+"Continue observing."
+
+]);
+
+}
+
+if(
+state.affinity>=75 &&
+!milestone75
+){
+
+milestone75=true;
+
+printConsole(
+"OBSERVER CLASSIFICATION UPDATED.",
+"warning"
+);
+
+}
+
+if(
+state.affinity>=100 &&
+!milestone100
+){
+
+milestone100=true;
+
+narrativeInterruption([
+
+"【 STAR STREAM ERROR 】",
+
+"The constellation is looking directly at you.",
+
+"Do not look back."
+
+]);
+
+}
+
+},
+1000
+);
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+updateHUD();
+
+})();
+
+</script>   
