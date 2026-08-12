@@ -22,33 +22,25 @@ overflow-x:hidden;
 min-height:100vh;
 }
 
-/* =========================
-   STARFIELD
-========================= */
-
 body:before{
 content:"";
 position:fixed;
 inset:0;
 pointer-events:none;
-
 background-image:
 radial-gradient(circle at 12% 18%,#fff 0 1px,transparent 1px),
 radial-gradient(circle at 78% 30%,#7dd3fc 0 1px,transparent 1px),
 radial-gradient(circle at 42% 72%,#fff 0 1px,transparent 1px),
 radial-gradient(circle at 91% 82%,#38bdf8 0 1px,transparent 1px),
 radial-gradient(circle at 62% 12%,#fff 0 1px,transparent 1px);
-
 background-size:
 180px 170px,
 250px 230px,
 310px 280px,
 220px 240px,
 340px 310px;
-
 opacity:.42;
 z-index:-2;
-
 animation:stars 35s linear infinite;
 }
 
@@ -57,31 +49,14 @@ content:"";
 position:fixed;
 inset:0;
 pointer-events:none;
-
 background:
-linear-gradient(
-180deg,
-rgba(14,116,144,.14),
-transparent 35%,
-rgba(2,6,23,.7)
-);
-
+linear-gradient(180deg,rgba(14,116,144,.14),transparent 35%,rgba(2,6,23,.7));
 z-index:-1;
 }
 
 @keyframes stars{
-0%{
-background-position:
-0 0,0 0,0 0,0 0,0 0;
-}
-100%{
-background-position:
-180px 170px,
-250px 230px,
-310px 280px,
-220px 240px,
-340px 310px;
-}
+0%{background-position:0 0,0 0,0 0,0 0,0 0}
+100%{background-position:180px 170px,250px 230px,310px 280px,220px 240px,340px 310px}
 }
 
 
@@ -97,10 +72,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 z-index:9999;
-
-transition:
-opacity 1.2s ease,
-visibility 1.2s ease;
+transition:opacity 1.2s ease,visibility 1.2s ease;
 }
 
 #connect.hide{
@@ -118,16 +90,8 @@ font-family:monospace;
 .bootbox{
 border:1px solid #38bdf8;
 padding:38px 25px;
-background:
-linear-gradient(
-180deg,
-rgba(3,15,31,.98),
-rgba(2,8,20,.98)
-);
-
-box-shadow:
-0 0 35px rgba(2,132,199,.18),
-inset 0 0 30px rgba(14,165,233,.03);
+background:linear-gradient(180deg,rgba(3,15,31,.98),rgba(2,8,20,.98));
+box-shadow:0 0 35px rgba(2,132,199,.18);
 }
 
 .boottitle{
@@ -141,10 +105,7 @@ font-size:clamp(22px,6vw,38px);
 letter-spacing:3px;
 margin:25px 0;
 color:#e0f2fe;
-
-text-shadow:
-0 0 15px #38bdf8,
-0 0 35px rgba(56,189,248,.25);
+text-shadow:0 0 15px #38bdf8,0 0 35px rgba(56,189,248,.25);
 }
 
 .loading{
@@ -159,13 +120,8 @@ border:1px solid #155e75;
 display:block;
 height:100%;
 width:0;
-
 background:#38bdf8;
-
-box-shadow:
-0 0 12px #38bdf8,
-0 0 25px rgba(56,189,248,.5);
-
+box-shadow:0 0 12px #38bdf8;
 animation:load 3.2s forwards;
 }
 
@@ -190,11 +146,9 @@ min-height:22px;
 display:none;
 margin-top:22px;
 padding:13px 30px;
-
 border:1px solid #38bdf8;
 background:rgba(14,165,233,.05);
 color:#bae6fd;
-
 cursor:pointer;
 letter-spacing:3px;
 font-weight:bold;
@@ -203,11 +157,7 @@ transition:.3s;
 
 .enter:hover{
 background:rgba(14,165,233,.16);
-
-box-shadow:
-0 0 20px rgba(56,189,248,.45),
-inset 0 0 15px rgba(56,189,248,.08);
-
+box-shadow:0 0 20px rgba(56,189,248,.45);
 color:white;
 transform:translateY(-2px);
 }
@@ -236,11 +186,7 @@ margin:35px auto;
 .system{
 border:1px solid #075985;
 background:rgba(2,11,24,.92);
-
-box-shadow:
-0 0 35px rgba(2,132,199,.15),
-0 0 100px rgba(14,165,233,.03);
-
+box-shadow:0 0 35px rgba(2,132,199,.15);
 position:relative;
 }
 
@@ -265,15 +211,7 @@ bottom:0;
 width:80%;
 height:1px;
 transform:translateX(-50%);
-
-background:
-linear-gradient(
-90deg,
-transparent,
-#38bdf8,
-transparent
-);
-
+background:linear-gradient(90deg,transparent,#38bdf8,transparent);
 box-shadow:0 0 12px #38bdf8;
 }
 
@@ -287,12 +225,8 @@ letter-spacing:3px;
 font-size:clamp(27px,7vw,48px);
 letter-spacing:5px;
 margin:15px 0 8px;
-
 color:#e0f2fe;
-
-text-shadow:
-0 0 20px rgba(56,189,248,.55),
-0 0 45px rgba(56,189,248,.12);
+text-shadow:0 0 20px rgba(56,189,248,.55);
 }
 
 .subtitle{
@@ -303,7 +237,7 @@ letter-spacing:2px;
 
 
 /* =========================
-   NAVIGATION
+   NAV
 ========================= */
 
 nav{
@@ -311,31 +245,22 @@ display:flex;
 justify-content:center;
 flex-wrap:wrap;
 gap:6px;
-
 padding:13px;
-
 border-bottom:1px solid #164e63;
-
 background:rgba(3,18,37,.95);
-
 position:sticky;
 top:0;
 z-index:20;
-
 backdrop-filter:blur(8px);
 }
 
 nav button{
 color:#7dd3fc;
 background:transparent;
-
 border:1px solid transparent;
-
 font-size:11px;
 letter-spacing:2px;
-
 padding:10px 16px;
-
 cursor:pointer;
 transition:.3s;
 }
@@ -344,9 +269,7 @@ nav button:hover,
 nav button.active{
 border-color:#0ea5e9;
 background:rgba(14,165,233,.08);
-
 color:white;
-
 text-shadow:0 0 8px #38bdf8;
 }
 
@@ -365,14 +288,8 @@ display:block;
 }
 
 @keyframes pageIn{
-from{
-opacity:0;
-transform:translateY(10px);
-}
-to{
-opacity:1;
-transform:translateY(0);
-}
+from{opacity:0;transform:translateY(10px)}
+to{opacity:1;transform:translateY(0)}
 }
 
 
@@ -383,16 +300,10 @@ transform:translateY(0);
 section{
 margin:18px;
 padding:23px;
-
 border:1px solid #164e63;
-
 background:rgba(7,23,43,.72);
-
 scroll-margin-top:80px;
-
-transition:
-border-color .3s,
-box-shadow .3s;
+transition:.3s;
 }
 
 section:hover{
@@ -408,14 +319,7 @@ font-size:13px;
 
 .line{
 height:1px;
-
-background:
-linear-gradient(
-90deg,
-#164e63,
-rgba(22,78,99,.2)
-);
-
+background:linear-gradient(90deg,#164e63,rgba(22,78,99,.2));
 margin:18px 0;
 }
 
@@ -424,23 +328,14 @@ font-size:14px;
 line-height:1.9;
 }
 
-.label{
-color:#38bdf8;
-}
-
-.value{
-color:#e0f2fe;
-}
+.label{color:#38bdf8}
+.value{color:#e0f2fe}
 
 .message{
 border-left:2px solid #38bdf8;
-
 padding:15px 17px;
-
 background:rgba(14,165,233,.035);
-
 color:#bae6fd;
-
 line-height:1.8;
 font-style:italic;
 }
@@ -452,29 +347,21 @@ font-style:italic;
 
 .fable{
 border:1px solid #164e63;
-
 padding:20px;
-
 background:rgba(3,13,28,.72);
-
 transition:.35s;
-
 position:relative;
 overflow:hidden;
 }
 
 .fable:before{
 content:"";
-
 position:absolute;
 top:0;
 left:-100%;
-
 width:100%;
 height:1px;
-
 background:#38bdf8;
-
 transition:.5s;
 }
 
@@ -484,10 +371,7 @@ left:100%;
 
 .fable:hover{
 border-color:#38bdf8;
-
-box-shadow:
-0 0 20px rgba(2,132,199,.15);
-
+box-shadow:0 0 20px rgba(2,132,199,.15);
 transform:translateY(-3px);
 }
 
@@ -513,13 +397,9 @@ color:#7dd3fc;
 
 .summary{
 margin:18px 0;
-
 padding-left:15px;
-
 border-left:1px solid #155e75;
-
 color:#bae6fd;
-
 font-size:13px;
 line-height:1.8;
 }
@@ -532,48 +412,33 @@ line-height:1.8;
 
 .access{
 display:inline-block;
-
 margin-top:15px;
-
 padding:10px 17px;
-
 border:1px solid #0ea5e9;
-
 color:#bae6fd;
-
 text-decoration:none;
-
 font-size:11px;
 letter-spacing:2px;
-
 transition:.3s;
 }
 
 .access:hover{
 background:rgba(14,165,233,.12);
-
-box-shadow:
-0 0 15px rgba(56,189,248,.35);
-
+box-shadow:0 0 15px rgba(56,189,248,.35);
 color:white;
-
 transform:translateX(3px);
 }
 
 .fableList{
 padding:12px;
 margin:8px 0;
-
 border:1px solid transparent;
-
 transition:.3s;
 }
 
 .fableList:hover{
 border-color:#0ea5e9;
-
 background:rgba(14,165,233,.07);
-
 transform:translateX(5px);
 }
 
@@ -584,27 +449,21 @@ color:#38bdf8;
 
 
 /* =========================
-   TRANSMISSION
+   TRANSMISSIONS
 ========================= */
 
 .transmission{
 padding:17px;
 margin:13px 0;
-
 border:1px dashed #155e75;
-
 background:rgba(2,10,22,.68);
-
 position:relative;
-
 transition:.3s;
 }
 
 .transmission:hover{
 border-color:#38bdf8;
-
 background:rgba(14,165,233,.035);
-
 transform:translateX(3px);
 }
 
@@ -623,9 +482,9 @@ margin-bottom:0;
 }
 
 
-/* =====================================================
-   NORMAL DETAILS
-===================================================== */
+/* =========================
+   DETAILS
+========================= */
 
 details{
 margin-top:15px;
@@ -636,12 +495,9 @@ background:rgba(2,10,22,.3);
 summary{
 cursor:pointer;
 padding:12px;
-
 color:#67e8f9;
-
 font-size:12px;
 letter-spacing:1px;
-
 transition:.3s;
 }
 
@@ -658,182 +514,139 @@ line-height:1.8;
 }
 
 
-/* =====================================================
-   CORRUPTED DETAILS
-===================================================== */
+/* =========================
+   RED SYSTEM ERROR
+========================= */
 
-.corrupt{
+.redReveal{
+display:none;
 position:relative;
-
-border:1px solid #7f1d1d !important;
-
-background:
-rgba(40,0,5,.35) !important;
-
 overflow:hidden;
 
+margin-top:12px;
+
+padding:18px;
+
+border:1px solid #ef4444;
+
+background:
+radial-gradient(
+circle at 50% 50%,
+rgba(127,29,29,.22),
+rgba(20,3,8,.96)
+);
+
+color:#fecaca;
+
+box-shadow:
+0 0 15px rgba(239,68,68,.2),
+inset 0 0 30px rgba(127,29,29,.12);
+
 animation:
-corruptOpen .45s ease,
-redPulse 2s infinite;
+redAppear .5s ease,
+redGlitch 2.2s infinite;
 }
 
-@keyframes corruptOpen{
+.redReveal.show{
+display:block;
+}
 
-0%{
+.redTitle{
+color:#f87171;
+font-family:monospace;
+font-weight:bold;
+letter-spacing:2px;
+font-size:12px;
+text-shadow:
+0 0 8px #ef4444,
+0 0 18px rgba(239,68,68,.4);
+}
+
+.redText{
+margin-top:12px;
+font-family:monospace;
+font-size:12px;
+line-height:1.8;
+color:#fecaca;
+}
+
+.redLine{
+height:1px;
+background:
+linear-gradient(
+90deg,
+transparent,
+#ef4444,
+transparent
+);
+
+margin:12px 0;
+
+box-shadow:0 0 8px #ef4444;
+}
+
+@keyframes redAppear{
+
+from{
 opacity:0;
-transform:
-translateX(-5px)
-skewX(-2deg);
+transform:scale(.98);
+filter:blur(4px);
 }
 
-40%{
+to{
 opacity:1;
-transform:
-translateX(4px)
-skewX(2deg);
-}
-
-70%{
-transform:
-translateX(-2px)
-skewX(-1deg);
-}
-
-100%{
-transform:none;
+transform:scale(1);
+filter:blur(0);
 }
 
 }
 
-@keyframes redPulse{
+@keyframes redGlitch{
 
-0%,100%{
-box-shadow:
-0 0 5px rgba(220,38,38,.08);
+0%,82%,100%{
+transform:translate(0);
 }
 
-50%{
-box-shadow:
-0 0 18px rgba(220,38,38,.22),
-inset 0 0 15px rgba(127,29,29,.08);
+84%{
+transform:translate(-2px,1px);
+}
+
+86%{
+transform:translate(2px,-1px);
+}
+
+88%{
+transform:translate(-1px,0);
 }
 
 }
 
-.corrupt:before{
+.redReveal:after{
 content:"";
 position:absolute;
-
 inset:0;
 
 background:
 repeating-linear-gradient(
 0deg,
-transparent 0px,
+transparent 0,
 transparent 3px,
-rgba(255,0,0,.08) 4px,
-transparent 5px
+rgba(239,68,68,.05) 4px
 );
 
 pointer-events:none;
 
-animation:
-scanline .7s linear infinite;
+animation:scanRed 1.4s linear infinite;
 }
 
-@keyframes scanline{
-
-from{
-transform:translateY(-10px);
-}
-
-to{
-transform:translateY(10px);
-}
-
-}
-
-.corrupt:after{
-content:"";
-
-position:absolute;
-
-top:0;
-left:-100%;
-
-width:40%;
-height:100%;
-
-background:
-linear-gradient(
-90deg,
-transparent,
-rgba(255,30,30,.2),
-transparent
-);
-
-animation:
-redSweep 2.2s infinite;
-}
-
-@keyframes redSweep{
+@keyframes scanRed{
 
 0%{
-left:-100%;
+transform:translateY(-10%);
 }
 
-45%,100%{
-left:130%;
-}
-
-}
-
-.corruptText{
-position:relative;
-z-index:2;
-
-color:#fca5a5;
-
-text-shadow:
-0 0 5px rgba(239,68,68,.7);
-
-font-family:monospace;
-}
-
-.corruptText strong{
-color:#ef4444;
-
-letter-spacing:2px;
-
-animation:
-redGlitch 1.2s infinite;
-}
-
-@keyframes redGlitch{
-
-0%,80%,100%{
-transform:none;
-opacity:1;
-}
-
-82%{
-transform:
-translateX(3px)
-skewX(-5deg);
-
-opacity:.7;
-}
-
-84%{
-transform:
-translateX(-3px)
-skewX(5deg);
-
-opacity:1;
-}
-
-86%{
-transform:none;
+100%{
+transform:translateY(10%);
 }
 
 }
@@ -845,95 +658,31 @@ transform:none;
 
 .redParticles{
 position:absolute;
-
 inset:0;
-
 pointer-events:none;
-
 overflow:hidden;
-
-z-index:1;
 }
 
-.redParticles span{
+.particle{
 position:absolute;
 
-width:2px;
-height:2px;
+width:3px;
+height:3px;
 
 background:#ef4444;
 
 box-shadow:
 0 0 6px #ef4444,
-0 0 12px rgba(239,68,68,.5);
+0 0 12px rgba(239,68,68,.7);
 
 animation:
-particleRise linear infinite;
+particleFloat linear infinite;
 }
 
-.redParticles span:nth-child(1){
-left:8%;
-bottom:-5%;
-animation-duration:3s;
-}
-
-.redParticles span:nth-child(2){
-left:17%;
-bottom:-5%;
-animation-duration:4.2s;
-animation-delay:.5s;
-}
-
-.redParticles span:nth-child(3){
-left:29%;
-bottom:-5%;
-animation-duration:3.5s;
-animation-delay:1s;
-}
-
-.redParticles span:nth-child(4){
-left:42%;
-bottom:-5%;
-animation-duration:5s;
-animation-delay:.2s;
-}
-
-.redParticles span:nth-child(5){
-left:57%;
-bottom:-5%;
-animation-duration:3.8s;
-animation-delay:1.4s;
-}
-
-.redParticles span:nth-child(6){
-left:69%;
-bottom:-5%;
-animation-duration:4.5s;
-animation-delay:.8s;
-}
-
-.redParticles span:nth-child(7){
-left:81%;
-bottom:-5%;
-animation-duration:3.2s;
-animation-delay:1.7s;
-}
-
-.redParticles span:nth-child(8){
-left:93%;
-bottom:-5%;
-animation-duration:4.8s;
-animation-delay:.3s;
-}
-
-@keyframes particleRise{
+@keyframes particleFloat{
 
 0%{
-transform:
-translateY(0)
-translateX(0)
-scale(.5);
-
+transform:translateY(110px) translateX(0);
 opacity:0;
 }
 
@@ -941,21 +690,12 @@ opacity:0;
 opacity:1;
 }
 
-50%{
-transform:
-translateY(-55px)
-translateX(8px)
-scale(1);
-
-opacity:.9;
+85%{
+opacity:1;
 }
 
 100%{
-transform:
-translateY(-120px)
-translateX(-10px)
-scale(.2);
-
+transform:translateY(-120px) translateX(35px);
 opacity:0;
 }
 
@@ -963,24 +703,25 @@ opacity:0;
 
 
 /* =========================
-   CORRUPTED SUMMARY
+   WARNING
 ========================= */
 
-.corrupt summary{
-color:#f87171;
-
-border-bottom:1px solid rgba(127,29,29,.4);
-
-text-shadow:
-0 0 8px rgba(239,68,68,.4);
+.warning{
+text-align:center;
+padding:20px;
+border:1px solid #1d4ed8;
+background:rgba(23,37,84,.2);
+color:#bae6fd;
+font-size:11px;
+line-height:1.8;
+letter-spacing:1px;
+cursor:pointer;
+transition:.3s;
 }
 
-.corrupt summary:hover{
-color:#fff;
-
-background:
-rgba(127,29,29,.12);
-
+.warning:hover{
+border-color:#2563eb;
+box-shadow:0 0 15px rgba(37,99,235,.2);
 }
 
 
@@ -990,167 +731,26 @@ rgba(127,29,29,.12);
 
 .channels{
 display:flex;
-
 justify-content:center;
-
 flex-wrap:wrap;
-
 gap:10px;
 }
 
 .channel{
 padding:11px 20px;
-
 border:1px solid #155e75;
-
 text-decoration:none;
-
 color:#bae6fd;
-
 font-size:11px;
-
 letter-spacing:2px;
-
 transition:.3s;
 }
 
 .channel:hover{
 border-color:#38bdf8;
-
-box-shadow:
-0 0 15px rgba(56,189,248,.3);
-
+box-shadow:0 0 15px rgba(56,189,248,.3);
 color:white;
-
 transform:translateY(-2px);
-}
-
-
-/* =====================================================
-   WARNING — RED CORRUPTED
-===================================================== */
-
-.warning{
-position:relative;
-
-overflow:hidden;
-
-text-align:center;
-
-padding:22px;
-
-border:1px solid #991b1b;
-
-background:
-rgba(69,10,10,.25);
-
-color:#fecaca;
-
-font-size:11px;
-
-line-height:1.8;
-
-letter-spacing:1px;
-
-box-shadow:
-0 0 12px rgba(127,29,29,.12),
-inset 0 0 25px rgba(127,29,29,.05);
-
-animation:
-warningPulse 2.8s infinite;
-}
-
-.warning:before{
-content:"";
-
-position:absolute;
-
-inset:0;
-
-background:
-repeating-linear-gradient(
-0deg,
-transparent 0,
-transparent 4px,
-rgba(239,68,68,.07) 5px,
-transparent 6px
-);
-
-pointer-events:none;
-
-animation:
-warningScan .8s linear infinite;
-}
-
-@keyframes warningScan{
-
-from{
-transform:translateY(-8px);
-}
-
-to{
-transform:translateY(8px);
-}
-
-}
-
-@keyframes warningPulse{
-
-0%,100%{
-border-color:#7f1d1d;
-box-shadow:
-0 0 8px rgba(127,29,29,.1);
-}
-
-50%{
-border-color:#ef4444;
-
-box-shadow:
-0 0 22px rgba(220,38,38,.22),
-inset 0 0 20px rgba(127,29,29,.08);
-}
-
-}
-
-.warningText{
-position:relative;
-z-index:3;
-
-color:#fca5a5;
-
-text-shadow:
-0 0 7px rgba(239,68,68,.6);
-
-animation:
-warningGlitch 1.8s infinite;
-}
-
-@keyframes warningGlitch{
-
-0%,88%,100%{
-transform:none;
-}
-
-90%{
-transform:
-translateX(2px)
-skewX(-2deg);
-
-color:#fff;
-}
-
-92%{
-transform:
-translateX(-2px)
-skewX(2deg);
-
-color:#ef4444;
-}
-
-94%{
-transform:none;
-}
-
 }
 
 
@@ -1160,15 +760,10 @@ transform:none;
 
 footer{
 text-align:center;
-
 padding:25px;
-
 font-size:10px;
-
 color:#475569;
-
 letter-spacing:2px;
-
 line-height:1.8;
 }
 
@@ -1183,13 +778,9 @@ animation:blink 1.4s infinite;
 
 @keyframes blink{
 
-0%,45%{
-opacity:1;
-}
+0%,45%{opacity:1}
 
-50%,100%{
-opacity:.3;
-}
+50%,100%{opacity:.3}
 
 }
 
@@ -1205,7 +796,6 @@ transform:none;
 
 95%{
 transform:translateX(2px);
-
 text-shadow:
 2px 0 #38bdf8,
 -2px 0 #0ea5e9;
@@ -1213,7 +803,6 @@ text-shadow:
 
 96%{
 transform:translateX(-2px);
-
 text-shadow:
 -2px 0 #38bdf8,
 2px 0 #0ea5e9;
@@ -1291,9 +880,9 @@ padding:30px 18px;
 @media(prefers-reduced-motion:reduce){
 
 *{
-animation-duration:.01ms !important;
-animation-iteration-count:1 !important;
-scroll-behavior:auto !important;
+animation-duration:.01ms!important;
+animation-iteration-count:1!important;
+scroll-behavior:auto!important;
 }
 
 }
@@ -1327,11 +916,9 @@ STAR STREAM...
 </div>
 
 <div class="bootstatus">
-
 <span id="status">
 SEARCHING FOR CONSTELLATION...
 </span>
-
 </div>
 
 <button class="enter" id="enter">
@@ -1354,6 +941,8 @@ SEARCHING FOR CONSTELLATION...
 
 <div class="system">
 
+
+<!-- HEADER -->
 
 <header>
 
@@ -1382,8 +971,7 @@ CONSTELLATION RECORD // ACTIVE
 
 <nav>
 
-<button
-class="active"
+<button class="active"
 onclick="showPage('home',this)">
 HOME
 </button>
@@ -1432,7 +1020,6 @@ CHANNELS
 
 ■
 <span class="label">Modifier:</span>
-
 <span class="value">
 「Keeper of Forgotten Stories」
 </span>
@@ -1441,7 +1028,6 @@ CHANNELS
 
 ■
 <span class="label">Grade:</span>
-
 <span class="value">
 Unknown.
 </span>
@@ -1450,7 +1036,6 @@ Unknown.
 
 ■
 <span class="label">Status:</span>
-
 <span class="value">
 Currently observing the Scenario.
 </span>
@@ -1459,7 +1044,6 @@ Currently observing the Scenario.
 
 ■
 <span class="label">Alignment:</span>
-
 <span class="value">
 Narrative Preservation.
 </span>
@@ -1468,7 +1052,6 @@ Narrative Preservation.
 
 ■
 <span class="label">Fables Registered:</span>
-
 <span class="value">
 1 and counting...
 </span>
@@ -1477,7 +1060,6 @@ Narrative Preservation.
 
 ■
 <span class="label">Incarnations Sponsored:</span>
-
 <span class="value">
 None. (Searching...)
 </span>
@@ -1518,7 +1100,6 @@ constellation is preserved as another Fable."
 
 <div class="line"></div>
 
-
 <div class="fableList">
 <i>The One Who Stayed Until The End</i>
 </div>
@@ -1536,32 +1117,32 @@ constellation is preserved as another Fable."
 </div>
 
 
-<!-- RED CORRUPTED WINDOW -->
-
-<details class="corrupt">
+<details class="secretDetails"
+data-message="fables">
 
 <summary>
 【 ▶ REVEAL REMAINING FABLES... 】
 </summary>
 
-<div class="redParticles">
-<span></span><span></span><span></span><span></span>
-<span></span><span></span><span></span><span></span>
+<div class="hidden">
+
+<div class="redReveal">
+
+<div class="redParticles"></div>
+
+<div class="redTitle">
+[ ERROR // NARRATIVE BREACH DETECTED ]
 </div>
 
-<div class="hidden corruptText">
+<div class="redLine"></div>
 
-<strong>
-[ STAR STREAM ERROR ]
-</strong>
-
-<br><br>
+<div class="redText">
 
 [RESTRICTED INFORMATION]
 
 <br><br>
 
-The remaining records have been sealed.
+The remaining Fables have been sealed.
 
 <br><br>
 
@@ -1569,22 +1150,18 @@ Permission level insufficient.
 
 <br><br>
 
-The Star Stream does not believe
-you are ready to read them.
+The Star Stream has classified
+these records as inaccessible.
 
 <br><br>
 
-<strong>
+<span class="blink">
 ACCESS DENIED.
-</strong>
+</span>
 
-<br><br>
+</div>
 
-[ WARNING ]
-
-<br>
-
-Unauthorized observation detected.
+</div>
 
 </div>
 
@@ -1604,7 +1181,6 @@ Unauthorized observation detected.
 
 <div class="line"></div>
 
-
 <div class="fableList">
 <i>「Witness to Unfinished Stories」</i>
 </div>
@@ -1614,24 +1190,28 @@ Unauthorized observation detected.
 </div>
 
 
-<!-- RED CORRUPTED WINDOW -->
-
-<details class="corrupt">
+<details class="secretDetails"
+data-message="attributes">
 
 <summary>
 【 ▶ REVEAL HIDDEN ATTRIBUTES... 】
 </summary>
 
-<div class="redParticles">
-<span></span><span></span><span></span><span></span>
-<span></span><span></span><span></span><span></span>
+<div class="hidden">
+
+<div class="redReveal">
+
+<div class="redParticles"></div>
+
+<div class="redTitle">
+[ WARNING // OBSERVER ACCESS DETECTED ]
 </div>
 
-<div class="hidden corruptText">
+<div class="redLine"></div>
 
-<strong>
-[ ATTRIBUTE DATABASE CORRUPTED ]
-</strong>
+<div class="redText">
+
+[RESTRICTED INFORMATION]
 
 <br><br>
 
@@ -1640,22 +1220,22 @@ to be observed by incarnations.
 
 <br><br>
 
-Observation itself may constitute
-an unauthorized interaction.
+Your current observation has been recorded.
 
 <br><br>
 
-[ DATA RECOVERY: FAILED ]
+Further inspection may produce
+unpredictable narrative consequences.
 
 <br><br>
 
-<strong>
-STOP LOOKING.
-</strong>
+<span class="blink">
+STOP OBSERVING.
+</span>
 
-<br><br>
+</div>
 
-The Star Stream has noticed you.
+</div>
 
 </div>
 
@@ -1701,18 +1281,13 @@ stories that should have been forgotten."
 
 
 
-<!-- ONLY HOME WARNING -->
+<!-- SINGLE WARNING -->
 
 <section>
 
-<div class="warning">
-
-<div class="redParticles">
-<span></span><span></span><span></span><span></span>
-<span></span><span></span><span></span><span></span>
-</div>
-
-<div class="warningText">
+<div
+class="warning"
+onclick="activateWarning(this)">
 
 ━━━━━━━━━━━━━━━━━━━━
 
@@ -1727,11 +1302,50 @@ alter your perception of the Scenario.
 
 <br><br>
 
+<span class="blink">
 The consequences cannot be reversed.
+</span>
 
 <br><br>
 
 ━━━━━━━━━━━━━━━━━━━━
+
+
+<div class="redReveal warningReveal">
+
+<div class="redParticles"></div>
+
+<div class="redTitle">
+[ CRITICAL WARNING // SYSTEM INSTABILITY ]
+</div>
+
+<div class="redLine"></div>
+
+<div class="redText">
+
+The warning has been acknowledged.
+
+<br><br>
+
+You were not supposed to interact
+with this message.
+
+<br><br>
+
+The Star Stream has registered
+your presence.
+
+<br><br>
+
+Do not attempt to close the connection.
+
+<br><br>
+
+<span class="blink">
+SOMETHING HAS NOTICED YOU.
+</span>
+
+</div>
 
 </div>
 
@@ -1783,7 +1397,6 @@ FABLE RECORD // #001
 FRESH START
 </div>
 
-
 <div class="meta">
 
 <strong>KakaObi</strong>
@@ -1809,9 +1422,7 @@ CREATOR CHOSE NOT TO USE ARCHIVE WARNINGS
 
 </div>
 
-
 <div class="line"></div>
-
 
 <div class="summary">
 
@@ -1858,7 +1469,6 @@ forgive any grammar mistakes or awkward wording.
 
 </div>
 
-
 <div class="tags">
 
 <strong>RELATIONSHIP:</strong>
@@ -1890,7 +1500,6 @@ Uchiha Obito Needs a Hug · Protective Uchiha Obito ·
 Other Additional Tags to Be Added
 
 </div>
-
 
 <a
 class="access"
@@ -1960,15 +1569,17 @@ another story.
 
 <div class="line"></div>
 
-
 <div class="message">
 
 Incoming transmission detected.
 
 <br><br>
 
-The following record has been
-authorized for observation.
+Source: CONSTELLATION DATABASE
+
+<br>
+
+Classification: NARRATIVE
 
 </div>
 
@@ -2001,68 +1612,18 @@ Classification: KakaObi
 
 Status: Ongoing
 
+<br><br>
+
+The Star Stream is currently
+monitoring narrative progression.
+
+<br><br>
+
+No conclusion has been detected.
+
 </p>
 
 </div>
-
-
-<!-- RED UNKNOWN TRANSMISSION -->
-
-<details class="corrupt">
-
-<summary>
-【 ▶ RECEIVE UNKNOWN TRANSMISSION... 】
-</summary>
-
-<div class="redParticles">
-<span></span><span></span><span></span><span></span>
-<span></span><span></span><span></span><span></span>
-</div>
-
-<div class="hidden corruptText">
-
-<strong>
-[ UNKNOWN TRANSMISSION DETECTED ]
-</strong>
-
-<br><br>
-
-...
-
-<br><br>
-
-You were not supposed to find this.
-
-<br><br>
-
-The Star Stream is watching.
-
-<br><br>
-
-No.
-
-<br>
-
-Something is watching
-through the Star Stream.
-
-<br><br>
-
-[ SIGNAL SOURCE: UNKNOWN ]
-
-<br><br>
-
-[ TRANSMISSION STATUS: CORRUPTED ]
-
-<br><br>
-
-<strong>
-DO NOT ANSWER.
-</strong>
-
-</div>
-
-</details>
 
 
 </section>
@@ -2087,7 +1648,6 @@ DO NOT ANSWER.
 
 <div class="line"></div>
 
-
 <div class="message">
 
 The constellation maintains several
@@ -2102,7 +1662,6 @@ identified.
 
 <br>
 
-
 <div class="channels">
 
 <a
@@ -2114,7 +1673,6 @@ rel="noopener">
 AO3
 
 </a>
-
 
 <a
 class="channel"
@@ -2131,7 +1689,6 @@ WATTPAD
 </section>
 
 
-
 <section>
 
 <div class="heading">
@@ -2139,7 +1696,6 @@ WATTPAD
 </div>
 
 <div class="line"></div>
-
 
 <div class="info">
 
@@ -2179,7 +1735,6 @@ NONE DETECTED
 </section>
 
 
-
 <section>
 
 <div class="heading">
@@ -2187,7 +1742,6 @@ NONE DETECTED
 </div>
 
 <div class="line"></div>
-
 
 <div class="message">
 
@@ -2216,46 +1770,8 @@ CONFIRMED.
 
 
 <!-- =====================================================
-     FOOTER WARNING
+     FOOTER
 ===================================================== -->
-
-<section>
-
-<div class="warning">
-
-<div class="redParticles">
-<span></span><span></span><span></span><span></span>
-<span></span><span></span><span></span><span></span>
-</div>
-
-<div class="warningText">
-
-━━━━━━━━━━━━━━━━━━━━
-
-<br>
-
-[ STAR STREAM WARNING ]
-
-<br><br>
-
-Interaction with this constellation may
-alter your perception of the Scenario.
-
-<br><br>
-
-The consequences cannot be reversed.
-
-<br><br>
-
-━━━━━━━━━━━━━━━━━━━━
-
-</div>
-
-</div>
-
-</section>
-
-
 
 <footer>
 
@@ -2287,11 +1803,11 @@ refused to forget them.」
 
 
 
-<!-- =====================================================
-     JAVASCRIPT
-===================================================== -->
-
 <script>
+
+/* =====================================================
+   STAR STREAM BOOT
+===================================================== */
 
 const status =
 document.getElementById("status");
@@ -2306,7 +1822,7 @@ const main =
 document.getElementById("main");
 
 
-const messages = [
+const messages=[
 
 "SEARCHING FOR CONSTELLATION...",
 
@@ -2322,15 +1838,14 @@ const messages = [
 
 ];
 
-
-let i = 0;
+let i=0;
 
 
 function updateStatus(){
 
-if(i < messages.length){
+if(i<messages.length){
 
-status.textContent =
+status.textContent=
 messages[i];
 
 i++;
@@ -2347,12 +1862,13 @@ updateStatus,
 updateStatus();
 
 
-/* ENTER */
+/* =====================================================
+   ENTER BUTTON
+===================================================== */
 
 setTimeout(function(){
 
-enter.style.display =
-"inline-block";
+enter.style.display="inline-block";
 
 },4300);
 
@@ -2365,19 +1881,19 @@ connect.classList.add("hide");
 
 main.classList.add("show");
 
-document.body.style.overflowY =
-"auto";
+document.body.style.overflowY="auto";
 
 window.scrollTo({
 top:0,
 behavior:"smooth"
 });
 
-}
-);
+});
 
 
-/* NAVIGATION */
+/* =====================================================
+   NAVIGATION
+===================================================== */
 
 function showPage(page,button){
 
@@ -2390,7 +1906,7 @@ p.classList.remove("active");
 });
 
 
-const selected =
+const selected=
 document.getElementById(page);
 
 if(selected){
@@ -2427,38 +1943,155 @@ behavior:"smooth"
 }
 
 
-/* SECRET WORD */
+/* =====================================================
+   RED PARTICLES
+===================================================== */
 
-let secret = "";
+function createParticles(container){
 
-const secretCode =
-"starstream";
+container.innerHTML="";
+
+for(let i=0;i<28;i++){
+
+const particle=
+document.createElement("span");
+
+particle.className="particle";
+
+particle.style.left=
+Math.random()*100+"%";
+
+particle.style.top=
+(60+Math.random()*50)+"%";
+
+particle.style.animationDuration=
+(1.5+Math.random()*2.5)+"s";
+
+particle.style.animationDelay=
+Math.random()*1.5+"s";
+
+particle.style.width=
+(1+Math.random()*3)+"px";
+
+particle.style.height=
+particle.style.width;
+
+container.appendChild(particle);
+
+}
+
+}
+
+
+/* =====================================================
+   SECRET RED REVEALS
+===================================================== */
+
+document
+.querySelectorAll(".secretDetails")
+.forEach(function(details){
+
+details.addEventListener(
+"toggle",
+function(){
+
+if(details.open){
+
+const reveal=
+details.querySelector(".redReveal");
+
+if(reveal){
+
+setTimeout(function(){
+
+reveal.classList.add("show");
+
+const particles=
+reveal.querySelector(".redParticles");
+
+if(particles){
+
+createParticles(particles);
+
+}
+
+},80);
+
+}
+
+}
+
+});
+
+});
+
+
+/* =====================================================
+   WARNING
+===================================================== */
+
+function activateWarning(element){
+
+if(element.dataset.activated==="true"){
+return;
+}
+
+element.dataset.activated="true";
+
+const reveal=
+element.querySelector(".warningReveal");
+
+if(!reveal){
+return;
+}
+
+reveal.classList.add("show");
+
+const particles=
+reveal.querySelector(".redParticles");
+
+if(particles){
+
+createParticles(particles);
+
+}
+
+}
+
+
+/* =====================================================
+   SECRET KEYWORD
+===================================================== */
+
+let secret="";
+
+const secretCode="starstream";
 
 document.addEventListener(
 "keydown",
 function(event){
 
-secret +=
+secret+=
 event.key.toLowerCase();
 
-if(secret.length >
+if(secret.length>
 secretCode.length){
 
-secret =
+secret=
 secret.slice(
 -secretCode.length
 );
 
 }
 
-if(secret === secretCode){
+if(secret===secretCode){
 
-document.body.style.textShadow =
-"0 0 4px #38bdf8";
+document.body.style.textShadow=
+"0 0 4px #ef4444";
 
 setTimeout(function(){
 
-document.body.style.textShadow =
+document.body.style.textShadow=
 "none";
 
 },2000);
@@ -2470,6 +2103,7 @@ console.log(
 }
 
 });
+
 
 </script>
 
