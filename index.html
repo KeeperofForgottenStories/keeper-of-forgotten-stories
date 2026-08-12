@@ -4427,8 +4427,24 @@ PROBABILITY:
 <button
 id="consoleButton"
 type="button"
-title="Open Star Stream Command Terminal"
-aria-label="Open Star Stream Command Terminal">
+aria-label="Open Star Stream Command Terminal"
+style="
+position:fixed;
+right:20px;
+bottom:20px;
+z-index:2147483647;
+width:42px;
+height:42px;
+padding:0;
+margin:0;
+border:1px solid #38bdf8;
+background:#020b18;
+color:#67e8f9;
+font-family:monospace;
+font-size:19px;
+cursor:pointer;
+pointer-events:auto;
+">
 ⌘
 </button>
 
@@ -5694,3 +5710,189 @@ updateHUD();
 })();
 
 </script>   
+<script>
+(function(){
+
+const button = document.getElementById("consoleButton");
+const terminal = document.getElementById("starConsole");
+const close = document.getElementById("consoleClose");
+const input = document.getElementById("consoleInput");
+
+if(!button){
+console.error("[STAR STREAM] ⌘ BUTTON NOT FOUND.");
+return;
+}
+
+if(!terminal){
+console.error("[STAR STREAM] TERMINAL NOT FOUND.");
+return;
+}
+
+
+/* ===============================
+   OPEN TERMINAL
+================================ */
+
+function openTerminal(){
+
+terminal.classList.add("open");
+
+terminal.style.opacity="1";
+terminal.style.visibility="visible";
+terminal.style.pointerEvents="auto";
+
+terminal.setAttribute(
+"aria-hidden",
+"false"
+);
+
+document.body.style.overflow="hidden";
+
+if(input){
+
+setTimeout(function(){
+input.focus();
+},100);
+
+}
+
+}
+
+
+/* ===============================
+   CLOSE TERMINAL
+================================ */
+
+function closeTerminal(){
+
+terminal.classList.remove("open");
+
+terminal.style.opacity="";
+terminal.style.visibility="";
+terminal.style.pointerEvents="";
+
+terminal.setAttribute(
+"aria-hidden",
+"true"
+);
+
+document.body.style.overflow="";
+
+}
+
+
+/* ===============================
+   ⌘ BUTTON
+================================ */
+
+button.onclick=function(event){
+
+event.preventDefault();
+event.stopPropagation();
+
+openTerminal();
+
+};
+
+
+/* ===============================
+   CLOSE
+================================ */
+
+if(close){
+
+close.onclick=function(event){
+
+event.preventDefault();
+event.stopPropagation();
+
+closeTerminal();
+
+};
+
+}
+
+
+/* ===============================
+   CLICK OUTSIDE
+================================ */
+
+terminal.addEventListener(
+"click",
+function(event){
+
+if(event.target===terminal){
+
+closeTerminal();
+
+}
+
+}
+);
+
+
+/* ===============================
+   ESC
+================================ */
+
+document.addEventListener(
+"keydown",
+function(event){
+
+if(
+event.key==="Escape" &&
+terminal.classList.contains("open")
+){
+
+closeTerminal();
+
+}
+
+}
+);
+
+
+/* ===============================
+   CTRL + SHIFT + K
+================================ */
+
+document.addEventListener(
+"keydown",
+function(event){
+
+if(
+event.ctrlKey &&
+event.shiftKey &&
+event.key.toLowerCase()==="k"
+){
+
+event.preventDefault();
+
+if(
+terminal.classList.contains("open")
+){
+
+closeTerminal();
+
+}else{
+
+openTerminal();
+
+}
+
+}
+
+}
+);
+
+
+/* ===============================
+   DEBUG
+================================ */
+
+console.log(
+"[STAR STREAM] COMMAND TERMINAL ONLINE."
+);
+
+})();
+</script>
