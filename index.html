@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Keeper of Forgotten Stories</title>
+
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+
+body{
+ margin:0;
+ background:#030712;
+ color:#dbeafe;
+ font-family:Arial,Helvetica,sans-serif;
+ min-height:100vh;
+ overflow-x:hidden;
+}
+
+body:before{
+ content:"";
+ position:fixed;
+ inset:0;
+ pointer-events:none;
+ background-image:
+ radial-gradient(circle at 15% 20%,#ffffff 0 1px,transparent 1px),
+ radial-gradient(circle at 75% 35%,#8bd5ff 0 1px,transparent 1px),
+ radial-gradient(circle at 40% 80%,#ffffff 0 1px,transparent 1px),
+ radial-gradient(circle at 90% 85%,#7dd3fc 0 1px,transparent 1px);
+ background-size:190px 170px,260px 230px,320px 290px,230px 250px;
+ opacity:.35;
+ z-index:-1;
+}
+
+body:after{
+ content:"";
+ position:fixed;
+ inset:0;
+ pointer-events:none;
+ background:linear-gradient(180deg,rgba(15,76,129,.16),transparent 35%,rgba(5,20,45,.35));
+ z-index:-2;
+}
+
+.container{
+ width:min(900px,92%);
+ margin:45px auto;
+}
+
+.system{
+ border:1px solid #38bdf8;
+ box-shadow:0 0 20px rgba(14,165,233,.16);
+ background:rgba(3,12,28,.91);
+}
+
+.header{
+ padding:28px 25px;
+ text-align:center;
+ border-bottom:1px solid #164e63;
+}
+
+.small{
+ color:#67e8f9;
+ font-size:12px;
+ letter-spacing:3px;
+}
+
+.title{
+ margin:12px 0 5px;
+ color:#e0f2fe;
+ font-size:clamp(25px,6vw,45px);
+ letter-spacing:5px;
+ text-shadow:0 0 18px rgba(56,189,248,.65);
+}
+
+.subtitle{
+ color:#7dd3fc;
+ font-size:13px;
+ letter-spacing:2px;
+}
+
+.section{
+ margin:18px;
+ padding:22px;
+ border:1px solid #164e63;
+ background:rgba(8,25,48,.68);
+}
+
+.section-title{
+ color:#67e8f9;
+ font-weight:bold;
+ letter-spacing:2px;
+ margin-bottom:17px;
+}
+
+.line{
+ height:1px;
+ background:#164e63;
+ margin:18px 0;
+}
+
+.info{
+ line-height:1.9;
+ font-size:14px;
+}
+
+.label{color:#38bdf8}
+.value{color:#e0f2fe}
+
+.quote{
+ border-left:2px solid #38bdf8;
+ padding:12px 16px;
+ color:#bae6fd;
+ font-style:italic;
+ line-height:1.7;
+ background:rgba(14,165,233,.045);
+}
+
+.fable{
+ padding:10px 12px;
+ margin:7px 0;
+ border:1px solid transparent;
+ transition:.25s;
+ color:#dbeafe;
+}
+
+.fable:hover{
+ border-color:#0ea5e9;
+ background:rgba(14,165,233,.08);
+ transform:translateX(5px);
+}
+
+.fable:before{
+ content:"✦ ";
+ color:#38bdf8;
+}
+
+.restricted{
+ color:#64748b;
+ font-size:12px;
+ font-style:italic;
+}
+
+details{
+ margin-top:12px;
+ border:1px dashed #155e75;
+}
+
+summary{
+ cursor:pointer;
+ padding:11px;
+ color:#67e8f9;
+ font-size:13px;
+}
+
+.hidden{
+ padding:12px;
+ color:#64748b;
+ font-size:12px;
+}
+
+.warning{
+ border:1px solid #2563eb;
+ color:#bae6fd;
+ text-align:center;
+ padding:17px;
+ line-height:1.7;
+ font-size:12px;
+ letter-spacing:1px;
+ background:rgba(30,64,175,.08);
+}
+
+.links{
+ display:flex;
+ flex-wrap:wrap;
+ justify-content:center;
+ gap:10px;
+}
+
+.link{
+ text-decoration:none;
+ color:#bae6fd;
+ border:1px solid #155e75;
+ padding:10px 18px;
+ font-size:12px;
+ letter-spacing:1px;
+ transition:.25s;
+}
+
+.link:hover{
+ color:white;
+ border-color:#38bdf8;
+ box-shadow:0 0 12px rgba(56,189,248,.3);
+}
+
+.footer{
+ text-align:center;
+ padding:25px;
+ color:#475569;
+ font-size:11px;
+ letter-spacing:1px;
+}
+
+.blink{animation:blink 1.5s infinite}
+@keyframes blink{
+ 0%,45%{opacity:1}
+ 50%,100%{opacity:.35}
+}
+
+@media(max-width:600px){
+ .container{margin:20px auto}
+ .section{margin:10px;padding:17px}
+ .title{letter-spacing:3px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="system">
+
+<header class="header">
+<div class="small">【 STAR STREAM CONNECTION ESTABLISHED 】</div>
+
+<h1 class="title">KEEPER OF<br>FORGOTTEN STORIES</h1>
+
+<div class="subtitle">
+<span class="blink">●</span>
+CONSTELLATION DATABASE // ACTIVE
+</div>
+</header>
+
+
+<!-- TRANSMISSION -->
+
+<section class="section">
+
+<div class="section-title">
+【 ▶ TRANSMISSION RECEIVED: Constellation Data... 】
+</div>
+
+<div class="line"></div>
+
+<div class="section-title">
+[ CONSTELLATION STATUS SHEET ]
+</div>
+
+<div class="info">
+■ <span class="label">Modifier:</span>
+<span class="value">「Keeper of Forgotten Stories」</span><br>
+
+■ <span class="label">Grade:</span>
+<span class="value">Unknown.</span><br>
+
+■ <span class="label">Status:</span>
+<span class="value">Currently observing the Scenario.</span><br>
+
+■ <span class="label">Alignment:</span>
+<span class="value">Narrative Preservation.</span><br>
+
+■ <span class="label">Incarnations Sponsored:</span>
+<span class="value">None. (Searching...)</span>
+</div>
+
+<div class="line"></div>
+
+<div class="section-title">
+[ STAR STREAM EVALUATION ]
+</div>
+
+<div class="quote">
+"The Star Stream has recognized this constellation's
+obsession with unfinished stories. Every forgotten tale
+entrusted to this constellation is preserved as another Fable."
+</div>
+
+</section>
+
+
+<!-- FABLES -->
+
+<section class="section">
+
+<div class="section-title">
+[ ACQUIRED FABLES ]
+</div>
+
+<div class="fable">
+<i>The One Who Stayed Until The End</i>
+</div>
+
+<div class="fable">
+<i>The Author Who Loved Her Characters Too Much</i>
+</div>
+
+<div class="fable">
+<i>The Witness Beyond The Ending</i>
+</div>
+
+<div class="fable">
+<i>The Keeper of Unfinished Stories</i>
+</div>
+
+<details>
+<summary>【 ▶ Reveal Hidden Fables... 】</summary>
+<div class="hidden">
+[RESTRICTED INFORMATION: Fables data sealed.]<br><br>
+The remaining records have been classified
+as unnecessary information.
+<br><br>
+<span class="blink">Permission denied.</span>
+</div>
+</details>
+
+</section>
+
+
+<!-- ATTRIBUTES -->
+
+<section class="section">
+
+<div class="section-title">
+[ CONSTELLATION ATTRIBUTE ]
+</div>
+
+<div class="fable">
+<i>「Witness to Unfinished Stories」</i>
+</div>
+
+<div class="fable">
+<i>「The Hand That Writes Their Second Chances」</i>
+</div>
+
+<details>
+<summary>【 ▶ Reveal Hidden Attributes... 】</summary>
+<div class="hidden">
+[RESTRICTED INFORMATION: Attribute data sealed.]<br><br>
+Some attributes are not meant to be
+observed by incarnations.
+</div>
+</details>
+
+</section>
+
+
+<!-- ORIGIN -->
+
+<section class="section">
+
+<div class="section-title">
+[ ORIGIN RECORD ]
+</div>
+
+<div class="quote">
+"Born from countless unfinished stories and the readers
+who refused to let them disappear."
+</div>
+
+<div class="line"></div>
+
+<div class="section-title">
+[ CONSTELLATION REPUTATION ]
+</div>
+
+<div class="quote">
+"A quiet constellation known for preserving stories
+that should have been forgotten."
+</div>
+
+</section>
+
+
+<!-- AUTHOR DATA -->
+
+<section class="section">
+
+<div class="section-title">
+[ INCARNATION INFORMATION ]
+</div>
+
+<div class="info">
+
+■ <span class="label">Designation:</span>
+<span class="value">Author / Reader</span><br>
+
+■ <span class="label">Primary Activity:</span>
+<span class="value">Writing stories that probably should have been left alone.</span><br>
+
+■ <span class="label">Known Weakness:</span>
+<span class="value">Fictional characters.</span><br>
+
+■ <span class="label">Current Scenario:</span>
+<span class="value">Creating another story.</span><br>
+
+■ <span class="label">Survival Probability:</span>
+<span class="value">Uncertain.</span>
+
+</div>
+
+</section>
+
+
+<!-- LINKS -->
+
+<section class="section">
+
+<div class="section-title">
+[ EXTERNAL CHANNELS ]
+</div>
+
+<div class="links">
+
+<a class="link" href="#" target="_blank">
+AO3
+</a>
+
+<a class="link" href="#" target="_blank">
+WATTPAD
+</a>
+
+<a class="link" href="#" target="_blank">
+OTHER CHANNEL
+</a>
+
+</div>
+
+</section>
+
+
+<!-- WARNING -->
+
+<section class="section">
+
+<div class="warning">
+━━━━━━━━━━━━━━━━━━━━<br>
+[ WARNING: SYSTEM MESSAGE ]<br><br>
+
+Interaction with this constellation may alter
+your perception of the Scenario.<br><br>
+
+<span class="blink">
+The consequences cannot be reversed.
+</span>
+
+<br>━━━━━━━━━━━━━━━━━━━━
+</div>
+
+</section>
+
+
+<footer class="footer">
+STAR STREAM DATABASE // RECORD #KFS-001<br>
+STATUS: OBSERVING THE SCENARIO
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>
