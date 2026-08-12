@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Keeper of Forgotten Stories</title>
 
 <style>
@@ -10,244 +10,492 @@
 html{scroll-behavior:smooth}
 
 body{
- margin:0;
- background:#030712;
- color:#dbeafe;
- font-family:Arial,Helvetica,sans-serif;
- min-height:100vh;
- overflow-x:hidden;
+margin:0;
+background:#020611;
+color:#dbeafe;
+font-family:Arial,Helvetica,sans-serif;
+overflow-x:hidden;
 }
 
 body:before{
- content:"";
- position:fixed;
- inset:0;
- pointer-events:none;
- background-image:
- radial-gradient(circle at 15% 20%,#ffffff 0 1px,transparent 1px),
- radial-gradient(circle at 75% 35%,#8bd5ff 0 1px,transparent 1px),
- radial-gradient(circle at 40% 80%,#ffffff 0 1px,transparent 1px),
- radial-gradient(circle at 90% 85%,#7dd3fc 0 1px,transparent 1px);
- background-size:190px 170px,260px 230px,320px 290px,230px 250px;
- opacity:.35;
- z-index:-1;
+content:"";
+position:fixed;
+inset:0;
+pointer-events:none;
+background-image:
+radial-gradient(circle,#fff 0 1px,transparent 1px),
+radial-gradient(circle,#7dd3fc 0 1px,transparent 1px),
+radial-gradient(circle,#fff 0 1px,transparent 1px);
+background-size:180px 180px,270px 240px,340px 300px;
+opacity:.3;
+z-index:-2;
+animation:stars 30s linear infinite;
 }
 
 body:after{
- content:"";
- position:fixed;
- inset:0;
- pointer-events:none;
- background:linear-gradient(180deg,rgba(15,76,129,.16),transparent 35%,rgba(5,20,45,.35));
- z-index:-2;
+content:"";
+position:fixed;
+inset:0;
+background:linear-gradient(180deg,#06152d55,#020611,#03152a);
+pointer-events:none;
+z-index:-1;
 }
 
+@keyframes stars{
+from{background-position:0 0,0 0,0 0}
+to{background-position:180px 180px,270px 240px,340px 300px}
+}
+
+#connect{
+position:fixed;
+inset:0;
+background:#020611;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:9999;
+transition:opacity 1s,visibility 1s;
+}
+
+#connect.hide{
+opacity:0;
+visibility:hidden;
+}
+
+.boot{
+width:min(650px,88%);
+text-align:center;
+font-family:monospace;
+}
+
+.bootbox{
+border:1px solid #38bdf8;
+padding:35px 25px;
+background:#030b19;
+box-shadow:0 0 35px #0284c733;
+}
+
+.boottitle{
+font-size:13px;
+letter-spacing:5px;
+color:#67e8f9;
+}
+
+.bootmain{
+font-size:clamp(22px,6vw,38px);
+letter-spacing:3px;
+margin:25px 0;
+color:#e0f2fe;
+text-shadow:0 0 15px #38bdf8;
+}
+
+.loading{
+height:5px;
+background:#082f49;
+margin:20px 0;
+overflow:hidden;
+}
+
+.loading span{
+display:block;
+height:100%;
+width:0;
+background:#38bdf8;
+box-shadow:0 0 12px #38bdf8;
+animation:load 3s forwards;
+}
+
+@keyframes load{to{width:100%}}
+
+.bootstatus{
+font-size:11px;
+color:#7dd3fc;
+letter-spacing:2px;
+line-height:2;
+}
+
+.enter{
+display:none;
+margin-top:22px;
+padding:12px 30px;
+border:1px solid #38bdf8;
+background:transparent;
+color:#bae6fd;
+cursor:pointer;
+letter-spacing:3px;
+font-weight:bold;
+}
+
+.enter:hover{
+background:#0ea5e922;
+box-shadow:0 0 20px #38bdf855;
+}
+
+#main{
+opacity:0;
+transition:opacity 1.2s;
+}
+
+#main.show{opacity:1}
+
 .container{
- width:min(900px,92%);
- margin:45px auto;
+width:min(950px,92%);
+margin:35px auto;
 }
 
 .system{
- border:1px solid #38bdf8;
- box-shadow:0 0 20px rgba(14,165,233,.16);
- background:rgba(3,12,28,.91);
+border:1px solid #075985;
+background:#020b18e8;
+box-shadow:0 0 35px #0284c722;
 }
 
-.header{
- padding:28px 25px;
- text-align:center;
- border-bottom:1px solid #164e63;
+header{
+padding:35px 20px;
+text-align:center;
+border-bottom:1px solid #164e63;
 }
 
-.small{
- color:#67e8f9;
- font-size:12px;
- letter-spacing:3px;
+.signal{
+font-size:11px;
+color:#67e8f9;
+letter-spacing:3px;
 }
 
 .title{
- margin:12px 0 5px;
- color:#e0f2fe;
- font-size:clamp(25px,6vw,45px);
- letter-spacing:5px;
- text-shadow:0 0 18px rgba(56,189,248,.65);
+font-size:clamp(27px,7vw,48px);
+letter-spacing:5px;
+margin:15px 0 8px;
+color:#e0f2fe;
+text-shadow:0 0 20px #38bdf877;
 }
 
 .subtitle{
- color:#7dd3fc;
- font-size:13px;
- letter-spacing:2px;
+font-size:12px;
+color:#7dd3fc;
+letter-spacing:2px;
 }
 
-.section{
- margin:18px;
- padding:22px;
- border:1px solid #164e63;
- background:rgba(8,25,48,.68);
+nav{
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:8px;
+padding:15px;
+border-bottom:1px solid #164e63;
+background:#031225;
+position:sticky;
+top:0;
+z-index:20;
 }
 
-.section-title{
- color:#67e8f9;
- font-weight:bold;
- letter-spacing:2px;
- margin-bottom:17px;
+nav a{
+color:#7dd3fc;
+text-decoration:none;
+font-size:11px;
+letter-spacing:2px;
+padding:9px 15px;
+border:1px solid transparent;
+}
+
+nav a:hover{
+border-color:#0ea5e9;
+background:#0ea5e912;
+color:white;
+}
+
+section{
+margin:18px;
+padding:23px;
+border:1px solid #164e63;
+background:#07172bb5;
+scroll-margin-top:70px;
+}
+
+.heading{
+color:#67e8f9;
+font-weight:bold;
+letter-spacing:2px;
+font-size:13px;
 }
 
 .line{
- height:1px;
- background:#164e63;
- margin:18px 0;
+height:1px;
+background:#164e63;
+margin:18px 0;
 }
 
 .info{
- line-height:1.9;
- font-size:14px;
+font-size:14px;
+line-height:1.9;
 }
 
 .label{color:#38bdf8}
 .value{color:#e0f2fe}
 
-.quote{
- border-left:2px solid #38bdf8;
- padding:12px 16px;
- color:#bae6fd;
- font-style:italic;
- line-height:1.7;
- background:rgba(14,165,233,.045);
+.message{
+border-left:2px solid #38bdf8;
+padding:15px 17px;
+background:#0ea5e908;
+color:#bae6fd;
+line-height:1.8;
+font-style:italic;
 }
 
 .fable{
- padding:10px 12px;
- margin:7px 0;
- border:1px solid transparent;
- transition:.25s;
- color:#dbeafe;
+border:1px solid #164e63;
+padding:20px;
+background:#030d1caa;
+transition:.3s;
 }
 
 .fable:hover{
- border-color:#0ea5e9;
- background:rgba(14,165,233,.08);
- transform:translateX(5px);
+border-color:#38bdf8;
+box-shadow:0 0 20px #0284c722;
+transform:translateY(-2px);
 }
 
-.fable:before{
- content:"✦ ";
- color:#38bdf8;
+.fableid{
+color:#64748b;
+font-family:monospace;
+font-size:11px;
 }
 
-.restricted{
- color:#64748b;
- font-size:12px;
- font-style:italic;
+.fabletitle{
+font-size:21px;
+color:#e0f2fe;
+letter-spacing:2px;
+margin:8px 0;
+}
+
+.meta{
+font-size:12px;
+line-height:1.8;
+color:#7dd3fc;
+}
+
+.summary{
+margin:18px 0;
+padding-left:15px;
+border-left:1px solid #155e75;
+color:#bae6fd;
+font-size:13px;
+line-height:1.8;
+}
+
+.tags{
+font-size:11px;
+color:#64748b;
+line-height:1.8;
+}
+
+.access{
+display:inline-block;
+margin-top:15px;
+padding:10px 17px;
+border:1px solid #0ea5e9;
+color:#bae6fd;
+text-decoration:none;
+font-size:11px;
+letter-spacing:2px;
+transition:.25s;
+}
+
+.access:hover{
+background:#0ea5e922;
+box-shadow:0 0 15px #38bdf855;
+color:white;
+}
+
+.transmission{
+padding:16px;
+margin:12px 0;
+border:1px dashed #155e75;
+background:#020a16aa;
+}
+
+.transmission strong{
+color:#67e8f9;
+font-family:monospace;
+font-size:12px;
+}
+
+.transmission p{
+font-size:13px;
+line-height:1.7;
+color:#bae6fd;
 }
 
 details{
- margin-top:12px;
- border:1px dashed #155e75;
+margin-top:15px;
+border:1px dashed #155e75;
 }
 
 summary{
- cursor:pointer;
- padding:11px;
- color:#67e8f9;
- font-size:13px;
+cursor:pointer;
+padding:12px;
+color:#67e8f9;
+font-size:12px;
+letter-spacing:1px;
 }
 
 .hidden{
- padding:12px;
- color:#64748b;
- font-size:12px;
+padding:15px;
+color:#64748b;
+font-size:12px;
+line-height:1.8;
+}
+
+.channels{
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:10px;
+}
+
+.channel{
+padding:11px 20px;
+border:1px solid #155e75;
+text-decoration:none;
+color:#bae6fd;
+font-size:11px;
+letter-spacing:2px;
+transition:.25s;
+}
+
+.channel:hover{
+border-color:#38bdf8;
+box-shadow:0 0 15px #38bdf844;
+color:white;
 }
 
 .warning{
- border:1px solid #2563eb;
- color:#bae6fd;
- text-align:center;
- padding:17px;
- line-height:1.7;
- font-size:12px;
- letter-spacing:1px;
- background:rgba(30,64,175,.08);
+text-align:center;
+padding:20px;
+border:1px solid #1d4ed8;
+background:#17255433;
+color:#bae6fd;
+font-size:11px;
+line-height:1.8;
+letter-spacing:1px;
 }
 
-.links{
- display:flex;
- flex-wrap:wrap;
- justify-content:center;
- gap:10px;
-}
+.blink{animation:blink 1.4s infinite}
 
-.link{
- text-decoration:none;
- color:#bae6fd;
- border:1px solid #155e75;
- padding:10px 18px;
- font-size:12px;
- letter-spacing:1px;
- transition:.25s;
-}
-
-.link:hover{
- color:white;
- border-color:#38bdf8;
- box-shadow:0 0 12px rgba(56,189,248,.3);
-}
-
-.footer{
- text-align:center;
- padding:25px;
- color:#475569;
- font-size:11px;
- letter-spacing:1px;
-}
-
-.blink{animation:blink 1.5s infinite}
 @keyframes blink{
- 0%,45%{opacity:1}
- 50%,100%{opacity:.35}
+0%,45%{opacity:1}
+50%,100%{opacity:.3}
+}
+
+footer{
+text-align:center;
+padding:25px;
+font-size:10px;
+color:#475569;
+letter-spacing:2px;
+line-height:1.8;
+}
+
+.glitch{
+animation:glitch 4s infinite;
+}
+
+@keyframes glitch{
+0%,94%,100%{transform:none}
+95%{transform:translateX:2px}
+96%{transform:translateX(-2px)}
+97%{transform:none}
 }
 
 @media(max-width:600px){
- .container{margin:20px auto}
- .section{margin:10px;padding:17px}
- .title{letter-spacing:3px}
+.container{width:96%;margin:15px auto}
+section{margin:10px;padding:17px}
+.title{letter-spacing:3px}
+nav a{padding:8px 10px}
 }
 </style>
 </head>
 
 <body>
 
+<!-- STAR STREAM CONNECTION -->
+
+<div id="connect">
+
+<div class="bootbox boot">
+
+<div class="boottitle">
+【 STAR STREAM CONNECTION 】
+</div>
+
+<div class="bootmain glitch">
+CONNECTING TO<br>STAR STREAM...
+</div>
+
+<div class="loading">
+<span></span>
+</div>
+
+<div class="bootstatus">
+<span id="status">SEARCHING FOR CONSTELLATION...</span>
+</div>
+
+<button class="enter" id="enter">
+[ ENTER THE SCENARIO ]
+</button>
+
+</div>
+
+</div>
+
+
+<!-- MAIN SITE -->
+
+<div id="main">
+
 <div class="container">
 
 <div class="system">
 
-<header class="header">
-<div class="small">【 STAR STREAM CONNECTION ESTABLISHED 】</div>
+<header>
 
-<h1 class="title">KEEPER OF<br>FORGOTTEN STORIES</h1>
+<div class="signal">
+【 TRANSMISSION CONNECTION ESTABLISHED 】
+</div>
+
+<h1 class="title">
+KEEPER OF<br>FORGOTTEN STORIES
+</h1>
 
 <div class="subtitle">
 <span class="blink">●</span>
-CONSTELLATION DATABASE // ACTIVE
+CONSTELLATION RECORD // ACTIVE
 </div>
+
 </header>
 
 
-<!-- TRANSMISSION -->
+<!-- NAVIGATION -->
 
-<section class="section">
+<nav>
+<a href="#home">HOME</a>
+<a href="#fables">FABLES</a>
+<a href="#transmissions">TRANSMISSIONS</a>
+<a href="#channels">CHANNELS</a>
+</nav>
 
-<div class="section-title">
-【 ▶ TRANSMISSION RECEIVED: Constellation Data... 】
+
+<!-- HOME -->
+
+<section id="home">
+
+<div class="heading">
+【 CONSTELLATION STATUS SHEET 】
 </div>
 
 <div class="line"></div>
 
-<div class="section-title">
-[ CONSTELLATION STATUS SHEET ]
-</div>
-
 <div class="info">
+
 ■ <span class="label">Modifier:</span>
 <span class="value">「Keeper of Forgotten Stories」</span><br>
 
@@ -260,20 +508,25 @@ CONSTELLATION DATABASE // ACTIVE
 ■ <span class="label">Alignment:</span>
 <span class="value">Narrative Preservation.</span><br>
 
-■ <span class="label">Incarnations Sponsored:</span>
-<span class="value">None. (Searching...)</span>
+■ <span class="label">Fables Registered:</span>
+<span class="value">1 and counting...</span>
+
 </div>
 
 <div class="line"></div>
 
-<div class="section-title">
-[ STAR STREAM EVALUATION ]
+<div class="heading">
+【 STAR STREAM EVALUATION 】
 </div>
 
-<div class="quote">
+<br>
+
+<div class="message">
 "The Star Stream has recognized this constellation's
-obsession with unfinished stories. Every forgotten tale
-entrusted to this constellation is preserved as another Fable."
+obsession with unfinished stories.<br><br>
+
+Every forgotten tale entrusted to this constellation
+is preserved as another Fable."
 </div>
 
 </section>
@@ -281,11 +534,181 @@ entrusted to this constellation is preserved as another Fable."
 
 <!-- FABLES -->
 
-<section class="section">
+<section id="fables">
 
-<div class="section-title">
-[ ACQUIRED FABLES ]
+<div class="heading">
+【 FABLE ARCHIVE 】
 </div>
+
+<div class="line"></div>
+
+<div class="fable">
+
+<div class="fableid">
+FABLE RECORD // #001
+</div>
+
+<div class="fabletitle">
+FRESH START
+</div>
+
+<div class="meta">
+KakaObi · Naruto (Anime & Manga)<br>
+STATUS: ONGOING · CHAPTERS: 13/?<br>
+WORD COUNT: 56,950<br>
+RATING: TEEN AND UP AUDIENCES
+</div>
+
+<div class="line"></div>
+
+<div class="summary">
+
+"I knew that helping in the end would never be
+enough to make up for everything I had done."
+
+<br><br>
+
+If Obito could start over from the beginning,
+he would do everything in his power to prevent
+the tragedies that once consumed his life.
+
+Maybe only then could he finally be at peace.
+
+<br><br>
+
+A second chance. A different beginning.
+Perhaps a different ending.
+
+</div>
+
+<div class="tags">
+TIME TRAVEL · BOTTOM UCHIHA OBITO ·
+PROTECTIVE UCHIHA OBITO · UCHIHA OBITO NEEDS A HUG
+</div>
+
+<a class="access"
+href="https://archiveofourown.org/works/84746576"
+target="_blank">
+[ ACCESS FABLE ]
+</a>
+
+</div>
+
+<br>
+
+<details>
+<summary>
+【 ▶ SEARCH FOR ADDITIONAL FABLES... 】
+</summary>
+
+<div class="hidden">
+
+[ STAR STREAM NOTICE ]<br><br>
+
+Additional Fable records have not yet
+been registered in the archive.
+
+The constellation appears to be writing
+another story.
+
+<span class="blink">■</span>
+
+</div>
+
+</details>
+
+</section>
+
+
+<!-- TRANSMISSIONS -->
+
+<section id="transmissions">
+
+<div class="heading">
+【 TRANSMISSION LOG 】
+</div>
+
+<div class="line"></div>
+
+<div class="transmission">
+
+<strong>TRANSMISSION #001</strong>
+
+<p>
+A new Fable has been registered.
+<br><br>
+「Fresh Start」
+<br><br>
+Origin: Naruto Scenario<br>
+Classification: KakaObi<br>
+Status: Ongoing
+</p>
+
+</div>
+
+<div class="transmission">
+
+<strong>TRANSMISSION #002</strong>
+
+<p>
+The story has not reached its ending.
+<br><br>
+The Star Stream is waiting.
+</p>
+
+</div>
+
+<div class="transmission">
+
+<strong>TRANSMISSION #003</strong>
+
+<p>
+Someone is reading.
+<br><br>
+Someone is always reading.
+</p>
+
+</div>
+
+<details>
+
+<summary>
+【 ▶ ACCESS RESTRICTED TRANSMISSIONS 】
+</summary>
+
+<div class="hidden">
+
+[ACCESS DENIED]<br><br>
+
+The remaining transmissions have been
+classified by the constellation.
+
+Reason: Unknown.
+
+<br><br>
+
+<span class="blink">
+Something is watching from beyond the archive.
+</span>
+
+</div>
+
+</details>
+
+</section>
+
+
+<!-- ACQUIRED FABLES -->
+
+<section>
+
+<div class="heading">
+【 ACQUIRED FABLES 】
+</div>
+
+<div class="line"></div>
+
+<div class="info">
 
 <div class="fable">
 <i>The One Who Stayed Until The End</i>
@@ -303,124 +726,61 @@ entrusted to this constellation is preserved as another Fable."
 <i>The Keeper of Unfinished Stories</i>
 </div>
 
+</div>
+
 <details>
-<summary>【 ▶ Reveal Hidden Fables... 】</summary>
+
+<summary>
+【 ▶ REVEAL REMAINING FABLES... 】
+</summary>
+
 <div class="hidden">
-[RESTRICTED INFORMATION: Fables data sealed.]<br><br>
-The remaining records have been classified
-as unnecessary information.
+
+[RESTRICTED INFORMATION]<br><br>
+
+The remaining records have been sealed.
+
+Permission level insufficient.
+
 <br><br>
-<span class="blink">Permission denied.</span>
+
+The Star Stream does not believe
+you are ready to read them.
+
 </div>
+
 </details>
 
 </section>
 
 
-<!-- ATTRIBUTES -->
+<!-- CHANNELS -->
 
-<section class="section">
+<section id="channels">
 
-<div class="section-title">
-[ CONSTELLATION ATTRIBUTE ]
-</div>
-
-<div class="fable">
-<i>「Witness to Unfinished Stories」</i>
-</div>
-
-<div class="fable">
-<i>「The Hand That Writes Their Second Chances」</i>
-</div>
-
-<details>
-<summary>【 ▶ Reveal Hidden Attributes... 】</summary>
-<div class="hidden">
-[RESTRICTED INFORMATION: Attribute data sealed.]<br><br>
-Some attributes are not meant to be
-observed by incarnations.
-</div>
-</details>
-
-</section>
-
-
-<!-- ORIGIN -->
-
-<section class="section">
-
-<div class="section-title">
-[ ORIGIN RECORD ]
-</div>
-
-<div class="quote">
-"Born from countless unfinished stories and the readers
-who refused to let them disappear."
+<div class="heading">
+【 EXTERNAL CHANNELS 】
 </div>
 
 <div class="line"></div>
 
-<div class="section-title">
-[ CONSTELLATION REPUTATION ]
-</div>
+<div class="channels">
 
-<div class="quote">
-"A quiet constellation known for preserving stories
-that should have been forgotten."
-</div>
-
-</section>
-
-
-<!-- AUTHOR DATA -->
-
-<section class="section">
-
-<div class="section-title">
-[ INCARNATION INFORMATION ]
-</div>
-
-<div class="info">
-
-■ <span class="label">Designation:</span>
-<span class="value">Author / Reader</span><br>
-
-■ <span class="label">Primary Activity:</span>
-<span class="value">Writing stories that probably should have been left alone.</span><br>
-
-■ <span class="label">Known Weakness:</span>
-<span class="value">Fictional characters.</span><br>
-
-■ <span class="label">Current Scenario:</span>
-<span class="value">Creating another story.</span><br>
-
-■ <span class="label">Survival Probability:</span>
-<span class="value">Uncertain.</span>
-
-</div>
-
-</section>
-
-
-<!-- LINKS -->
-
-<section class="section">
-
-<div class="section-title">
-[ EXTERNAL CHANNELS ]
-</div>
-
-<div class="links">
-
-<a class="link" href="#" target="_blank">
+<a class="channel"
+href="https://archiveofourown.org/users/Keeper_of_Forgotten_Stories"
+target="_blank">
 AO3
 </a>
 
-<a class="link" href="#" target="_blank">
+<a class="channel"
+href="#"
+target="_blank">
 WATTPAD
 </a>
 
-<a class="link" href="#" target="_blank">
+<a class="channel"
+href="#"
+target="_blank">
 OTHER CHANNEL
 </a>
 
@@ -431,32 +791,87 @@ OTHER CHANNEL
 
 <!-- WARNING -->
 
-<section class="section">
+<section>
 
 <div class="warning">
-━━━━━━━━━━━━━━━━━━━━<br>
-[ WARNING: SYSTEM MESSAGE ]<br><br>
 
-Interaction with this constellation may alter
-your perception of the Scenario.<br><br>
+━━━━━━━━━━━━━━━━━━━━<br>
+
+[ STAR STREAM WARNING ]<br><br>
+
+Interaction with this constellation may
+alter your perception of the Scenario.
+
+<br><br>
 
 <span class="blink">
 The consequences cannot be reversed.
 </span>
 
-<br>━━━━━━━━━━━━━━━━━━━━
+<br><br>
+
+━━━━━━━━━━━━━━━━━━━━
+
 </div>
 
 </section>
 
 
-<footer class="footer">
+<footer>
+
 STAR STREAM DATABASE // RECORD #KFS-001<br>
-STATUS: OBSERVING THE SCENARIO
+STATUS: OBSERVING THE SCENARIO<br>
+<br>
+「Some stories survive because someone
+refused to forget them.」
+
 </footer>
 
 </div>
+
 </div>
+
+</div>
+
+
+<script>
+
+const status=document.getElementById("status");
+const enter=document.getElementById("enter");
+const connect=document.getElementById("connect");
+const main=document.getElementById("main");
+
+const messages=[
+"SEARCHING FOR CONSTELLATION...",
+"LOCATING NARRATIVE SIGNATURE...",
+"IDENTITY CONFIRMED.",
+"「KEEPER OF FORGOTTEN STORIES」",
+"TRANSMISSION READY."
+];
+
+let i=0;
+
+function updateStatus(){
+if(i<messages.length){
+status.textContent=messages[i];
+i++;
+setTimeout(updateStatus,650);
+}
+}
+
+updateStatus();
+
+setTimeout(()=>{
+enter.style.display="inline-block";
+},3800);
+
+enter.addEventListener("click",()=>{
+connect.classList.add("hide");
+main.classList.add("show");
+document.body.style.overflowY="auto";
+});
+
+</script>
 
 </body>
 </html>
