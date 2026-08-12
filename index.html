@@ -3,14 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-
 <title>Keeper of Forgotten Stories</title>
 
 <style>
 
-*{
-box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 html{
 scroll-behavior:smooth;
@@ -73,16 +70,10 @@ z-index:-1;
 }
 
 @keyframes stars{
-
 0%{
 background-position:
-0 0,
-0 0,
-0 0,
-0 0,
-0 0;
+0 0,0 0,0 0,0 0,0 0;
 }
-
 100%{
 background-position:
 180px 170px,
@@ -91,7 +82,6 @@ background-position:
 220px 240px,
 340px 310px;
 }
-
 }
 
 
@@ -102,13 +92,10 @@ background-position:
 #connect{
 position:fixed;
 inset:0;
-
 background:#020611;
-
 display:flex;
 align-items:center;
 justify-content:center;
-
 z-index:9999;
 
 transition:
@@ -130,9 +117,7 @@ font-family:monospace;
 
 .bootbox{
 border:1px solid #38bdf8;
-
 padding:38px 25px;
-
 background:
 linear-gradient(
 180deg,
@@ -164,13 +149,9 @@ text-shadow:
 
 .loading{
 height:5px;
-
 background:#082f49;
-
 margin:22px 0;
-
 overflow:hidden;
-
 border:1px solid #155e75;
 }
 
@@ -189,31 +170,12 @@ animation:load 3.2s forwards;
 }
 
 @keyframes load{
-
-0%{
-width:0;
-}
-
-25%{
-width:19%;
-}
-
-50%{
-width:47%;
-}
-
-72%{
-width:76%;
-}
-
-90%{
-width:91%;
-}
-
-100%{
-width:100%;
-}
-
+0%{width:0}
+25%{width:19%}
+50%{width:47%}
+72%{width:76%}
+90%{width:91%}
+100%{width:100%}
 }
 
 .bootstatus{
@@ -226,23 +188,16 @@ min-height:22px;
 
 .enter{
 display:none;
-
 margin-top:22px;
-
 padding:13px 30px;
 
 border:1px solid #38bdf8;
-
 background:rgba(14,165,233,.05);
-
 color:#bae6fd;
 
 cursor:pointer;
-
 letter-spacing:3px;
-
 font-weight:bold;
-
 transition:.3s;
 }
 
@@ -254,7 +209,6 @@ box-shadow:
 inset 0 0 15px rgba(56,189,248,.08);
 
 color:white;
-
 transform:translateY(-2px);
 }
 
@@ -265,10 +219,7 @@ transform:translateY(-2px);
 
 #main{
 opacity:0;
-
-transition:
-opacity 1.2s ease;
-
+transition:opacity 1.2s ease;
 pointer-events:none;
 }
 
@@ -284,7 +235,6 @@ margin:35px auto;
 
 .system{
 border:1px solid #075985;
-
 background:rgba(2,11,24,.92);
 
 box-shadow:
@@ -301,27 +251,19 @@ position:relative;
 
 header{
 padding:35px 20px;
-
 text-align:center;
-
 border-bottom:1px solid #164e63;
-
 position:relative;
-
 overflow:hidden;
 }
 
 header:before{
 content:"";
-
 position:absolute;
-
 left:50%;
 bottom:0;
-
 width:80%;
 height:1px;
-
 transform:translateX(-50%);
 
 background:
@@ -332,23 +274,18 @@ transparent,
 transparent
 );
 
-box-shadow:
-0 0 12px #38bdf8;
+box-shadow:0 0 12px #38bdf8;
 }
 
 .signal{
 font-size:11px;
-
 color:#67e8f9;
-
 letter-spacing:3px;
 }
 
 .title{
 font-size:clamp(27px,7vw,48px);
-
 letter-spacing:5px;
-
 margin:15px 0 8px;
 
 color:#e0f2fe;
@@ -356,14 +293,11 @@ color:#e0f2fe;
 text-shadow:
 0 0 20px rgba(56,189,248,.55),
 0 0 45px rgba(56,189,248,.12);
-
 }
 
 .subtitle{
 font-size:12px;
-
 color:#7dd3fc;
-
 letter-spacing:2px;
 }
 
@@ -374,11 +308,8 @@ letter-spacing:2px;
 
 nav{
 display:flex;
-
 justify-content:center;
-
 flex-wrap:wrap;
-
 gap:6px;
 
 padding:13px;
@@ -388,9 +319,7 @@ border-bottom:1px solid #164e63;
 background:rgba(3,18,37,.95);
 
 position:sticky;
-
 top:0;
-
 z-index:20;
 
 backdrop-filter:blur(8px);
@@ -398,35 +327,27 @@ backdrop-filter:blur(8px);
 
 nav button{
 color:#7dd3fc;
-
 background:transparent;
 
 border:1px solid transparent;
 
 font-size:11px;
-
 letter-spacing:2px;
 
 padding:10px 16px;
 
 cursor:pointer;
-
 transition:.3s;
 }
 
 nav button:hover,
 nav button.active{
 border-color:#0ea5e9;
-
 background:rgba(14,165,233,.08);
 
 color:white;
 
-text-shadow:
-0 0 8px #38bdf8;
-
-box-shadow:
-inset 0 0 10px rgba(56,189,248,.03);
+text-shadow:0 0 8px #38bdf8;
 }
 
 
@@ -436,7 +357,6 @@ inset 0 0 10px rgba(56,189,248,.03);
 
 .page{
 display:none;
-
 animation:pageIn .5s ease;
 }
 
@@ -445,17 +365,14 @@ display:block;
 }
 
 @keyframes pageIn{
-
 from{
 opacity:0;
 transform:translateY(10px);
 }
-
 to{
 opacity:1;
 transform:translateY(0);
 }
-
 }
 
 
@@ -465,7 +382,6 @@ transform:translateY(0);
 
 section{
 margin:18px;
-
 padding:23px;
 
 border:1px solid #164e63;
@@ -485,11 +401,8 @@ border-color:#155e75;
 
 .heading{
 color:#67e8f9;
-
 font-weight:bold;
-
 letter-spacing:2px;
-
 font-size:13px;
 }
 
@@ -508,7 +421,6 @@ margin:18px 0;
 
 .info{
 font-size:14px;
-
 line-height:1.9;
 }
 
@@ -530,11 +442,7 @@ background:rgba(14,165,233,.035);
 color:#bae6fd;
 
 line-height:1.8;
-
 font-style:italic;
-
-box-shadow:
-inset 10px 0 20px rgba(14,165,233,.015);
 }
 
 
@@ -552,7 +460,6 @@ background:rgba(3,13,28,.72);
 transition:.35s;
 
 position:relative;
-
 overflow:hidden;
 }
 
@@ -560,7 +467,6 @@ overflow:hidden;
 content:"";
 
 position:absolute;
-
 top:0;
 left:-100%;
 
@@ -587,29 +493,21 @@ transform:translateY(-3px);
 
 .fableid{
 color:#64748b;
-
 font-family:monospace;
-
 font-size:11px;
-
 letter-spacing:1px;
 }
 
 .fabletitle{
 font-size:21px;
-
 color:#e0f2fe;
-
 letter-spacing:2px;
-
 margin:8px 0;
 }
 
 .meta{
 font-size:12px;
-
 line-height:1.8;
-
 color:#7dd3fc;
 }
 
@@ -623,15 +521,12 @@ border-left:1px solid #155e75;
 color:#bae6fd;
 
 font-size:13px;
-
 line-height:1.8;
 }
 
 .tags{
 font-size:11px;
-
 color:#64748b;
-
 line-height:1.8;
 }
 
@@ -649,7 +544,6 @@ color:#bae6fd;
 text-decoration:none;
 
 font-size:11px;
-
 letter-spacing:2px;
 
 transition:.3s;
@@ -666,14 +560,8 @@ color:white;
 transform:translateX(3px);
 }
 
-
-/* =========================
-   SMALL FABLE RECORDS
-========================= */
-
 .fableList{
 padding:12px;
-
 margin:8px 0;
 
 border:1px solid transparent;
@@ -691,18 +579,16 @@ transform:translateX(5px);
 
 .fableList:before{
 content:"✦ ";
-
 color:#38bdf8;
 }
 
 
 /* =========================
-   TRANSMISSIONS
+   TRANSMISSION
 ========================= */
 
 .transmission{
 padding:17px;
-
 margin:13px 0;
 
 border:1px dashed #155e75;
@@ -724,46 +610,36 @@ transform:translateX(3px);
 
 .transmission strong{
 color:#67e8f9;
-
 font-family:monospace;
-
 font-size:12px;
-
 letter-spacing:2px;
 }
 
 .transmission p{
 font-size:13px;
-
 line-height:1.7;
-
 color:#bae6fd;
-
 margin-bottom:0;
 }
 
 
-/* =========================
-   DETAILS
-========================= */
+/* =====================================================
+   NORMAL DETAILS
+===================================================== */
 
 details{
 margin-top:15px;
-
 border:1px dashed #155e75;
-
 background:rgba(2,10,22,.3);
 }
 
 summary{
 cursor:pointer;
-
 padding:12px;
 
 color:#67e8f9;
 
 font-size:12px;
-
 letter-spacing:1px;
 
 transition:.3s;
@@ -771,18 +647,340 @@ transition:.3s;
 
 summary:hover{
 background:rgba(14,165,233,.05);
-
 color:white;
 }
 
 .hidden{
 padding:15px;
-
 color:#64748b;
-
 font-size:12px;
-
 line-height:1.8;
+}
+
+
+/* =====================================================
+   CORRUPTED DETAILS
+===================================================== */
+
+.corrupt{
+position:relative;
+
+border:1px solid #7f1d1d !important;
+
+background:
+rgba(40,0,5,.35) !important;
+
+overflow:hidden;
+
+animation:
+corruptOpen .45s ease,
+redPulse 2s infinite;
+}
+
+@keyframes corruptOpen{
+
+0%{
+opacity:0;
+transform:
+translateX(-5px)
+skewX(-2deg);
+}
+
+40%{
+opacity:1;
+transform:
+translateX(4px)
+skewX(2deg);
+}
+
+70%{
+transform:
+translateX(-2px)
+skewX(-1deg);
+}
+
+100%{
+transform:none;
+}
+
+}
+
+@keyframes redPulse{
+
+0%,100%{
+box-shadow:
+0 0 5px rgba(220,38,38,.08);
+}
+
+50%{
+box-shadow:
+0 0 18px rgba(220,38,38,.22),
+inset 0 0 15px rgba(127,29,29,.08);
+}
+
+}
+
+.corrupt:before{
+content:"";
+position:absolute;
+
+inset:0;
+
+background:
+repeating-linear-gradient(
+0deg,
+transparent 0px,
+transparent 3px,
+rgba(255,0,0,.08) 4px,
+transparent 5px
+);
+
+pointer-events:none;
+
+animation:
+scanline .7s linear infinite;
+}
+
+@keyframes scanline{
+
+from{
+transform:translateY(-10px);
+}
+
+to{
+transform:translateY(10px);
+}
+
+}
+
+.corrupt:after{
+content:"";
+
+position:absolute;
+
+top:0;
+left:-100%;
+
+width:40%;
+height:100%;
+
+background:
+linear-gradient(
+90deg,
+transparent,
+rgba(255,30,30,.2),
+transparent
+);
+
+animation:
+redSweep 2.2s infinite;
+}
+
+@keyframes redSweep{
+
+0%{
+left:-100%;
+}
+
+45%,100%{
+left:130%;
+}
+
+}
+
+.corruptText{
+position:relative;
+z-index:2;
+
+color:#fca5a5;
+
+text-shadow:
+0 0 5px rgba(239,68,68,.7);
+
+font-family:monospace;
+}
+
+.corruptText strong{
+color:#ef4444;
+
+letter-spacing:2px;
+
+animation:
+redGlitch 1.2s infinite;
+}
+
+@keyframes redGlitch{
+
+0%,80%,100%{
+transform:none;
+opacity:1;
+}
+
+82%{
+transform:
+translateX(3px)
+skewX(-5deg);
+
+opacity:.7;
+}
+
+84%{
+transform:
+translateX(-3px)
+skewX(5deg);
+
+opacity:1;
+}
+
+86%{
+transform:none;
+}
+
+}
+
+
+/* =========================
+   RED PARTICLES
+========================= */
+
+.redParticles{
+position:absolute;
+
+inset:0;
+
+pointer-events:none;
+
+overflow:hidden;
+
+z-index:1;
+}
+
+.redParticles span{
+position:absolute;
+
+width:2px;
+height:2px;
+
+background:#ef4444;
+
+box-shadow:
+0 0 6px #ef4444,
+0 0 12px rgba(239,68,68,.5);
+
+animation:
+particleRise linear infinite;
+}
+
+.redParticles span:nth-child(1){
+left:8%;
+bottom:-5%;
+animation-duration:3s;
+}
+
+.redParticles span:nth-child(2){
+left:17%;
+bottom:-5%;
+animation-duration:4.2s;
+animation-delay:.5s;
+}
+
+.redParticles span:nth-child(3){
+left:29%;
+bottom:-5%;
+animation-duration:3.5s;
+animation-delay:1s;
+}
+
+.redParticles span:nth-child(4){
+left:42%;
+bottom:-5%;
+animation-duration:5s;
+animation-delay:.2s;
+}
+
+.redParticles span:nth-child(5){
+left:57%;
+bottom:-5%;
+animation-duration:3.8s;
+animation-delay:1.4s;
+}
+
+.redParticles span:nth-child(6){
+left:69%;
+bottom:-5%;
+animation-duration:4.5s;
+animation-delay:.8s;
+}
+
+.redParticles span:nth-child(7){
+left:81%;
+bottom:-5%;
+animation-duration:3.2s;
+animation-delay:1.7s;
+}
+
+.redParticles span:nth-child(8){
+left:93%;
+bottom:-5%;
+animation-duration:4.8s;
+animation-delay:.3s;
+}
+
+@keyframes particleRise{
+
+0%{
+transform:
+translateY(0)
+translateX(0)
+scale(.5);
+
+opacity:0;
+}
+
+15%{
+opacity:1;
+}
+
+50%{
+transform:
+translateY(-55px)
+translateX(8px)
+scale(1);
+
+opacity:.9;
+}
+
+100%{
+transform:
+translateY(-120px)
+translateX(-10px)
+scale(.2);
+
+opacity:0;
+}
+
+}
+
+
+/* =========================
+   CORRUPTED SUMMARY
+========================= */
+
+.corrupt summary{
+color:#f87171;
+
+border-bottom:1px solid rgba(127,29,29,.4);
+
+text-shadow:
+0 0 8px rgba(239,68,68,.4);
+}
+
+.corrupt summary:hover{
+color:#fff;
+
+background:
+rgba(127,29,29,.12);
+
 }
 
 
@@ -828,20 +1026,25 @@ transform:translateY(-2px);
 }
 
 
-/* =========================
-   WARNING
-========================= */
+/* =====================================================
+   WARNING — RED CORRUPTED
+===================================================== */
 
 .warning{
+position:relative;
+
+overflow:hidden;
+
 text-align:center;
 
-padding:20px;
+padding:22px;
 
-border:1px solid #1d4ed8;
+border:1px solid #991b1b;
 
-background:rgba(23,37,84,.2);
+background:
+rgba(69,10,10,.25);
 
-color:#bae6fd;
+color:#fecaca;
 
 font-size:11px;
 
@@ -850,7 +1053,104 @@ line-height:1.8;
 letter-spacing:1px;
 
 box-shadow:
-inset 0 0 20px rgba(30,64,175,.04);
+0 0 12px rgba(127,29,29,.12),
+inset 0 0 25px rgba(127,29,29,.05);
+
+animation:
+warningPulse 2.8s infinite;
+}
+
+.warning:before{
+content:"";
+
+position:absolute;
+
+inset:0;
+
+background:
+repeating-linear-gradient(
+0deg,
+transparent 0,
+transparent 4px,
+rgba(239,68,68,.07) 5px,
+transparent 6px
+);
+
+pointer-events:none;
+
+animation:
+warningScan .8s linear infinite;
+}
+
+@keyframes warningScan{
+
+from{
+transform:translateY(-8px);
+}
+
+to{
+transform:translateY(8px);
+}
+
+}
+
+@keyframes warningPulse{
+
+0%,100%{
+border-color:#7f1d1d;
+box-shadow:
+0 0 8px rgba(127,29,29,.1);
+}
+
+50%{
+border-color:#ef4444;
+
+box-shadow:
+0 0 22px rgba(220,38,38,.22),
+inset 0 0 20px rgba(127,29,29,.08);
+}
+
+}
+
+.warningText{
+position:relative;
+z-index:3;
+
+color:#fca5a5;
+
+text-shadow:
+0 0 7px rgba(239,68,68,.6);
+
+animation:
+warningGlitch 1.8s infinite;
+}
+
+@keyframes warningGlitch{
+
+0%,88%,100%{
+transform:none;
+}
+
+90%{
+transform:
+translateX(2px)
+skewX(-2deg);
+
+color:#fff;
+}
+
+92%{
+transform:
+translateX(-2px)
+skewX(2deg);
+
+color:#ef4444;
+}
+
+94%{
+transform:none;
+}
+
 }
 
 
@@ -905,6 +1205,7 @@ transform:none;
 
 95%{
 transform:translateX(2px);
+
 text-shadow:
 2px 0 #38bdf8,
 -2px 0 #0ea5e9;
@@ -912,6 +1213,7 @@ text-shadow:
 
 96%{
 transform:translateX(-2px);
+
 text-shadow:
 -2px 0 #38bdf8,
 2px 0 #0ea5e9;
@@ -1025,9 +1327,11 @@ STAR STREAM...
 </div>
 
 <div class="bootstatus">
+
 <span id="status">
 SEARCHING FOR CONSTELLATION...
 </span>
+
 </div>
 
 <button class="enter" id="enter">
@@ -1050,10 +1354,6 @@ SEARCHING FOR CONSTELLATION...
 
 <div class="system">
 
-
-<!-- =====================================================
-     HEADER
-===================================================== -->
 
 <header>
 
@@ -1078,9 +1378,7 @@ CONSTELLATION RECORD // ACTIVE
 
 
 
-<!-- =====================================================
-     NAVIGATION
-===================================================== -->
+<!-- NAVIGATION -->
 
 <nav>
 
@@ -1186,9 +1484,7 @@ None. (Searching...)
 
 </div>
 
-
 <div class="line"></div>
-
 
 <div class="heading">
 【 STAR STREAM EVALUATION 】
@@ -1240,13 +1536,26 @@ constellation is preserved as another Fable."
 </div>
 
 
-<details>
+<!-- RED CORRUPTED WINDOW -->
+
+<details class="corrupt">
 
 <summary>
 【 ▶ REVEAL REMAINING FABLES... 】
 </summary>
 
-<div class="hidden">
+<div class="redParticles">
+<span></span><span></span><span></span><span></span>
+<span></span><span></span><span></span><span></span>
+</div>
+
+<div class="hidden corruptText">
+
+<strong>
+[ STAR STREAM ERROR ]
+</strong>
+
+<br><br>
 
 [RESTRICTED INFORMATION]
 
@@ -1265,9 +1574,17 @@ you are ready to read them.
 
 <br><br>
 
-<span class="blink">
+<strong>
 ACCESS DENIED.
-</span>
+</strong>
+
+<br><br>
+
+[ WARNING ]
+
+<br>
+
+Unauthorized observation detected.
 
 </div>
 
@@ -1297,15 +1614,24 @@ ACCESS DENIED.
 </div>
 
 
-<details>
+<!-- RED CORRUPTED WINDOW -->
+
+<details class="corrupt">
 
 <summary>
 【 ▶ REVEAL HIDDEN ATTRIBUTES... 】
 </summary>
 
-<div class="hidden">
+<div class="redParticles">
+<span></span><span></span><span></span><span></span>
+<span></span><span></span><span></span><span></span>
+</div>
 
-[RESTRICTED INFORMATION]
+<div class="hidden corruptText">
+
+<strong>
+[ ATTRIBUTE DATABASE CORRUPTED ]
+</strong>
 
 <br><br>
 
@@ -1316,6 +1642,20 @@ to be observed by incarnations.
 
 Observation itself may constitute
 an unauthorized interaction.
+
+<br><br>
+
+[ DATA RECOVERY: FAILED ]
+
+<br><br>
+
+<strong>
+STOP LOOKING.
+</strong>
+
+<br><br>
+
+The Star Stream has noticed you.
 
 </div>
 
@@ -1361,11 +1701,18 @@ stories that should have been forgotten."
 
 
 
-<!-- WARNING -->
+<!-- ONLY HOME WARNING -->
 
 <section>
 
 <div class="warning">
+
+<div class="redParticles">
+<span></span><span></span><span></span><span></span>
+<span></span><span></span><span></span><span></span>
+</div>
+
+<div class="warningText">
 
 ━━━━━━━━━━━━━━━━━━━━
 
@@ -1380,13 +1727,13 @@ alter your perception of the Scenario.
 
 <br><br>
 
-<span class="blink">
 The consequences cannot be reversed.
-</span>
 
 <br><br>
 
 ━━━━━━━━━━━━━━━━━━━━
+
+</div>
 
 </div>
 
@@ -1425,8 +1772,6 @@ classified as Fables.
 
 <br>
 
-
-<!-- FABLE 001 -->
 
 <div class="fable">
 
@@ -1496,7 +1841,7 @@ all the tragedies of those years.
 
 <br><br>
 
-Maybe only then I could finally be at peace.
+Maybe only then could I finally be at peace.
 
 <br><br>
 
@@ -1506,11 +1851,9 @@ of the anime or manga.
 <br><br>
 
 <i>
-
 Note: This is a translated version of my original
 story. English is not my first language, so please
 forgive any grammar mistakes or awkward wording.
-
 </i>
 
 </div>
@@ -1526,7 +1869,6 @@ Hatake Kakashi / Uchiha Obito
 
 <br><br>
 
-
 <strong>CHARACTERS:</strong>
 
 <br>
@@ -1538,7 +1880,6 @@ Uchiha Sasuke · Uzumaki Naruto · Uchiha Madara ·
 Akatsuki Characters · Haruno Sakura · Hyuuga Hinata
 
 <br><br>
-
 
 <strong>ADDITIONAL TAGS:</strong>
 
@@ -1564,12 +1905,8 @@ rel="noopener">
 </div>
 
 
-
 <br>
 
-
-
-<!-- SEARCH ADDITIONAL -->
 
 <details>
 
@@ -1601,31 +1938,6 @@ another story.
 
 </details>
 
-
-</section>
-
-
-<!-- ARCHIVE WARNING -->
-
-<section>
-
-<div class="warning">
-
-[ ARCHIVE NOTICE ]
-
-<br><br>
-
-The records displayed above represent
-only a fraction of the constellation's
-known narrative activity.
-
-<br><br>
-
-Additional records may appear
-without prior warning.
-
-</div>
-
 </section>
 
 
@@ -1648,18 +1960,20 @@ without prior warning.
 
 <div class="line"></div>
 
+
 <div class="message">
 
-Incoming messages detected.
+Incoming transmission detected.
 
 <br><br>
 
-Some transmissions may not have been
-intended for human observation.
+The following record has been
+authorized for observation.
 
 </div>
 
 
+<!-- ONLY TRANSMISSION #001 -->
 
 <div class="transmission">
 
@@ -1692,106 +2006,26 @@ Status: Ongoing
 </div>
 
 
+<!-- RED UNKNOWN TRANSMISSION -->
 
-<div class="transmission">
-
-<strong>
-TRANSMISSION #002
-</strong>
-
-<p>
-
-The story has not reached its ending.
-
-<br><br>
-
-The Star Stream is waiting.
-
-</p>
-
-</div>
-
-
-
-<div class="transmission">
-
-<strong>
-TRANSMISSION #003
-</strong>
-
-<p>
-
-Someone is reading.
-
-<br><br>
-
-Someone is always reading.
-
-</p>
-
-</div>
-
-
-
-<div class="transmission">
-
-<strong>
-TRANSMISSION #004
-</strong>
-
-<p>
-
-[ SYSTEM NOTICE ]
-
-<br><br>
-
-The author has once again become
-emotionally attached to a fictional character.
-
-<br><br>
-
-This behavior has been recorded
-as recurring.
-
-</p>
-
-</div>
-
-
-
-<div class="transmission">
-
-<strong>
-TRANSMISSION #005
-</strong>
-
-<p>
-
-The ending has not been determined.
-
-<br><br>
-
-Therefore...
-
-<br><br>
-
-the story continues.
-
-</p>
-
-</div>
-
-
-
-<details>
+<details class="corrupt">
 
 <summary>
 【 ▶ RECEIVE UNKNOWN TRANSMISSION... 】
 </summary>
 
-<div class="hidden">
+<div class="redParticles">
+<span></span><span></span><span></span><span></span>
+<span></span><span></span><span></span><span></span>
+</div>
 
-<em>
+<div class="hidden corruptText">
+
+<strong>
+[ UNKNOWN TRANSMISSION DETECTED ]
+</strong>
+
+<br><br>
 
 ...
 
@@ -1805,10 +2039,26 @@ The Star Stream is watching.
 
 <br><br>
 
-Something is watching from beyond
-the archive.
+No.
 
-</em>
+<br>
+
+Something is watching
+through the Star Stream.
+
+<br><br>
+
+[ SIGNAL SOURCE: UNKNOWN ]
+
+<br><br>
+
+[ TRANSMISSION STATUS: CORRUPTED ]
+
+<br><br>
+
+<strong>
+DO NOT ANSWER.
+</strong>
 
 </div>
 
@@ -1818,38 +2068,12 @@ the archive.
 </section>
 
 
-
-<section>
-
-<div class="warning">
-
-<span class="blink">
-【 WARNING 】
-</span>
-
-<br><br>
-
-Not every transmission should be answered.
-
-<br><br>
-
-Not every story wants to be remembered.
-
-<br><br>
-
-Some stories remember you back.
-
-</div>
-
-</section>
-
-
 </main>
 
 
 
 <!-- =====================================================
-     EXTERNAL CHANNELS
+     CHANNELS
 ===================================================== -->
 
 <main id="channels" class="page">
@@ -1881,7 +2105,6 @@ identified.
 
 <div class="channels">
 
-
 <a
 class="channel"
 href="https://archiveofourown.org/users/Keeper_of_Forgotten_Stories"
@@ -1902,7 +2125,6 @@ rel="noopener">
 WATTPAD
 
 </a>
-
 
 </div>
 
@@ -1932,7 +2154,6 @@ ONLINE // CONNECTED
 
 <br>
 
-
 ■
 <span class="label">
 WATTPAD:
@@ -1943,7 +2164,6 @@ ONLINE // CONNECTED
 </span>
 
 <br>
-
 
 ■
 <span class="label">
@@ -1996,12 +2216,19 @@ CONFIRMED.
 
 
 <!-- =====================================================
-     FINAL WARNING
+     FOOTER WARNING
 ===================================================== -->
 
 <section>
 
 <div class="warning">
+
+<div class="redParticles">
+<span></span><span></span><span></span><span></span>
+<span></span><span></span><span></span><span></span>
+</div>
+
+<div class="warningText">
 
 ━━━━━━━━━━━━━━━━━━━━
 
@@ -2016,9 +2243,7 @@ alter your perception of the Scenario.
 
 <br><br>
 
-<span class="blink">
 The consequences cannot be reversed.
-</span>
 
 <br><br>
 
@@ -2026,13 +2251,11 @@ The consequences cannot be reversed.
 
 </div>
 
+</div>
+
 </section>
 
 
-
-<!-- =====================================================
-     FOOTER
-===================================================== -->
 
 <footer>
 
@@ -2069,10 +2292,6 @@ refused to forget them.」
 ===================================================== -->
 
 <script>
-
-/* =========================
-   STAR STREAM BOOT
-========================= */
 
 const status =
 document.getElementById("status");
@@ -2125,13 +2344,10 @@ updateStatus,
 
 }
 
-
 updateStatus();
 
 
-/* =========================
-   SHOW ENTER BUTTON
-========================= */
+/* ENTER */
 
 setTimeout(function(){
 
@@ -2140,10 +2356,6 @@ enter.style.display =
 
 },4300);
 
-
-/* =========================
-   ENTER SITE
-========================= */
 
 enter.addEventListener(
 "click",
@@ -2165,9 +2377,7 @@ behavior:"smooth"
 );
 
 
-/* =========================
-   PAGE NAVIGATION
-========================= */
+/* NAVIGATION */
 
 function showPage(page,button){
 
@@ -2217,42 +2427,7 @@ behavior:"smooth"
 }
 
 
-/* =========================
-   PREVENT HASH JUMP
-========================= */
-
-document
-.querySelectorAll("nav button")
-.forEach(function(button){
-
-button.addEventListener(
-"mouseenter",
-function(){
-
-button.style.textShadow =
-"0 0 10px #38bdf8";
-
-});
-
-button.addEventListener(
-"mouseleave",
-function(){
-
-if(!button.classList.contains("active")){
-
-button.style.textShadow =
-"none";
-
-}
-
-});
-
-});
-
-
-/* =========================
-   KONAMI-LIKE SECRET
-========================= */
+/* SECRET WORD */
 
 let secret = "";
 
@@ -2295,7 +2470,6 @@ console.log(
 }
 
 });
-
 
 </script>
 
